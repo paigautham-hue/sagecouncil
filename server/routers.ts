@@ -5,6 +5,7 @@ import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
 import { invokeLLM } from "./_core/llm";
+import { getRelevantContext } from "./rag";
 
 export const appRouter = router({
   system: systemRouter,
@@ -254,6 +255,18 @@ export const appRouter = router({
           .map(t => `${t!.fullName}: ${t!.oneLineEssence}`)
           .join("\n");
 
+        // Get relevant context using RAG
+        let relevantContext = "";
+        try {
+          relevantContext = await getRelevantContext(
+            input.message, 
+            input.selectedTeachers, 
+            5
+          );
+        } catch (error) {
+          console.error("RAG context retrieval failed:", error);
+        }
+
         // Build system prompt based on mode
         let systemPrompt = "";
         if (input.mode === "one_sage") {
@@ -272,6 +285,11 @@ export const appRouter = router({
           : "Use a balanced, clear tone.";
 
         systemPrompt += `\n\n${toneGuidance}`;
+
+        // Add RAG context if available
+        if (relevantContext) {
+          systemPrompt += `\n\nRELEVANT TEACHINGS FROM THE SELECTED TEACHERS:\n${relevantContext}\n\nDraw upon these specific teachings when formulating your response. Cite them naturally.`;
+        }
 
         // Call LLM
         const response = await invokeLLM({
