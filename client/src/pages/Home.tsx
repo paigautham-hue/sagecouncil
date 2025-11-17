@@ -6,6 +6,7 @@ import { Sparkles, Users, BookOpen, Compass, ArrowRight, Menu, X } from "lucide-
 import { trpc } from "@/lib/trpc";
 import { useEffect, useState } from "react";
 import { TemplePortal } from "@/components/TemplePortal";
+import { TodaysDeepDrop } from "@/components/TodaysDeepDrop";
 import { getSagePortrait } from "@/lib/sagePortraits";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
@@ -168,8 +169,14 @@ export default function Home() {
         )}
       </section>
 
+      {/* Today's Deep Drop */}
+      <section className="container py-16">
+        <TodaysDeepDrop />
+      </section>
+
       {/* Features Section */}
-      <section className="py-20 border-t border-border/30">
+      <section className="border-t border-border/30">
+        <div className="container py-24">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
             Three Ways to <span className="text-gradient-violet">Explore Wisdom</span>
@@ -218,6 +225,7 @@ export default function Home() {
               </div>
             </Link>
           </div>
+        </div>
         </div>
       </section>
 

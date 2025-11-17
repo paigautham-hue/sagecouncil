@@ -196,9 +196,10 @@
 - [x] Build "Today's Deep Drop" backend API
 - [x] Add AI-generated commentary for daily quote
 - [x] Generate 1-minute practice from teacher's methods
-- [ ] Build "Today's Deep Drop" frontend component
-- [ ] Add "Ask about this" button (pre-load in Council)
-- [ ] Add "See how others see this" button (compare mode)
+- [x] Build "Today's Deep Drop" frontend component
+- [x] Add "Ask about this" button (pre-load in Council)
+- [x] Add "See how others see this" button (compare mode)
+- [x] Integrate Today's Deep Drop into homepage
 - [ ] Create horizontal scroll of teacher avatars with essence lines
 - [ ] Build "Pick Your Focus Today" theme cards
 - [ ] Create theme modal with AI synthesis and tiny practice
