@@ -239,7 +239,7 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8">
             {/* One Sage */}
             <Link href="/council?mode=one_sage">
-              <div className="glass-card p-8 rounded-2xl cursor-pointer group">
+              <div className="glass-card gradient-overlay card-lift p-8 rounded-2xl cursor-pointer group">
                 <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <SacredGeometryIcon className="w-8 h-8 text-primary" size={32} />
                 </div>
@@ -253,7 +253,7 @@ export default function Home() {
 
             {/* Compare Two */}
             <Link href="/council?mode=compare_two">
-              <div className="glass-card p-8 rounded-2xl cursor-pointer group">
+              <div className="glass-card gradient-overlay card-lift p-8 rounded-2xl cursor-pointer group">
                 <div className="w-16 h-16 rounded-full bg-secondary/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <CompassIcon className="w-8 h-8 text-secondary" size={32} />
                 </div>
@@ -267,7 +267,7 @@ export default function Home() {
 
             {/* Council */}
             <Link href="/council?mode=council">
-              <div className="glass-card p-8 rounded-2xl cursor-pointer group">
+              <div className="glass-card gradient-overlay card-lift p-8 rounded-2xl cursor-pointer group">
                 <div className="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <LotusIcon className="w-8 h-8 text-accent" size={32} />
                 </div>
@@ -296,7 +296,7 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Paradox Playground */}
             <Link href="/paradox-playground">
-              <div className="glass-card p-8 rounded-2xl cursor-pointer group hover:border-violet-500/50 transition-all">
+              <div className="glass-card gradient-overlay card-lift p-8 rounded-2xl cursor-pointer group hover:border-violet-500/50">
                 <div className="w-16 h-16 rounded-full bg-violet-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <LabyrinthIcon className="w-8 h-8 text-violet-400" size={32} />
                 </div>
@@ -314,7 +314,7 @@ export default function Home() {
 
             {/* Life Experiments */}
             <Link href="/life-experiments">
-              <div className="glass-card p-8 rounded-2xl cursor-pointer group hover:border-amber-500/50 transition-all">
+              <div className="glass-card gradient-overlay card-lift p-8 rounded-2xl cursor-pointer group hover:border-amber-500/50">
                 <div className="w-16 h-16 rounded-full bg-amber-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <SeedIcon className="w-8 h-8 text-amber-400" size={32} />
                 </div>

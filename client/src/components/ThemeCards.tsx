@@ -119,7 +119,7 @@ export function ThemeCards() {
           return (
             <Card
               key={theme.id}
-              className="group cursor-pointer bg-slate-900/40 backdrop-blur-md border-slate-700/50 hover:border-gold/50 transition-all duration-300 hover:scale-105"
+              className="group cursor-pointer bg-slate-900/40 backdrop-blur-md border-slate-700/50 hover:border-gold/50 gradient-overlay card-lift stagger-item"
               onClick={() => handleThemeClick(theme)}
             >
               <CardContent className="p-6 space-y-4">

@@ -14,7 +14,7 @@ export const LotusIcon = ({ className = "", size = 24 }: IconProps) => (
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className={className}
+    className={`icon-rotate-hover ${className}`}
   >
     <path
       d="M12 2C12 2 8 6 8 10C8 12.2091 9.79086 14 12 14C14.2091 14 16 12.2091 16 10C16 6 12 2 12 2Z"
@@ -53,7 +53,7 @@ export const SacredGeometryIcon = ({ className = "", size = 24 }: IconProps) => 
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className={className}
+    className={`icon-rotate-hover ${className}`}
   >
     <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
     <circle cx="12" cy="12" r="6" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
@@ -73,7 +73,7 @@ export const PhoenixIcon = ({ className = "", size = 24 }: IconProps) => (
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className={className}
+    className={`icon-rotate-hover ${className}`}
   >
     <path
       d="M12 2C12 2 10 5 10 8C10 9.5 11 10.5 12 10.5C13 10.5 14 9.5 14 8C14 5 12 2 12 2Z"
@@ -113,7 +113,7 @@ export const EnsoIcon = ({ className = "", size = 24 }: IconProps) => (
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className={className}
+    className={`icon-rotate-hover ${className}`}
   >
     <path
       d="M12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21"
@@ -140,7 +140,7 @@ export const CompassIcon = ({ className = "", size = 24 }: IconProps) => (
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className={className}
+    className={`icon-rotate-hover ${className}`}
   >
     <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
     <path
@@ -167,7 +167,7 @@ export const InfinityIcon = ({ className = "", size = 24 }: IconProps) => (
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className={className}
+    className={`icon-rotate-hover ${className}`}
   >
     <path
       d="M7 12C7 9.79086 8.79086 8 11 8C13.2091 8 15 9.79086 15 12C15 14.2091 13.2091 16 11 16C8.79086 16 7 14.2091 7 12Z"
@@ -192,7 +192,7 @@ export const HeartMandalaIcon = ({ className = "", size = 24 }: IconProps) => (
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className={className}
+    className={`icon-rotate-hover ${className}`}
   >
     <path
       d="M12 21C12 21 4 15 4 9C4 6.79086 5.79086 5 8 5C9.5 5 10.7 5.7 12 7C13.3 5.7 14.5 5 16 5C18.2091 5 20 6.79086 20 9C20 15 12 21 12 21Z"
@@ -219,7 +219,7 @@ export const HourglassIcon = ({ className = "", size = 24 }: IconProps) => (
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className={className}
+    className={`icon-rotate-hover ${className}`}
   >
     <path
       d="M7 3H17V8L12 12L7 8V3Z"
@@ -246,7 +246,7 @@ export const LabyrinthIcon = ({ className = "", size = 24 }: IconProps) => (
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className={className}
+    className={`icon-rotate-hover ${className}`}
   >
     <path
       d="M12 12C12 12 12 8 16 8C18 8 19 9 19 11C19 13 18 14 16 14C14 14 12 14 12 14"
@@ -275,7 +275,7 @@ export const SeedIcon = ({ className = "", size = 24 }: IconProps) => (
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className={className}
+    className={`icon-rotate-hover ${className}`}
   >
     <path
       d="M12 22V12"
