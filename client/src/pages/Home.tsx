@@ -2,7 +2,8 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
 import { Link } from "wouter";
-import { Sparkles, Users, BookOpen, Compass, ArrowRight, Menu, X, Brain, FlaskConical } from "lucide-react";
+import { ArrowRight, Menu, X } from "lucide-react";
+import { LotusIcon, CompassIcon, LabyrinthIcon, SeedIcon, SacredGeometryIcon } from "@/components/icons/SophisticatedIcons";
 import { trpc } from "@/lib/trpc";
 import { useEffect, useState } from "react";
 import { TemplePortal } from "@/components/TemplePortal";
@@ -39,7 +40,7 @@ export default function Home() {
           <div className="flex items-center justify-between">
             <Link href="/">
               <div className="flex items-center gap-3 cursor-pointer">
-                <Sparkles className="w-8 h-8 text-accent" />
+                <LotusIcon className="w-8 h-8 text-accent" size={32} />
                 <h1 className="text-2xl font-bold text-gradient-gold">{APP_TITLE}</h1>
               </div>
             </Link>
@@ -81,44 +82,44 @@ export default function Home() {
                 <div className="flex flex-col gap-4 mt-8">
                   <Link href="/council">
                     <Button variant="ghost" className="w-full justify-start" onClick={() => setMobileMenuOpen(false)}>
-                      <Users className="w-4 h-4 mr-2" />
+                      <SacredGeometryIcon className="w-4 h-4 mr-2" size={16} />
                       Council
                     </Button>
                   </Link>
                   <Link href="/sages">
                     <Button variant="ghost" className="w-full justify-start" onClick={() => setMobileMenuOpen(false)}>
-                      <BookOpen className="w-4 h-4 mr-2" />
+                      <LotusIcon className="w-4 h-4 mr-2" size={16} />
                       Sages
                     </Button>
                   </Link>
                   <Link href="/journeys">
                     <Button variant="ghost" className="w-full justify-start" onClick={() => setMobileMenuOpen(false)}>
-                      <Compass className="w-4 h-4 mr-2" />
+                      <CompassIcon className="w-4 h-4 mr-2" size={16} />
                       Journeys
                     </Button>
                   </Link>
                   <Link href="/micro-retreats">
                     <Button variant="ghost" className="w-full justify-start" onClick={() => setMobileMenuOpen(false)}>
-                      <Sparkles className="w-4 h-4 mr-2" />
+                      <LotusIcon className="w-4 h-4 mr-2" size={16} />
                       Retreats
                     </Button>
                   </Link>
                   <Link href="/paradox-playground">
                     <Button variant="ghost" className="w-full justify-start" onClick={() => setMobileMenuOpen(false)}>
-                      <Brain className="w-4 h-4 mr-2" />
+                      <LabyrinthIcon className="w-4 h-4 mr-2" size={16} />
                       Paradoxes
                     </Button>
                   </Link>
                   <Link href="/life-experiments">
                     <Button variant="ghost" className="w-full justify-start" onClick={() => setMobileMenuOpen(false)}>
-                      <FlaskConical className="w-4 h-4 mr-2" />
+                      <SeedIcon className="w-4 h-4 mr-2" size={16} />
                       Experiments
                     </Button>
                   </Link>
                   {isAuthenticated && (
                     <Link href="/my-path">
                       <Button variant="ghost" className="w-full justify-start" onClick={() => setMobileMenuOpen(false)}>
-                        <Sparkles className="w-4 h-4 mr-2" />
+                        <LotusIcon className="w-4 h-4 mr-2" size={16} />
                         My Path
                       </Button>
                     </Link>
@@ -131,7 +132,7 @@ export default function Home() {
               {isAuthenticated ? (
                 <Link href="/my-path">
                   <Button variant="default" className="ripple">
-                    <Compass className="w-4 h-4 mr-2" />
+                    <CompassIcon className="w-4 h-4 mr-2" size={16} />
                     My Path
                   </Button>
                 </Link>
@@ -155,7 +156,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card">
-              <Sparkles className="w-4 h-4 text-accent" />
+              <LotusIcon className="w-4 h-4 text-accent" size={16} />
               <span className="text-sm text-muted-foreground">Wisdom from 36 spiritual teachers</span>
             </div>
             
@@ -172,7 +173,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/council">
                 <Button size="lg" className="ripple text-lg px-8 py-6">
-                  <Users className="w-5 h-5 mr-2" />
+                  <SacredGeometryIcon className="w-5 h-5 mr-2" size={20} />
                   Enter the Council
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
@@ -180,7 +181,7 @@ export default function Home() {
               
               <Link href="/sages">
                 <Button size="lg" variant="outline" className="ripple text-lg px-8 py-6">
-                  <BookOpen className="w-5 h-5 mr-2" />
+                  <LotusIcon className="w-5 h-5 mr-2" size={20} />
                   Explore Sages
                 </Button>
               </Link>
@@ -240,7 +241,7 @@ export default function Home() {
             <Link href="/council?mode=one_sage">
               <div className="glass-card p-8 rounded-2xl cursor-pointer group">
                 <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <Users className="w-8 h-8 text-primary" />
+                  <SacredGeometryIcon className="w-8 h-8 text-primary" size={32} />
                 </div>
                 <h3 className="text-2xl font-bold mb-4">One Sage</h3>
                 <p className="text-foreground/70">
@@ -254,7 +255,7 @@ export default function Home() {
             <Link href="/council?mode=compare_two">
               <div className="glass-card p-8 rounded-2xl cursor-pointer group">
                 <div className="w-16 h-16 rounded-full bg-secondary/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <Compass className="w-8 h-8 text-secondary" />
+                  <CompassIcon className="w-8 h-8 text-secondary" size={32} />
                 </div>
                 <h3 className="text-2xl font-bold mb-4">Compare Two</h3>
                 <p className="text-foreground/70">
@@ -268,7 +269,7 @@ export default function Home() {
             <Link href="/council?mode=council">
               <div className="glass-card p-8 rounded-2xl cursor-pointer group">
                 <div className="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <Sparkles className="w-8 h-8 text-accent" />
+                  <LotusIcon className="w-8 h-8 text-accent" size={32} />
                 </div>
                 <h3 className="text-2xl font-bold mb-4">Full Council</h3>
                 <p className="text-foreground/70">
@@ -297,7 +298,7 @@ export default function Home() {
             <Link href="/paradox-playground">
               <div className="glass-card p-8 rounded-2xl cursor-pointer group hover:border-violet-500/50 transition-all">
                 <div className="w-16 h-16 rounded-full bg-violet-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <Brain className="w-8 h-8 text-violet-400" />
+                  <LabyrinthIcon className="w-8 h-8 text-violet-400" size={32} />
                 </div>
                 <h3 className="text-2xl font-bold mb-4">Paradox Playground</h3>
                 <p className="text-foreground/70 mb-4">
@@ -315,7 +316,7 @@ export default function Home() {
             <Link href="/life-experiments">
               <div className="glass-card p-8 rounded-2xl cursor-pointer group hover:border-amber-500/50 transition-all">
                 <div className="w-16 h-16 rounded-full bg-amber-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <FlaskConical className="w-8 h-8 text-amber-400" />
+                  <SeedIcon className="w-8 h-8 text-amber-400" size={32} />
                 </div>
                 <h3 className="text-2xl font-bold mb-4">Life Experiments</h3>
                 <p className="text-foreground/70 mb-4">
@@ -383,7 +384,7 @@ export default function Home() {
             {!isAuthenticated && (
               <Button asChild size="lg" className="ripple text-lg px-8 py-6">
                 <a href={getLoginUrl()}>
-                  <Sparkles className="w-5 h-5 mr-2" />
+                  <LotusIcon className="w-5 h-5 mr-2" size={20} />
                   Get Started Free
                 </a>
               </Button>
@@ -397,7 +398,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <Sparkles className="w-6 h-6 text-accent" />
+              <LotusIcon className="w-6 h-6 text-accent" size={24} />
               <span className="text-sm text-muted-foreground">
                 © 2024 {APP_TITLE}. Wisdom for the modern seeker.
               </span>

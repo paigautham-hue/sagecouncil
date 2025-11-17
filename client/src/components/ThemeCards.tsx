@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
-import { Brain, Heart, Skull, Users, Sparkles, Flame } from "lucide-react";
+import { LotusIcon, CompassIcon, LabyrinthIcon, SeedIcon, SacredGeometryIcon } from "@/components/icons/SophisticatedIcons";
 
 interface Theme {
   id: string;
@@ -22,7 +22,7 @@ const themes: Theme[] = [
   {
     id: "ego",
     title: "Ego & Self",
-    icon: Brain,
+    icon: LabyrinthIcon,
     color: "from-purple-600 to-indigo-600",
     description: "Understanding the nature of self and transcending ego",
     synthesis: "The ego is not an enemy to be destroyed, but a construct to be understood. Across traditions, teachers point to the illusory nature of the separate self while honoring the practical necessity of personality. The path involves seeing through identification while functioning skillfully in the world.",
@@ -35,7 +35,7 @@ const themes: Theme[] = [
   {
     id: "relationships",
     title: "Relationships",
-    icon: Heart,
+    icon: SacredGeometryIcon,
     color: "from-rose-600 to-pink-600",
     description: "Love, connection, and authentic relating",
     synthesis: "True relationship begins with relationship to oneself. Teachers across traditions emphasize that we cannot offer others what we haven't cultivated within. Love is not possession but recognition—seeing the divine in another while honoring their autonomy. Healthy boundaries and authentic vulnerability create the container for genuine connection.",
@@ -48,7 +48,7 @@ const themes: Theme[] = [
   {
     id: "death",
     title: "Death & Impermanence",
-    icon: Skull,
+    icon: SeedIcon,
     color: "from-slate-600 to-gray-700",
     description: "Embracing mortality and the transient nature of existence",
     synthesis: "Death is the ultimate teacher, stripping away all that is non-essential. Contemplating mortality doesn't lead to despair but to presence—when we truly understand that this moment is all we have, we stop postponing our lives. Impermanence is not a problem to solve but a truth to embrace, revealing the preciousness of each passing moment.",
@@ -61,7 +61,7 @@ const themes: Theme[] = [
   {
     id: "suffering",
     title: "Suffering & Growth",
-    icon: Flame,
+    icon: LotusIcon,
     color: "from-orange-600 to-red-600",
     description: "Finding meaning in pain and adversity",
     synthesis: "Suffering is universal, but it need not be meaningless. The Buddha taught that suffering arises from attachment; Viktor Frankl showed that meaning can be found even in the darkest circumstances. Pain is inevitable; suffering is what happens when we resist pain. The path through difficulty involves neither avoidance nor wallowing, but conscious engagement with what is.",
@@ -74,7 +74,7 @@ const themes: Theme[] = [
   {
     id: "presence",
     title: "Presence & Awareness",
-    icon: Sparkles,
+    icon: CompassIcon,
     color: "from-gold to-yellow-600",
     description: "Living in the present moment",
     synthesis: "The present moment is the only point of power. Past and future exist only as thoughts arising now. Presence is not a state to achieve but our natural condition when we stop resisting what is. Awareness itself is always here, always whole—it's only our attention that wanders. Coming home to now is coming home to ourselves.",
@@ -87,7 +87,7 @@ const themes: Theme[] = [
   {
     id: "purpose",
     title: "Purpose & Meaning",
-    icon: Users,
+    icon: SacredGeometryIcon,
     color: "from-blue-600 to-cyan-600",
     description: "Discovering your unique contribution",
     synthesis: "Purpose is not found but forged through engagement with life. It emerges at the intersection of your gifts, the world's needs, and what brings you alive. Meaning is not a destination but a direction—a continuous choosing of values over comfort, growth over stagnation, contribution over consumption. Your purpose evolves as you do.",
