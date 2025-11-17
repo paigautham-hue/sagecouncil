@@ -6,6 +6,8 @@ import { z } from "zod";
 import * as db from "./db";
 import { invokeLLM } from "./_core/llm";
 import { getRelevantContext } from "./rag";
+import * as aiService from "./ai-service";
+import { getTodaysDrop } from "./daily-drop";
 
 export const appRouter = router({
   system: systemRouter,
@@ -217,8 +219,36 @@ export const appRouter = router({
       }),
   }),
 
+  // Today's Deep Drop
+  daily: router({
+    getTodaysDrop: publicProcedure.query(async () => {
+      return await getTodaysDrop();
+    }),
+  }),
+
   // AI Chat
   chat: router({
+    // Get reflection prompt before answering
+    getReflectionPrompt: protectedProcedure
+      .input(z.object({ question: z.string() }))
+      .query(async ({ input }) => {
+        return await aiService.generateReflectionPrompt(input.question);
+      }),
+    
+    // Select teachers for Council mode
+    selectTeachers: protectedProcedure
+      .input(z.object({ question: z.string() }))
+      .query(async ({ input }) => {
+        const allTeachers = await db.getAllTeachers();
+        const teachersForSelection = allTeachers.map(t => ({
+          id: t.id,
+          fullName: t.fullName,
+          tradition: t.traditionTags?.join(', ') || '',
+          themes: '' // Themes will be retrieved from database when needed
+        }));
+        return await aiService.selectTeachersForQuestion(input.question, teachersForSelection);
+      }),
+    
     sendMessage: protectedProcedure
       .input(z.object({
         conversationId: z.number(),
@@ -232,6 +262,28 @@ export const appRouter = router({
         const conversation = await db.getConversationById(input.conversationId);
         if (!conversation || conversation.userId !== ctx.user.id) {
           throw new Error("Conversation not found");
+        }
+
+        // Check for crisis keywords
+        const isCrisis = aiService.detectCrisis(input.message);
+        if (isCrisis) {
+          const crisisResponse = await aiService.generateCrisisResponse();
+          
+          // Add user message
+          await db.addConversationMessage({
+            conversationId: input.conversationId,
+            role: "user",
+            content: input.message,
+          });
+          
+          // Add crisis response
+          await db.addConversationMessage({
+            conversationId: input.conversationId,
+            role: "assistant",
+            content: crisisResponse,
+          });
+          
+          return { response: crisisResponse, isCrisis: true };
         }
 
         // Add user message

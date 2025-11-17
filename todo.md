@@ -188,3 +188,80 @@
 - [x] Update Sages library with portrait graphics
 - [x] Create getSagePortrait helper function
 - [x] Save checkpoint with enhanced visuals
+
+
+## 100% Completion - Missing Features Implementation
+
+### Homepage "Today's Experience"
+- [x] Build "Today's Deep Drop" backend API
+- [x] Add AI-generated commentary for daily quote
+- [x] Generate 1-minute practice from teacher's methods
+- [ ] Build "Today's Deep Drop" frontend component
+- [ ] Add "Ask about this" button (pre-load in Council)
+- [ ] Add "See how others see this" button (compare mode)
+- [ ] Create horizontal scroll of teacher avatars with essence lines
+- [ ] Build "Pick Your Focus Today" theme cards
+- [ ] Create theme modal with AI synthesis and tiny practice
+
+### Advanced Council Chat Features
+- [ ] Implement "Reflection first?" toggle with introspective prompts
+- [ ] Add save/bookmark conversation snippets to Journal
+- [ ] Implement teacher avatar glow animation during speech
+- [ ] Build safety detection for crisis keywords
+- [ ] Add compassionate crisis response with professional help resources
+- [ ] Implement comparison summary (convergences/differences)
+- [ ] Build meta-synthesis ("Common thread" + actionable insight)
+- [ ] Create teacher selection algorithm for Council mode
+- [ ] Add scrollable teacher avatar selector with essence lines
+
+### Sages Library Enhancements
+- [ ] Add filter by tradition/era/theme
+- [ ] Implement search functionality
+- [ ] Create quick profile card on avatar hover
+- [ ] Add "Explore this Sage" CTA
+
+### Journeys - Full Implementation
+- [ ] Create day-by-day content structure
+- [ ] Build daily content cards with readings/practices/reflections
+- [ ] Implement progress tracking with visual indicators
+- [ ] Add daily unlocking mechanism
+- [ ] Create completion badges/milestones
+
+### My Path - Complete Features
+- [ ] Build journal entries interface with rich text editor
+- [ ] Implement saved conversations display
+- [ ] Create insights timeline (chronological view)
+- [ ] Add progress visualization (journey completion, metrics)
+- [ ] Build tagging system for saved content
+
+### Admin Console - Full Features
+- [ ] Implement conversation log viewer (anonymized)
+- [ ] Build flagging system for concerning conversations
+- [ ] Create analytics dashboard (usage metrics, popular teachers/themes)
+- [ ] Add knowledge coverage monitor
+- [ ] Implement system prompt configuration interface
+
+### Animations & Micro-interactions
+- [ ] Add breathing glow animation to sage avatars
+- [ ] Implement orbiting symbols around avatars
+- [ ] Create "light floating upwards" effect when saving insights
+- [ ] Add avatar pulsate on hover
+- [ ] Implement teacher glow during their speaking turn
+
+### Additional Pages
+- [ ] Create About page
+- [ ] Build FAQ page
+- [ ] Create Safety page with crisis resources
+- [ ] Build Privacy policy page
+
+### Advanced LLM Features
+- [x] Implement teacher selection algorithm based on question analysis
+- [x] Build multi-teacher synthesis generator
+- [x] Create comparison logic (highlight convergences/differences)
+- [x] Implement safety keyword detection
+- [x] Build reflection prompt generator
+- [x] Create practice generator from teacher methods
+- [x] Implement theme synthesis across teachers
+- [x] Create comprehensive AI service module
+- [x] Integrate crisis detection into chat
+- [x] Add reflection prompt and teacher selection endpoints
