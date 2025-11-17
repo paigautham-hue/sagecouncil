@@ -5,6 +5,8 @@ import { Link } from "wouter";
 import { Sparkles, Users, BookOpen, Compass, ArrowRight, Menu, X } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useEffect, useState } from "react";
+import { TemplePortal } from "@/components/TemplePortal";
+import { getSagePortrait } from "@/lib/sagePortraits";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export default function Home() {
@@ -112,8 +114,13 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section */}
+      {/* Hero Section with Temple Portal */}
       <section className="relative overflow-hidden py-20 md:py-32">
+        {/* Temple Portal Animation - Behind content */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-50">
+          <TemplePortal />
+        </div>
+        
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card">
@@ -233,10 +240,12 @@ export default function Home() {
             {teachers?.slice(0, 12).map((teacher) => (
               <Link key={teacher.id} href={`/sages/${teacher.teacherId}`}>
                 <div className="glass-card p-4 rounded-xl cursor-pointer group text-center">
-                  <div className="w-20 h-20 mx-auto mb-3 rounded-full bg-gradient-to-br from-primary/30 to-accent/30 flex items-center justify-center sage-avatar">
-                    <span className="text-2xl font-bold text-foreground">
-                      {teacher.fullName.charAt(0)}
-                    </span>
+                  <div className="w-20 h-20 mx-auto mb-3 rounded-full border-2 border-amber-500/50 shadow-lg shadow-amber-500/30 overflow-hidden bg-slate-900/50 sage-avatar">
+                    <img 
+                      src={getSagePortrait(teacher.fullName)} 
+                      alt={teacher.fullName}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <h4 className="font-semibold text-sm mb-1 line-clamp-2">{teacher.fullName}</h4>
                   <p className="text-xs text-muted-foreground line-clamp-1">

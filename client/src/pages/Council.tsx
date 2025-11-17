@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { getSagePortrait } from "@/lib/sagePortraits";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";

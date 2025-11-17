@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { trpc } from "@/lib/trpc";
 import { ArrowLeft, MessageCircle, BookOpen, Lightbulb, Quote } from "lucide-react";
+import { getSagePortrait } from "@/lib/sagePortraits";
 import { Streamdown } from "streamdown";
 
 export default function SageDetail() {
