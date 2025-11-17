@@ -709,3 +709,20 @@
 - [ ] Start and track life experiment (requires user credentials)
 
 **Note**: Authenticated testing requires real user login and should be completed by end user before public launch.
+
+
+## CONTENT EXPANSION & AUTOMATION (Nov 17, 2025)
+
+### Content Library Expansion
+- [x] Create 10 additional Council Debates on provocative topics (6 seeded successfully)
+- [x] Expand Deep Questions from 24 to 36+ questions (12 new questions added)
+- [x] Create 5 additional Micro-Retreats with diverse themes (all 5 seeded successfully)
+- [x] Ensure content quality and teacher voice authenticity
+
+### Automated Scheduling
+- [x] Implement cron job for weekly Council Debate rotation (Mondays at midnight UTC)
+- [x] Implement cron job for Sunday evening Shadow Mirror generation (Sundays at 8 PM UTC)
+- [x] Add logging and error handling for cron jobs
+- [x] Register cron jobs on server startup
+- [ ] Set up email notification system for Shadow Mirror summaries (requires email service integration)
+- [ ] Set up email notifications for new Council Debates (requires email service integration)
