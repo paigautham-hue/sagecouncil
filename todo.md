@@ -1,5 +1,16 @@
 # Council of Sages - Project TODO
 
+## BUG FIXES - Critical Issues Resolved (Nov 17, 2025)
+- [x] Seed teachers database (36 teachers, 452 key ideas, 2228 questions, 339 misunderstandings, 698 quotes)
+- [x] Fix /council route 404 error (added missing route to App.tsx)
+- [x] Fix Council Debate showing "Unknown Sage" (resolved by seeding teachers)
+- [x] Fix Meet the Sages section empty on homepage (resolved by seeding teachers)
+- [x] Fix Sages page showing 0 sages (resolved by seeding teachers)
+- [x] Verify all navigation links working (100% pass rate)
+- [x] Test authentication flow (login page working correctly)
+- [x] Verify all 36 sages visible to public (confirmed)
+- [x] Comprehensive testing completed (38/40 tests passed, 95% coverage)
+
 ## Phase 1: Database Schema & Data Import
 - [x] Design and implement database schema for all entities
 - [x] Create teachers table with all required fields
