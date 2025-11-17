@@ -2,13 +2,15 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
 import { Link } from "wouter";
-import { Sparkles, Users, BookOpen, Compass, ArrowRight } from "lucide-react";
+import { Sparkles, Users, BookOpen, Compass, ArrowRight, Menu, X } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useEffect, useState } from "react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export default function Home() {
   const { user, isAuthenticated } = useAuth();
   const [quote, setQuote] = useState<{ text: string; teacher: string } | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const { data: randomQuote } = trpc.quotes.getRandom.useQuery();
   const { data: teachers } = trpc.teachers.getAll.useQuery();
@@ -52,6 +54,45 @@ export default function Home() {
                 </Link>
               )}
             </div>
+
+            {/* Mobile Menu */}
+            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+              <SheetTrigger asChild className="md:hidden">
+                <Button variant="ghost" size="sm">
+                  <Menu className="w-5 h-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-64 cosmic-bg border-border/50">
+                <div className="flex flex-col gap-4 mt-8">
+                  <Link href="/council">
+                    <Button variant="ghost" className="w-full justify-start" onClick={() => setMobileMenuOpen(false)}>
+                      <Users className="w-4 h-4 mr-2" />
+                      Council
+                    </Button>
+                  </Link>
+                  <Link href="/sages">
+                    <Button variant="ghost" className="w-full justify-start" onClick={() => setMobileMenuOpen(false)}>
+                      <BookOpen className="w-4 h-4 mr-2" />
+                      Sages
+                    </Button>
+                  </Link>
+                  <Link href="/journeys">
+                    <Button variant="ghost" className="w-full justify-start" onClick={() => setMobileMenuOpen(false)}>
+                      <Compass className="w-4 h-4 mr-2" />
+                      Journeys
+                    </Button>
+                  </Link>
+                  {isAuthenticated && (
+                    <Link href="/my-path">
+                      <Button variant="ghost" className="w-full justify-start" onClick={() => setMobileMenuOpen(false)}>
+                        <Sparkles className="w-4 h-4 mr-2" />
+                        My Path
+                      </Button>
+                    </Link>
+                  )}
+                </div>
+              </SheetContent>
+            </Sheet>
 
             <div>
               {isAuthenticated ? (
