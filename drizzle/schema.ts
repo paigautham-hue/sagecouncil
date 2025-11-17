@@ -1,22 +1,21 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, boolean, json } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
- * Extend this file with additional tables as your product grows.
- * Columns use camelCase to match both database fields and generated types.
  */
 export const users = mysqlTable("users", {
-  /**
-   * Surrogate primary key. Auto-incremented numeric value managed by the database.
-   * Use this for relations between tables.
-   */
   id: int("id").autoincrement().primaryKey(),
-  /** Manus OAuth identifier (openId) returned from the OAuth callback. Unique per user. */
   openId: varchar("openId", { length: 64 }).notNull().unique(),
   name: text("name"),
   email: varchar("email", { length: 320 }),
   loginMethod: varchar("loginMethod", { length: 64 }),
   role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
+  
+  // User preferences
+  depthLevel: int("depthLevel").default(5), // 1-10 scale
+  tonePreference: varchar("tonePreference", { length: 32 }).default("balanced"), // gentle, balanced, direct
+  preferredTeachers: json("preferredTeachers").$type<string[]>(), // Array of teacher IDs
+  
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
@@ -25,4 +24,257 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
-// TODO: Add your tables here
+/**
+ * Teachers from the training dataset
+ */
+export const teachers = mysqlTable("teachers", {
+  id: int("id").autoincrement().primaryKey(),
+  teacherId: varchar("teacherId", { length: 128 }).notNull().unique(), // e.g., "adyashanti"
+  fullName: varchar("fullName", { length: 256 }).notNull(),
+  phase: int("phase").notNull(), // 1-6
+  alsoAppearsInPhases: json("alsoAppearsInPhases").$type<number[]>(),
+  traditionTags: json("traditionTags").$type<string[]>(),
+  era: varchar("era", { length: 128 }),
+  regions: json("regions").$type<string[]>(),
+  oneLineEssence: text("oneLineEssence"),
+  shortSummary: text("shortSummary"),
+  mediumSummary: text("mediumSummary"),
+  avatarUrl: varchar("avatarUrl", { length: 512 }), // URL to avatar image
+  isActive: boolean("isActive").default(true).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Teacher = typeof teachers.$inferSelect;
+export type InsertTeacher = typeof teachers.$inferInsert;
+
+/**
+ * Key ideas from teachers
+ */
+export const keyIdeas = mysqlTable("keyIdeas", {
+  id: int("id").autoincrement().primaryKey(),
+  teacherId: int("teacherId").notNull(),
+  ideaId: varchar("ideaId", { length: 128 }).notNull(),
+  name: varchar("name", { length: 512 }).notNull(),
+  clearExplanation: text("clearExplanation"),
+  whenItApplies: text("whenItApplies"),
+  lifeDomains: json("lifeDomains").$type<string[]>(),
+  commonMisuse: text("commonMisuse"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type KeyIdea = typeof keyIdeas.$inferSelect;
+export type InsertKeyIdea = typeof keyIdeas.$inferInsert;
+
+/**
+ * Practices from teachers
+ */
+export const practices = mysqlTable("practices", {
+  id: int("id").autoincrement().primaryKey(),
+  teacherId: int("teacherId").notNull(),
+  practiceId: varchar("practiceId", { length: 128 }).notNull(),
+  name: varchar("name", { length: 512 }).notNull(),
+  type: varchar("type", { length: 64 }), // meditation, reflection, etc.
+  stepByStep: text("stepByStep"),
+  intendedEffect: text("intendedEffect"),
+  cautions: text("cautions"),
+  durationMinutes: int("durationMinutes"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type Practice = typeof practices.$inferSelect;
+export type InsertPractice = typeof practices.$inferInsert;
+
+/**
+ * Themes index
+ */
+export const themes = mysqlTable("themes", {
+  id: int("id").autoincrement().primaryKey(),
+  themeId: varchar("themeId", { length: 128 }).notNull().unique(),
+  label: varchar("label", { length: 256 }).notNull(),
+  description: text("description"),
+  relatedTeachers: json("relatedTeachers").$type<string[]>(), // Array of teacher IDs
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type Theme = typeof themes.$inferSelect;
+export type InsertTheme = typeof themes.$inferInsert;
+
+/**
+ * Quotes and short teachings
+ */
+export const quotes = mysqlTable("quotes", {
+  id: int("id").autoincrement().primaryKey(),
+  teacherId: int("teacherId").notNull(),
+  text: text("text").notNull(),
+  isParaphrase: boolean("isParaphrase").default(false).notNull(),
+  sourceReference: text("sourceReference"),
+  themeTags: json("themeTags").$type<string[]>(),
+  isFeatured: boolean("isFeatured").default(false).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type Quote = typeof quotes.$inferSelect;
+export type InsertQuote = typeof quotes.$inferInsert;
+
+/**
+ * Guided journeys/programs
+ */
+export const journeys = mysqlTable("journeys", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 512 }).notNull(),
+  description: text("description"),
+  durationDays: int("durationDays").notNull(),
+  themeIds: json("themeIds").$type<string[]>(),
+  teacherIds: json("teacherIds").$type<string[]>(),
+  isActive: boolean("isActive").default(true).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Journey = typeof journeys.$inferSelect;
+export type InsertJourney = typeof journeys.$inferInsert;
+
+/**
+ * Individual days within a journey
+ */
+export const journeyDays = mysqlTable("journeyDays", {
+  id: int("id").autoincrement().primaryKey(),
+  journeyId: int("journeyId").notNull(),
+  dayNumber: int("dayNumber").notNull(),
+  quoteId: int("quoteId"),
+  content: text("content"), // Markdown content
+  practiceText: text("practiceText"),
+  reflectionPrompt: text("reflectionPrompt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type JourneyDay = typeof journeyDays.$inferSelect;
+export type InsertJourneyDay = typeof journeyDays.$inferInsert;
+
+/**
+ * User progress through journeys
+ */
+export const userJourneyProgress = mysqlTable("userJourneyProgress", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  journeyId: int("journeyId").notNull(),
+  currentDay: int("currentDay").default(1).notNull(),
+  completedDays: json("completedDays").$type<number[]>(),
+  lastCompletedAt: timestamp("lastCompletedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type UserJourneyProgress = typeof userJourneyProgress.$inferSelect;
+export type InsertUserJourneyProgress = typeof userJourneyProgress.$inferInsert;
+
+/**
+ * User journal entries
+ */
+export const journalEntries = mysqlTable("journalEntries", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  type: mysqlEnum("type", ["quote", "conversation", "reflection", "note"]).notNull(),
+  content: text("content").notNull(),
+  tags: json("tags").$type<string[]>(),
+  relatedTeacherIds: json("relatedTeacherIds").$type<number[]>(),
+  relatedThemeIds: json("relatedThemeIds").$type<string[]>(),
+  conversationId: int("conversationId"), // Link to conversation if applicable
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type JournalEntry = typeof journalEntries.$inferSelect;
+export type InsertJournalEntry = typeof journalEntries.$inferInsert;
+
+/**
+ * AI conversations
+ */
+export const conversations = mysqlTable("conversations", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  mode: mysqlEnum("mode", ["one_sage", "compare_two", "council"]).notNull(),
+  selectedTeachers: json("selectedTeachers").$type<number[]>(), // Teacher IDs
+  metadata: json("metadata").$type<Record<string, any>>(),
+  isFlagged: boolean("isFlagged").default(false).notNull(),
+  flagReason: text("flagReason"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Conversation = typeof conversations.$inferSelect;
+export type InsertConversation = typeof conversations.$inferInsert;
+
+/**
+ * Individual messages within conversations
+ */
+export const conversationMessages = mysqlTable("conversationMessages", {
+  id: int("id").autoincrement().primaryKey(),
+  conversationId: int("conversationId").notNull(),
+  role: mysqlEnum("role", ["user", "assistant", "system"]).notNull(),
+  content: text("content").notNull(),
+  teacherId: int("teacherId"), // Which teacher is speaking (for assistant messages)
+  metadata: json("metadata").$type<Record<string, any>>(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type ConversationMessage = typeof conversationMessages.$inferSelect;
+export type InsertConversationMessage = typeof conversationMessages.$inferInsert;
+
+/**
+ * Vector embeddings for RAG
+ */
+export const embeddings = mysqlTable("embeddings", {
+  id: int("id").autoincrement().primaryKey(),
+  sourceType: mysqlEnum("sourceType", ["teacher", "idea", "practice", "theme", "quote"]).notNull(),
+  sourceId: int("sourceId").notNull(), // ID of the source entity
+  teacherId: int("teacherId"), // For filtering by teacher
+  chunkText: text("chunkText").notNull(),
+  embedding: json("embedding").$type<number[]>().notNull(), // Vector embedding
+  metadata: json("metadata").$type<Record<string, any>>(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type Embedding = typeof embeddings.$inferSelect;
+export type InsertEmbedding = typeof embeddings.$inferInsert;
+
+/**
+ * Central questions from teachers
+ */
+export const centralQuestions = mysqlTable("centralQuestions", {
+  id: int("id").autoincrement().primaryKey(),
+  teacherId: int("teacherId").notNull(),
+  question: text("question").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type CentralQuestion = typeof centralQuestions.$inferSelect;
+export type InsertCentralQuestion = typeof centralQuestions.$inferInsert;
+
+/**
+ * Common misunderstandings
+ */
+export const misunderstandings = mysqlTable("misunderstandings", {
+  id: int("id").autoincrement().primaryKey(),
+  teacherId: int("teacherId").notNull(),
+  misunderstanding: text("misunderstanding").notNull(),
+  clarification: text("clarification"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type Misunderstanding = typeof misunderstandings.$inferSelect;
+export type InsertMisunderstanding = typeof misunderstandings.$inferInsert;
+
+/**
+ * Analytics tracking
+ */
+export const analytics = mysqlTable("analytics", {
+  id: int("id").autoincrement().primaryKey(),
+  eventType: varchar("eventType", { length: 128 }).notNull(), // page_view, chat_message, journey_start, etc.
+  userId: int("userId"),
+  metadata: json("metadata").$type<Record<string, any>>(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type Analytics = typeof analytics.$inferSelect;
+export type InsertAnalytics = typeof analytics.$inferInsert;

@@ -1,6 +1,11 @@
-import { eq } from "drizzle-orm";
+import { eq, desc, sql, and, inArray } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { 
+  InsertUser, users, teachers, themes, quotes, keyIdeas, practices,
+  centralQuestions, misunderstandings, journeys, journeyDays,
+  userJourneyProgress, journalEntries, conversations, conversationMessages,
+  embeddings, analytics
+} from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -89,4 +94,259 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+// Teachers
+export async function getAllTeachers() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(teachers).where(eq(teachers.isActive, true)).orderBy(teachers.fullName);
+}
+
+export async function getTeacherById(id: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.select().from(teachers).where(eq(teachers.id, id)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function getTeacherByTeacherId(teacherId: string) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.select().from(teachers).where(eq(teachers.teacherId, teacherId)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function getTeachersByPhase(phase: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(teachers)
+    .where(and(eq(teachers.phase, phase), eq(teachers.isActive, true)))
+    .orderBy(teachers.fullName);
+}
+
+// Key Ideas
+export async function getKeyIdeasByTeacher(teacherId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(keyIdeas).where(eq(keyIdeas.teacherId, teacherId));
+}
+
+// Practices
+export async function getPracticesByTeacher(teacherId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(practices).where(eq(practices.teacherId, teacherId));
+}
+
+// Central Questions
+export async function getCentralQuestionsByTeacher(teacherId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(centralQuestions).where(eq(centralQuestions.teacherId, teacherId));
+}
+
+// Misunderstandings
+export async function getMisunderstandingsByTeacher(teacherId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(misunderstandings).where(eq(misunderstandings.teacherId, teacherId));
+}
+
+// Themes
+export async function getAllThemes() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(themes).orderBy(themes.label);
+}
+
+export async function getThemeById(id: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.select().from(themes).where(eq(themes.id, id)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+// Quotes
+export async function getAllQuotes() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(quotes).orderBy(desc(quotes.createdAt));
+}
+
+export async function getQuotesByTeacher(teacherId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(quotes).where(eq(quotes.teacherId, teacherId));
+}
+
+export async function getFeaturedQuotes() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(quotes).where(eq(quotes.isFeatured, true));
+}
+
+export async function getRandomQuote() {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.select().from(quotes).orderBy(sql`RAND()`).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+// Journeys
+export async function getAllJourneys() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(journeys).where(eq(journeys.isActive, true));
+}
+
+export async function getJourneyById(id: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.select().from(journeys).where(eq(journeys.id, id)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function getJourneyDays(journeyId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(journeyDays)
+    .where(eq(journeyDays.journeyId, journeyId))
+    .orderBy(journeyDays.dayNumber);
+}
+
+// User Journey Progress
+export async function getUserJourneyProgress(userId: number, journeyId: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.select().from(userJourneyProgress)
+    .where(and(
+      eq(userJourneyProgress.userId, userId),
+      eq(userJourneyProgress.journeyId, journeyId)
+    ))
+    .limit(1);
+  
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function getAllUserJourneyProgress(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(userJourneyProgress)
+    .where(eq(userJourneyProgress.userId, userId));
+}
+
+// Journal Entries
+export async function getUserJournalEntries(userId: number, limit: number = 50) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(journalEntries)
+    .where(eq(journalEntries.userId, userId))
+    .orderBy(desc(journalEntries.createdAt))
+    .limit(limit);
+}
+
+export async function createJournalEntry(entry: typeof journalEntries.$inferInsert) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.insert(journalEntries).values(entry);
+  return result[0].insertId;
+}
+
+// Conversations
+export async function getUserConversations(userId: number, limit: number = 20) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(conversations)
+    .where(eq(conversations.userId, userId))
+    .orderBy(desc(conversations.createdAt))
+    .limit(limit);
+}
+
+export async function getConversationById(id: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.select().from(conversations).where(eq(conversations.id, id)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function getConversationMessages(conversationId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(conversationMessages)
+    .where(eq(conversationMessages.conversationId, conversationId))
+    .orderBy(conversationMessages.createdAt);
+}
+
+export async function createConversation(conversation: typeof conversations.$inferInsert) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.insert(conversations).values(conversation);
+  return Number(result[0].insertId);
+}
+
+export async function addConversationMessage(message: typeof conversationMessages.$inferInsert) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.insert(conversationMessages).values(message);
+  return Number(result[0].insertId);
+}
+
+// Analytics
+export async function trackAnalytics(eventType: string, userId: number | null, metadata: Record<string, any>) {
+  const db = await getDb();
+  if (!db) return;
+  
+  await db.insert(analytics).values({
+    eventType,
+    userId,
+    metadata
+  });
+}
+
+// Embeddings for RAG
+export async function searchEmbeddings(queryEmbedding: number[], limit: number = 10, teacherId?: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  // For now, return all embeddings (will implement vector similarity later)
+  let query = db.select().from(embeddings);
+  
+  if (teacherId) {
+    query = query.where(eq(embeddings.teacherId, teacherId)) as any;
+  }
+  
+  return await query.limit(limit);
+}
+
+export async function createEmbedding(embedding: typeof embeddings.$inferInsert) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.insert(embeddings).values(embedding);
+  return Number(result[0].insertId);
+}
