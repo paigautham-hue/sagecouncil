@@ -1,7 +1,9 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import MicroRetreats from "@/pages/MicroRetreats";
+import MicroRetreats from "./pages/MicroRetreats";
+import ParadoxPlayground from "./pages/ParadoxPlayground";
+import LifeExperiments from "./pages/LifeExperiments";
 import AdminAnalytics from "@/pages/AdminAnalytics";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -25,6 +27,8 @@ function Router() {
       <Route path={"/"} component={Home} />
       <Route path={"/council"} component={Council} />
       <Route path={"/micro-retreats"} component={MicroRetreats} />
+      <Route path={"/paradox-playground"} component={ParadoxPlayground} />
+      <Route path={"/life-experiments"} component={LifeExperiments} />
       <Route path={"/404"} component={NotFound} />
       <Route path="/faq" component={FAQ} />
       <Route path="/safety" component={Safety} />
