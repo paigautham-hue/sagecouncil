@@ -304,6 +304,25 @@ export type UserThemeStat = typeof userThemeStats.$inferSelect;
 export type InsertUserThemeStat = typeof userThemeStats.$inferInsert;
 
 /**
+ * Council Debates - Weekly provocative questions with multiple teacher perspectives
+ */
+export const councilDebates = mysqlTable("council_debates", {
+  id: int("id").autoincrement().primaryKey(),
+  questionText: text("questionText").notNull(),
+  themeId: varchar("themeId", { length: 128 }),
+  teacherIds: json("teacherIds").$type<number[]>().notNull(),
+  teacherResponses: json("teacherResponses").$type<Array<{ teacherId: number; response: string }>>().notNull(),
+  synthesis: text("synthesis"),
+  weekNumber: int("weekNumber").notNull(),
+  year: int("year").notNull(),
+  isActive: boolean("isActive").default(true).notNull(),
+  createdAt: timestamp("createdAt").notNull().defaultNow(),
+});
+
+export type CouncilDebate = typeof councilDebates.$inferSelect;
+export type InsertCouncilDebate = typeof councilDebates.$inferInsert;
+
+/**
  * Analytics tracking
  */
 export const analytics = mysqlTable("analytics", {

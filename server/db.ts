@@ -4,7 +4,7 @@ import {
   InsertUser, users, teachers, themes, quotes, keyIdeas, practices,
   centralQuestions, misunderstandings, journeys, journeyDays,
   userJourneyProgress, journalEntries, conversations, conversationMessages,
-  embeddings, analytics, deepQuestions, userThemeStats
+  embeddings, analytics, deepQuestions, userThemeStats, councilDebates
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -490,4 +490,52 @@ export async function getConstellationData(userId: number) {
     }),
     connections: [] // Will be computed on frontend based on shared themes
   };
+}
+
+// Council Debates
+export async function getWeeklyDebate() {
+  const db = await getDb();
+  if (!db) return null;
+  
+  // Get current week number and year
+  const now = new Date();
+  const startOfYear = new Date(now.getFullYear(), 0, 1);
+  const weekNumber = Math.ceil(((now.getTime() - startOfYear.getTime()) / 86400000 + startOfYear.getDay() + 1) / 7);
+  const year = now.getFullYear();
+  
+  // Try to get debate for current week
+  const result = await db.select().from(councilDebates)
+    .where(and(
+      eq(councilDebates.weekNumber, weekNumber),
+      eq(councilDebates.year, year),
+      eq(councilDebates.isActive, true)
+    ))
+    .limit(1);
+  
+  if (result.length > 0) return result[0];
+  
+  // Fallback to most recent debate
+  const fallback = await db.select().from(councilDebates)
+    .where(eq(councilDebates.isActive, true))
+    .orderBy(desc(councilDebates.createdAt))
+    .limit(1);
+  
+  return fallback.length > 0 ? fallback[0] : null;
+}
+
+export async function getAllDebates() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(councilDebates)
+    .where(eq(councilDebates.isActive, true))
+    .orderBy(desc(councilDebates.createdAt));
+}
+
+export async function createDebate(debate: typeof councilDebates.$inferInsert) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.insert(councilDebates).values(debate);
+  return Number(result[0].insertId);
 }

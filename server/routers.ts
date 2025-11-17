@@ -441,6 +441,64 @@ export const appRouter = router({
       }),
   }),
 
+  // Council Debates
+  debates: router({
+    getWeekly: publicProcedure.query(async () => {
+      return await db.getWeeklyDebate();
+    }),
+    
+    getAll: publicProcedure.query(async () => {
+      return await db.getAllDebates();
+    }),
+    
+    create: protectedProcedure
+      .input(z.object({
+        questionText: z.string(),
+        themeId: z.string().optional(),
+        teacherIds: z.array(z.number()).min(3).max(5),
+      }))
+      .mutation(async ({ input }) => {
+        // Get teacher details
+        const teacherDetails = await Promise.all(
+          input.teacherIds.map(async (id) => {
+            const teacher = await db.getTeacherById(id);
+            const keyIdeas = await db.getKeyIdeasByTeacher(id);
+            return {
+              id,
+              fullName: teacher?.fullName || 'Unknown',
+              tradition: teacher?.oneLineEssence || teacher?.mediumSummary || '',
+              keyIdeas: keyIdeas.map(k => k.name + ': ' + (k.clearExplanation || '')).join('; ')
+            };
+          })
+        );
+        
+        // Generate debate
+        const { teacherResponses, synthesis } = await aiService.generateCouncilDebate(
+          input.questionText,
+          input.teacherIds,
+          teacherDetails
+        );
+        
+        // Calculate week number
+        const now = new Date();
+        const startOfYear = new Date(now.getFullYear(), 0, 1);
+        const weekNumber = Math.ceil(((now.getTime() - startOfYear.getTime()) / 86400000 + startOfYear.getDay() + 1) / 7);
+        
+        // Save debate
+        const debateId = await db.createDebate({
+          questionText: input.questionText,
+          themeId: input.themeId,
+          teacherIds: input.teacherIds,
+          teacherResponses,
+          synthesis,
+          weekNumber,
+          year: now.getFullYear(),
+        });
+        
+        return { debateId, teacherResponses, synthesis };
+      }),
+  }),
+
   // Inner Constellation
   constellation: router({
     getData: protectedProcedure.query(async ({ ctx }) => {

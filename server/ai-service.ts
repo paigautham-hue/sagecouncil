@@ -434,3 +434,88 @@ Provide a Council response.`
   const content = response.choices[0].message.content;
   return typeof content === 'string' ? content : "Thank you for sharing your reflection. We hear the depth in your words and honor the honesty of your exploration.";
 }
+
+/**
+ * Generate Council Debate with multiple teacher perspectives
+ */
+export async function generateCouncilDebate(
+  question: string,
+  teacherIds: number[],
+  teacherDetails: Array<{ id: number; fullName: string; tradition: string; keyIdeas: string }>
+): Promise<{ teacherResponses: Array<{ teacherId: number; response: string }>; synthesis: string }> {
+  
+  const teacherResponses: Array<{ teacherId: number; response: string }> = [];
+  
+  // Generate individual responses from each teacher
+  for (const teacher of teacherDetails) {
+    const response = await invokeLLM({
+      messages: [
+        {
+          role: "system",
+          content: `You are ${teacher.fullName}, a spiritual teacher from the ${teacher.tradition} tradition. You are participating in a Council debate on a provocative question.
+
+Your key teachings: ${teacher.keyIdeas}
+
+Respond to the question in your authentic voice:
+- Stay true to your tradition and perspective
+- Be direct and unafraid of controversy
+- Challenge assumptions where appropriate
+- Keep response to 100-150 words
+- Write in first person as ${teacher.fullName}
+
+This is a DEBATE - you may disagree with other perspectives. Be bold.`
+        },
+        {
+          role: "user",
+          content: `Question for debate: "${question}"
+
+Provide your perspective as ${teacher.fullName}.`
+        }
+      ]
+    });
+
+    const content = response.choices[0].message.content;
+    teacherResponses.push({
+      teacherId: teacher.id,
+      response: typeof content === 'string' ? content : `As ${teacher.fullName}, I invite you to sit with this question and discover your own truth.`
+    });
+  }
+
+  // Generate synthesis
+  const responsesText = teacherResponses
+    .map((r, idx) => `**${teacherDetails[idx].fullName}:**\n${r.response}`)
+    .join('\n\n');
+
+  const synthesisResponse = await invokeLLM({
+    messages: [
+      {
+        role: "system",
+        content: `You are synthesizing a Council debate between spiritual teachers. Your task is to:
+
+- Highlight the key points of agreement and disagreement
+- Identify the deeper question beneath the surface question
+- Show how different perspectives illuminate different facets of truth
+- Offer a meta-perspective that honors all views without flattening them
+- End with an invitation for the reader to sit with the tension
+
+Keep synthesis to 150-200 words. Be poetic but precise.`
+      },
+      {
+        role: "user",
+        content: `Question: "${question}"
+
+Teacher responses:
+${responsesText}
+
+Provide a synthesis of this debate.`
+      }
+    ]
+  });
+
+  const synthesisContent = synthesisResponse.choices[0].message.content;
+  const synthesis = typeof synthesisContent === 'string' 
+    ? synthesisContent 
+    : "These perspectives invite us to hold multiple truths simultaneously, recognizing that wisdom often lives in the creative tension between opposing views.";
+
+  return { teacherResponses, synthesis };
+}

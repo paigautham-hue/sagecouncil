@@ -538,15 +538,16 @@
 - [ ] Add quick actions on theme nodes (view journal entries, start journey) - deferred
 
 ### Feature Sprint 3: Council Debates
-- [ ] Create council_debates table in database
-- [ ] Build admin interface to create/edit debates
-- [ ] Add teacher selection and theme tagging for debates
-- [ ] Implement AI generation for individual teacher responses
-- [ ] Implement AI synthesis of debate
-- [ ] Create backend API endpoint to fetch featured weekly debate
-- [ ] Create backend API endpoint for debate archive
-- [ ] Build frontend UI for debate display on Home page
-- [ ] Create dedicated debate archive page
+- [x] Create council_debates table in database
+- [x] Implement AI generation for individual teacher responses (generateCouncilDebate)
+- [x] Implement AI synthesis of debate with meta-perspective
+- [x] Create backend API endpoints (getWeekly, getAll, create)
+- [x] Build frontend CouncilDebate component with teacher responses
+- [x] Add animated teacher response cards with color coding
+- [x] Display synthesis with expandable section
+- [x] Integrate into Home page
+- [x] Seed sample debate on suffering and spiritual growth
+- [ ] Build admin interface to create/edit debates (deferred)
 
 ### Feature Sprint 4: 15-Min Micro-Retreats
 - [ ] Create micro_retreats table

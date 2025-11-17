@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { TemplePortal } from "@/components/TemplePortal";
 import { TodaysDeepDrop } from "@/components/TodaysDeepDrop";
 import { DeepQuestionOfTheDay } from "@/components/DeepQuestionOfTheDay";
+import { CouncilDebate } from "@/components/CouncilDebate";
 import { ThemeCards } from "@/components/ThemeCards";
 import { getSagePortrait } from "@/lib/sagePortraits";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -179,6 +180,11 @@ export default function Home() {
       {/* Deep Question of the Day */}
       <section className="container py-16">
         <DeepQuestionOfTheDay />
+      </section>
+
+      {/* Council Debate */}
+      <section className="container py-16">
+        <CouncilDebate />
       </section>
 
       {/* Pick Your Focus Today */}
