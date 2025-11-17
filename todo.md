@@ -726,3 +726,30 @@
 - [x] Register cron jobs on server startup
 - [ ] Set up email notification system for Shadow Mirror summaries (requires email service integration)
 - [ ] Set up email notifications for new Council Debates (requires email service integration)
+
+
+## ADMIN DASHBOARD & USER ONBOARDING (Nov 17, 2025)
+
+### Admin Dashboard
+- [x] Create admin-only dashboard page (/admin)
+- [x] Add role-based access control (admin only with redirect)
+- [x] Add content statistics and analytics (overview tab)
+- [x] Create tabbed interface for all content types
+- [x] Add route to App.tsx
+- [ ] Build Council Debates management interface (CRUD) - placeholder created
+- [ ] Build Deep Questions management interface (CRUD) - placeholder created
+- [ ] Build Micro-Retreats management interface (CRUD) - placeholder created
+- [ ] Build Paradoxes management interface (CRUD) - placeholder created
+- [ ] Build Life Experiments management interface (CRUD) - placeholder created
+
+### User Onboarding Flow
+- [x] Install react-joyride for guided tours
+- [x] Create OnboardingContext for tracking user progress
+- [x] Create welcome modal for new users with feature overview
+- [x] Add OnboardingProvider to app root
+- [x] Integrate WelcomeModal into App.tsx
+- [x] Add onboarding progress tracking (localStorage)
+- [ ] Implement guided tour for Deep Questions (deferred)
+- [ ] Implement guided tour for Council Debates (deferred)
+- [ ] Implement guided tour for Micro-Retreats (deferred)
+- [ ] Test onboarding flow end-to-end
