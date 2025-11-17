@@ -175,12 +175,18 @@ export type InsertUserJourneyProgress = typeof userJourneyProgress.$inferInsert;
 export const journalEntries = mysqlTable("journalEntries", {
   id: int("id").autoincrement().primaryKey(),
   userId: int("userId").notNull(),
-  type: mysqlEnum("type", ["quote", "conversation", "reflection", "note"]).notNull(),
+  type: mysqlEnum("type", ["quote", "conversation", "reflection", "note", "deep_question", "micro_retreat", "life_experiment"]).notNull(),
   content: text("content").notNull(),
   tags: json("tags").$type<string[]>(),
   relatedTeacherIds: json("relatedTeacherIds").$type<number[]>(),
   relatedThemeIds: json("relatedThemeIds").$type<string[]>(),
   conversationId: int("conversationId"), // Link to conversation if applicable
+  
+  // Deep Question Ladder fields
+  deepQuestionId: int("deepQuestionId"),
+  userAnswerText: text("userAnswerText"),
+  councilResponseText: text("councilResponseText"),
+  
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
@@ -264,6 +270,23 @@ export const misunderstandings = mysqlTable("misunderstandings", {
 
 export type Misunderstanding = typeof misunderstandings.$inferSelect;
 export type InsertMisunderstanding = typeof misunderstandings.$inferInsert;
+
+/**
+ * Deep questions for the Deep Question Ladder feature
+ */
+export const deepQuestions = mysqlTable("deepQuestions", {
+  id: int("id").autoincrement().primaryKey(),
+  questionText: text("questionText").notNull(),
+  themeId: varchar("themeId", { length: 128 }), // Optional theme association
+  difficulty: int("difficulty").notNull(), // 1-10 scale
+  teacherIds: json("teacherIds").$type<number[]>(), // Teachers who address this question
+  tags: json("tags").$type<string[]>(),
+  isActive: boolean("isActive").default(true).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type DeepQuestion = typeof deepQuestions.$inferSelect;
+export type InsertDeepQuestion = typeof deepQuestions.$inferInsert;
 
 /**
  * Analytics tracking

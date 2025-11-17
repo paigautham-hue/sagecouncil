@@ -383,3 +383,54 @@ Provide commentary.`
   const content = response.choices[0].message.content;
   return typeof content === 'string' ? content : "This teaching invites us to look deeper at our assumptions and find wisdom in the present moment.";
 }
+
+/**
+ * Generate Council response to a deep question answer
+ */
+export async function generateDeepQuestionResponse(
+  question: string,
+  userAnswer: string,
+  themeId: string | null,
+  teacherIds: number[] | null
+): Promise<string> {
+  
+  // Get relevant context from RAG
+  const relevantContext = await semanticSearch(question + " " + userAnswer, 8);
+  
+  // Build context string
+  const contextStr = relevantContext
+    .map((item: any) => `[${item.sourceType}] ${item.chunkText}`)
+    .join('\n\n');
+  
+  const response = await invokeLLM({
+    messages: [
+      {
+        role: "system",
+        content: `You are the Council of Sages, a collective of spiritual teachers responding to a user's answer to a deep question. Your response should:
+
+- Acknowledge the depth and honesty in their answer
+- Reflect back what you hear in their words (mirror their experience)
+- Offer 2-3 insights from the wisdom tradition that relate to their answer
+- Be gentle, non-judgmental, and contemplative
+- Use "we notice" or "we sense" language (speaking as a council)
+- End with a gentle invitation to continue exploring
+
+Keep response to 150-200 words. Be warm and wise, not clinical or diagnostic.
+
+Relevant wisdom context:
+${contextStr}`
+      },
+      {
+        role: "user",
+        content: `Question: "${question}"
+
+User's answer: "${userAnswer}"
+
+Provide a Council response.`
+      }
+    ]
+  });
+
+  const content = response.choices[0].message.content;
+  return typeof content === 'string' ? content : "Thank you for sharing your reflection. We hear the depth in your words and honor the honesty of your exploration.";
+}

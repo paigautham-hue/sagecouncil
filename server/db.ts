@@ -4,7 +4,7 @@ import {
   InsertUser, users, teachers, themes, quotes, keyIdeas, practices,
   centralQuestions, misunderstandings, journeys, journeyDays,
   userJourneyProgress, journalEntries, conversations, conversationMessages,
-  embeddings, analytics
+  embeddings, analytics, deepQuestions
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -348,5 +348,53 @@ export async function createEmbedding(embedding: typeof embeddings.$inferInsert)
   if (!db) return null;
   
   const result = await db.insert(embeddings).values(embedding);
+  return Number(result[0].insertId);
+}
+
+// Deep Questions
+export async function getAllDeepQuestions() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(deepQuestions)
+    .where(eq(deepQuestions.isActive, true))
+    .orderBy(desc(deepQuestions.createdAt));
+}
+
+export async function getDeepQuestionById(id: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.select().from(deepQuestions)
+    .where(eq(deepQuestions.id, id))
+    .limit(1);
+  
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function getDailyDeepQuestion() {
+  const db = await getDb();
+  if (!db) return null;
+  
+  // Get today's date as a seed for consistent daily selection
+  const today = new Date();
+  const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / 86400000);
+  
+  // Get all active questions
+  const questions = await db.select().from(deepQuestions)
+    .where(eq(deepQuestions.isActive, true));
+  
+  if (questions.length === 0) return null;
+  
+  // Select question based on day of year (consistent for the day)
+  const index = dayOfYear % questions.length;
+  return questions[index];
+}
+
+export async function createDeepQuestion(question: typeof deepQuestions.$inferInsert) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.insert(deepQuestions).values(question);
   return Number(result[0].insertId);
 }

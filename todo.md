@@ -401,3 +401,230 @@
 - [x] Write reflection prompts for purpose journey
 - [x] Seed "Finding Purpose" journey to database (Journey ID: 4)
 - [x] All 3 journeys successfully seeded and available
+
+
+## NEW FEATURES UPDATE - 8 Advanced Features
+
+### Feature Sprint 1: Deep Question Ladder
+- [ ] Extend database schema with deep_questions table
+- [ ] Extend journal_entries table to store deep_question_id, user_answer_text, council_response_text
+- [ ] Create backend API endpoint to fetch daily question
+- [ ] Create backend API endpoint to submit answer and generate Council reflection
+- [ ] Build frontend UI component on Home page for question display
+- [ ] Implement level selection (Safe/Real/Raw) UI
+- [ ] Show user answer and Council response in UI
+- [ ] Add admin section to create/manage deep_questions
+- [ ] Test Deep Question Ladder end-to-end
+
+### Feature Sprint 2: Living Inner Constellation
+- [ ] Create user_theme_stats table or compute stats on demand
+- [ ] Implement backend logic to aggregate user interaction statistics
+- [ ] Build API endpoint to fetch user interaction data
+- [ ] Install graph visualization library (D3.js or React equivalent)
+- [ ] Build Inner Constellation view in My Path section
+- [ ] Create interactive node graph showing themes and teachers
+- [ ] Add hover tooltips showing engagement summaries
+- [ ] Add click actions for theme nodes (view journal, start journey)
+- [ ] Test Inner Constellation visualization
+
+### Feature Sprint 3: Council Debates
+- [ ] Add council_debates table to database schema
+- [ ] Create admin interface to create/edit debates
+- [ ] Implement AI content generation for debate responses
+- [ ] Build backend API to fetch featured weekly debate
+- [ ] Build backend API to fetch debate archive
+- [ ] Create UI to display debate on Home page
+- [ ] Build dedicated debate archive section
+- [ ] Test Council Debates feature
+
+### Feature Sprint 4: 15-Min Micro-Retreats
+- [ ] Add micro_retreats table to database
+- [ ] Add user_micro_retreat_sessions table
+- [ ] Create Micro-Retreat Builder in admin console
+- [ ] Build backend API to serve retreat steps
+- [ ] Build backend API to handle final submission and AI reflection
+- [ ] Create multi-step UI for micro-retreats with timers
+- [ ] Add input fields for each step
+- [ ] Place micro-retreats under Journeys section in new tab
+- [ ] Test Micro-Retreats flow
+
+### Feature Sprint 5: Shadow Mirror
+- [ ] Add shadow_mirror_summaries table to database
+- [ ] Create backend service to aggregate user content (7 days)
+- [ ] Implement AI summary generation with pattern identification
+- [ ] Create scheduled job or on-demand service for weekly summaries
+- [ ] Build Shadow Mirror tab in My Path section
+- [ ] Display weekly summaries with gentle, tentative language
+- [ ] Test Shadow Mirror safety and language
+
+### Feature Sprint 6: Story Alchemy
+- [ ] Add stories table to database
+- [ ] Add "Turn into a story" button to journal entries
+- [ ] Create modal/form for teacher lens selection
+- [ ] Build backend API to generate story from journal entry
+- [ ] Implement AI story generation with teacher's style
+- [ ] Add option to make stories public/private
+- [ ] Build admin moderation queue for public stories
+- [ ] Test Story Alchemy feature
+
+### Feature Sprint 7: Paradox Playground
+- [ ] Add paradoxes table to database
+- [ ] Add user_paradox_choices table
+- [ ] Create Paradox Builder in admin console
+- [ ] Implement AI content generation for paradox explanations
+- [ ] Build backend API to fetch paradoxes
+- [ ] Build backend API to record user choices
+- [ ] Create Paradox Playground UI with card grid
+- [ ] Build detailed view for each paradox
+- [ ] Test Paradox Playground feature
+
+### Feature Sprint 8: Life Experiments
+- [ ] Add life_experiments table to database
+- [ ] Add user_life_experiments table
+- [ ] Create Experiment Builder in admin console
+- [ ] Build backend logic to start experiments
+- [ ] Implement follow-up prompt scheduling
+- [ ] Build backend to handle user reflections and AI responses
+- [ ] Create UI for browsing experiments
+- [ ] Create UI for starting and completing experiments
+- [ ] Integrate into My Path or Journeys section
+- [ ] Test Life Experiments feature
+
+### Final Integration & UI/UX Refinement
+- [ ] Update main navigation (top nav for desktop, bottom nav for mobile)
+- [ ] Update Home page with Deep Question, Council Debate, Micro-Retreats entry points
+- [ ] Organize My Path with tabs: Dashboard, Inner Constellation, Journal, Shadow Mirror, Life Experiments, Stories
+- [ ] Restructure Journeys page with tabs: Journeys, Micro-Retreats
+- [ ] Create Paradox Playground as new top-level page or under Journeys
+- [ ] Perform full visual and interactive review for cohesion
+- [ ] Ensure all features follow cosmic theme and design language
+
+### Testing & QA
+- [ ] Test Deep Question Ladder saves to journal correctly
+- [ ] Test Inner Constellation stats accuracy
+- [ ] Test Council Debates rendering and caching
+- [ ] Test Micro-Retreat mid-flow exit handling
+- [ ] Test Shadow Mirror language is tentative and non-diagnostic
+- [ ] Test Story Alchemy removes personally identifying information
+- [ ] Test Paradox choices storage
+- [ ] Test Life Experiments follow-up timing
+- [ ] Test AI safety responses for self-harm mentions
+- [ ] Test performance of Inner Constellation with extensive data
+- [ ] Test Shadow Mirror generation performance
+- [ ] Verify responsive design on mobile for all new features
+- [ ] Update README.md with new features documentation
+
+
+## NEW FEATURE UPDATE - 8 Advanced Features
+
+### Feature Sprint 1: Deep Question Ladder (DQ-L)
+- [x] Extend database schema with deepQuestions table
+- [x] Update journalEntries table to support deep_question type
+- [x] Create backend API endpoints for fetching daily question
+- [x] Create backend API endpoint for submitting user answer and generating Council response
+- [x] Build frontend UI component on Home page for question display
+- [x] Add level selection (Safe, Real, Raw) functionality
+- [x] Display user answer and Council response
+- [x] Seed 24 deep questions across all themes
+- [ ] Add admin section for creating/managing deep questions (deferred)
+
+### Feature Sprint 2: Living Inner Constellation
+- [ ] Create user_theme_stats table or implement on-demand computation
+- [ ] Build backend API to aggregate user interaction statistics
+- [ ] Install and configure graph visualization library (D3.js or React equivalent)
+- [ ] Build Inner Constellation view in My Path section
+- [ ] Create interactive node graph with hover tooltips
+- [ ] Add quick actions on theme nodes (view journal entries, start journey)
+
+### Feature Sprint 3: Council Debates
+- [ ] Create council_debates table in database
+- [ ] Build admin interface to create/edit debates
+- [ ] Add teacher selection and theme tagging for debates
+- [ ] Implement AI generation for individual teacher responses
+- [ ] Implement AI synthesis of debate
+- [ ] Create backend API endpoint to fetch featured weekly debate
+- [ ] Create backend API endpoint for debate archive
+- [ ] Build frontend UI for debate display on Home page
+- [ ] Create dedicated debate archive page
+
+### Feature Sprint 4: 15-Min Micro-Retreats
+- [ ] Create micro_retreats table
+- [ ] Create user_micro_retreat_sessions table
+- [ ] Build admin Micro-Retreat Builder interface
+- [ ] Create backend API to serve retreat steps
+- [ ] Implement backend logic for final AI Council reflection
+- [ ] Build multi-step frontend UI with timers
+- [ ] Add reflection input fields for each step
+- [ ] Save completed retreat to journal_entries
+- [ ] Add Micro-Retreats tab under Journeys section
+
+### Feature Sprint 5: Shadow Mirror
+- [ ] Create shadow_mirror_summaries table
+- [ ] Build backend service to aggregate user content from last 7 days
+- [ ] Implement AI summary generation with pattern identification
+- [ ] Add safety checks for tentative language
+- [ ] Create scheduled job or on-demand trigger for weekly summaries
+- [ ] Build Shadow Mirror tab in My Path section
+- [ ] Display weekly summaries with dominant themes
+- [ ] Show reflection prompts and suggestions
+
+### Feature Sprint 6: Story Alchemy
+- [ ] Create stories table
+- [ ] Add "Turn into a story" button to journal entries
+- [ ] Build modal/form for teacher lens selection
+- [ ] Create backend API endpoint for story generation
+- [ ] Implement AI story generation (400-600 words, third-person)
+- [ ] Add anonymization logic to remove identifying information
+- [ ] Add public/private toggle for stories
+- [ ] Build admin moderation queue for public stories
+
+### Feature Sprint 7: Paradox Playground
+- [ ] Create paradoxes table
+- [ ] Create user_paradox_choices table
+- [ ] Build admin Paradox Builder interface
+- [ ] Add teacher assignment to each side of paradox
+- [ ] Implement AI generation for side explanations
+- [ ] Implement AI meta-synthesis
+- [ ] Create backend API endpoints for paradoxes
+- [ ] Record user choices in database
+- [ ] Build Paradox Playground UI with card grid
+- [ ] Create detailed view for each paradox
+
+### Feature Sprint 8: Life Experiments
+- [ ] Create life_experiments table
+- [ ] Create user_life_experiments table
+- [ ] Build admin Experiment Builder interface
+- [ ] Create backend logic to start experiment
+- [ ] Implement follow-up prompt scheduling
+- [ ] Build backend handler for user reflection submission
+- [ ] Implement AI Council response to user report
+- [ ] Save experiment loop to journal_entries
+- [ ] Build frontend UI for browsing experiments
+- [ ] Add UI for starting and completing experiments
+
+### Integration & UX Refinement
+- [ ] Update Home page with Deep Question of the Day
+- [ ] Add This Week's Council Debate to Home page
+- [ ] Add Micro-Retreat teaser to Home page
+- [ ] Reorganize My Path with new tabs: Inner Constellation, Shadow Mirror, Life Experiments, Stories
+- [ ] Restructure Journeys page with two tabs: Journeys and Micro-Retreats
+- [ ] Create Paradox Playground page/section
+- [ ] Update navigation components (desktop and mobile)
+- [ ] Ensure all features follow cosmic dark theme
+- [ ] Test visual consistency across all new features
+
+### Testing & Safety
+- [ ] Test Deep Question Ladder saves to journal correctly
+- [ ] Verify Inner Constellation stats accuracy
+- [ ] Test Council Debates rendering and caching
+- [ ] Test Micro-Retreat mid-flow exit handling
+- [ ] Verify Shadow Mirror uses tentative language
+- [ ] Test Story Alchemy anonymization
+- [ ] Verify Paradox choices storage
+- [ ] Test Life Experiments follow-up timing
+- [ ] Test AI responses to crisis content
+- [ ] Verify non-clinical language across all AI features
+- [ ] Performance test Inner Constellation with extensive data
+- [ ] Performance test Shadow Mirror generation
+- [ ] End-to-end testing of all 8 features
+- [ ] Mobile responsiveness testing

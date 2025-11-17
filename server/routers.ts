@@ -379,6 +379,68 @@ export const appRouter = router({
       }),
   }),
 
+  // Deep Questions (Deep Question Ladder feature)
+  deepQuestions: router({
+    getDailyQuestion: publicProcedure.query(async () => {
+      return await db.getDailyDeepQuestion();
+    }),
+    
+    submitAnswer: protectedProcedure
+      .input(z.object({
+        questionId: z.number(),
+        depthLevel: z.number().min(1).max(3),
+        userAnswer: z.string(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        // Get the question details
+        const question = await db.getDeepQuestionById(input.questionId);
+        if (!question) {
+          throw new Error('Question not found');
+        }
+        
+        // Generate Council response using AI
+        const councilResponse = await aiService.generateDeepQuestionResponse(
+          question.questionText,
+          input.userAnswer,
+          question.themeId,
+          question.teacherIds
+        );
+        
+        // Save to journal
+        const journalEntryId = await db.createJournalEntry({
+          userId: ctx.user.id,
+          type: 'deep_question',
+          content: input.userAnswer,
+          deepQuestionId: input.questionId,
+          userAnswerText: input.userAnswer,
+          councilResponseText: councilResponse,
+          relatedThemeIds: question.themeId ? [question.themeId] : [],
+          tags: [`depth-level-${input.depthLevel}`],
+        });
+        
+        return {
+          journalEntryId,
+          councilResponse,
+        };
+      }),
+    
+    getAll: publicProcedure.query(async () => {
+      return await db.getAllDeepQuestions();
+    }),
+    
+    create: protectedProcedure
+      .input(z.object({
+        questionText: z.string(),
+        themeId: z.string().optional(),
+        difficulty: z.number().min(1).max(10),
+        teacherIds: z.array(z.number()).optional(),
+        tags: z.array(z.string()).optional(),
+      }))
+      .mutation(async ({ input }) => {
+        return await db.createDeepQuestion(input);
+      }),
+  }),
+
   // Analytics
   analytics: router({
     track: publicProcedure

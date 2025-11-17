@@ -7,6 +7,7 @@ import { trpc } from "@/lib/trpc";
 import { useEffect, useState } from "react";
 import { TemplePortal } from "@/components/TemplePortal";
 import { TodaysDeepDrop } from "@/components/TodaysDeepDrop";
+import { DeepQuestionOfTheDay } from "@/components/DeepQuestionOfTheDay";
 import { ThemeCards } from "@/components/ThemeCards";
 import { getSagePortrait } from "@/lib/sagePortraits";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -173,6 +174,11 @@ export default function Home() {
       {/* Today's Deep Drop */}
       <section className="container py-16">
         <TodaysDeepDrop />
+      </section>
+
+      {/* Deep Question of the Day */}
+      <section className="container py-16">
+        <DeepQuestionOfTheDay />
       </section>
 
       {/* Pick Your Focus Today */}
