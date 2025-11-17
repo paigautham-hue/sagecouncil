@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, boolean, json } from "drizzle-orm/mysql-core";
+import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, boolean, json, date } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -350,6 +350,24 @@ export const userMicroRetreatSessions = mysqlTable("user_micro_retreat_sessions"
 
 export type UserMicroRetreatSession = typeof userMicroRetreatSessions.$inferSelect;
 export type InsertUserMicroRetreatSession = typeof userMicroRetreatSessions.$inferInsert;
+
+/**
+ * Shadow Mirror - Weekly pattern summaries
+ */
+export const shadowMirrorSummaries = mysqlTable("shadow_mirror_summaries", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  weekStartDate: date("weekStartDate").notNull(),
+  weekEndDate: date("weekEndDate").notNull(),
+  dominantThemes: json("dominantThemes").$type<string[]>(),
+  patternAnalysis: text("patternAnalysis").notNull(),
+  blindSpots: text("blindSpots"),
+  growthOpportunities: text("growthOpportunities"),
+  createdAt: timestamp("createdAt").notNull().defaultNow(),
+});
+
+export type ShadowMirrorSummary = typeof shadowMirrorSummaries.$inferSelect;
+export type InsertShadowMirrorSummary = typeof shadowMirrorSummaries.$inferInsert;
 
 /**
  * Analytics tracking

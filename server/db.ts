@@ -5,7 +5,7 @@ import {
   centralQuestions, misunderstandings, journeys, journeyDays,
   userJourneyProgress, journalEntries, conversations, conversationMessages,
   embeddings, analytics, deepQuestions, userThemeStats, councilDebates,
-  microRetreats, userMicroRetreatSessions
+  microRetreats, userMicroRetreatSessions, shadowMirrorSummaries
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -585,4 +585,66 @@ export async function getUserRetreatSessions(userId: number) {
   return await db.select().from(userMicroRetreatSessions)
     .where(eq(userMicroRetreatSessions.userId, userId))
     .orderBy(desc(userMicroRetreatSessions.completedAt));
+}
+
+// Shadow Mirror
+export async function getUserShadowMirrorSummaries(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(shadowMirrorSummaries)
+    .where(eq(shadowMirrorSummaries.userId, userId))
+    .orderBy(desc(shadowMirrorSummaries.weekStartDate));
+}
+
+export async function getLatestShadowMirrorSummary(userId: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.select().from(shadowMirrorSummaries)
+    .where(eq(shadowMirrorSummaries.userId, userId))
+    .orderBy(desc(shadowMirrorSummaries.weekStartDate))
+    .limit(1);
+  
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function createShadowMirrorSummary(summary: typeof shadowMirrorSummaries.$inferInsert) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.insert(shadowMirrorSummaries).values(summary);
+  return Number(result[0].insertId);
+}
+
+export async function getUserContentForWeek(userId: number, weekStartDate: Date, weekEndDate: Date) {
+  const db = await getDb();
+  if (!db) return { journalEntries: [], conversationMessages: [] };
+  
+  // Get journal entries from the week
+  const entries = await db.select().from(journalEntries)
+    .where(and(
+      eq(journalEntries.userId, userId),
+      sql`${journalEntries.createdAt} >= ${weekStartDate}`,
+      sql`${journalEntries.createdAt} <= ${weekEndDate}`
+    ))
+    .orderBy(journalEntries.createdAt);
+  
+  // Get conversation messages from the week
+  const messages = await db.select({
+    id: conversationMessages.id,
+    role: conversationMessages.role,
+    content: conversationMessages.content,
+    createdAt: conversationMessages.createdAt,
+  })
+    .from(conversationMessages)
+    .innerJoin(conversations, eq(conversationMessages.conversationId, conversations.id))
+    .where(and(
+      eq(conversations.userId, userId),
+      sql`${conversationMessages.createdAt} >= ${weekStartDate}`,
+      sql`${conversationMessages.createdAt} <= ${weekEndDate}`
+    ))
+    .orderBy(conversationMessages.createdAt);
+  
+  return { journalEntries: entries, conversationMessages: messages };
 }

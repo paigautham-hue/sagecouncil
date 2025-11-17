@@ -563,14 +563,16 @@
 - [ ] Build admin Micro-Retreat Builder interface (deferred)
 
 ### Feature Sprint 5: Shadow Mirror
-- [ ] Create shadow_mirror_summaries table
-- [ ] Build backend service to aggregate user content from last 7 days
-- [ ] Implement AI summary generation with pattern identification
-- [ ] Add safety checks for tentative language
-- [ ] Create scheduled job or on-demand trigger for weekly summaries
-- [ ] Build Shadow Mirror tab in My Path section
-- [ ] Display weekly summaries with dominant themes
-- [ ] Show reflection prompts and suggestions
+- [x] Create shadow_mirror_summaries table with JSON themes
+- [x] Build backend service to aggregate user content from last 7 days (getUserContentForWeek)
+- [x] Implement AI summary generation with pattern identification (generateShadowMirrorSummary)
+- [x] Add tentative language in AI prompts ("it seems," "perhaps," "you might be")
+- [x] Create on-demand trigger for weekly summaries (generateWeeklySummary mutation)
+- [x] Build Shadow Mirror component with expandable summaries
+- [x] Add Shadow Mirror tab in My Path section
+- [x] Display weekly summaries with dominant themes as tags
+- [x] Add expandable sections for pattern analysis, blind spots, growth opportunities
+- [ ] Create scheduled job for automatic weekly generation (deferred)
 
 ### Feature Sprint 6: Story Alchemy
 - [ ] Create stories table

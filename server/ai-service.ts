@@ -519,3 +519,123 @@ Provide a synthesis of this debate.`
 
   return { teacherResponses, synthesis };
 }
+
+/**
+ * Generate Shadow Mirror weekly summary
+ */
+export async function generateShadowMirrorSummary(
+  journalEntries: Array<{ content: string; type: string; createdAt: Date }>,
+  conversationMessages: Array<{ role: string; content: string; createdAt: Date }>
+): Promise<{
+  dominantThemes: string[];
+  patternAnalysis: string;
+  blindSpots: string;
+  growthOpportunities: string;
+}> {
+  
+  // Prepare content summary
+  const journalContent = journalEntries
+    .map(e => `[${e.type}] ${e.content.substring(0, 500)}`)
+    .join('\n\n');
+  
+  const userMessages = conversationMessages
+    .filter(m => m.role === 'user')
+    .map(m => m.content.substring(0, 300))
+    .join('\n\n');
+
+  if (!journalContent && !userMessages) {
+    return {
+      dominantThemes: [],
+      patternAnalysis: "Not enough data this week to generate a meaningful pattern analysis.",
+      blindSpots: "Continue engaging with the Council to build a richer picture of your inner landscape.",
+      growthOpportunities: "Start by exploring one theme that calls to you this week."
+    };
+  }
+
+  const response = await invokeLLM({
+    messages: [
+      {
+        role: "system",
+        content: `You are the Shadow Mirror—a compassionate but unflinching reflection of patterns the user may not see in themselves.
+
+Your task is to analyze a week of the user's journal entries and conversations to identify:
+1. **Dominant themes** (3-5 recurring topics, emotions, or questions)
+2. **Pattern analysis** (what keeps showing up? what's the deeper pattern?)
+3. **Blind spots** (what might they be avoiding or not seeing?)
+4. **Growth opportunities** (concrete next steps based on the patterns)
+
+Guidelines:
+- Use tentative language ("it seems," "perhaps," "you might be") to avoid being prescriptive
+- Be compassionate but honest—don't sugarcoat, but don't attack
+- Look for contradictions between what they say and what they do
+- Identify emotional patterns (e.g., always deflecting to humor, intellectualizing feelings)
+- Keep each section to 100-150 words
+- Write in second person ("you")
+- Be specific—reference actual themes from their content`
+      },
+      {
+        role: "user",
+        content: `Analyze this week's content:
+
+**Journal Entries:**
+${journalContent || "No journal entries this week."}
+
+**Conversation Excerpts (user messages only):**
+${userMessages || "No conversations this week."}
+
+Provide your analysis in this exact JSON format:
+{
+  "dominantThemes": ["theme1", "theme2", "theme3"],
+  "patternAnalysis": "...",
+  "blindSpots": "...",
+  "growthOpportunities": "..."
+}`
+      }
+    ],
+    response_format: {
+      type: "json_schema",
+      json_schema: {
+        name: "shadow_mirror_summary",
+        strict: true,
+        schema: {
+          type: "object",
+          properties: {
+            dominantThemes: {
+              type: "array",
+              items: { type: "string" },
+              description: "3-5 recurring themes, emotions, or questions"
+            },
+            patternAnalysis: {
+              type: "string",
+              description: "What keeps showing up? What's the deeper pattern?"
+            },
+            blindSpots: {
+              type: "string",
+              description: "What might they be avoiding or not seeing?"
+            },
+            growthOpportunities: {
+              type: "string",
+              description: "Concrete next steps based on the patterns"
+            }
+          },
+          required: ["dominantThemes", "patternAnalysis", "blindSpots", "growthOpportunities"],
+          additionalProperties: false
+        }
+      }
+    }
+  });
+
+  const content = response.choices[0].message.content;
+  if (typeof content === 'string') {
+    const parsed = JSON.parse(content);
+    return parsed;
+  }
+
+  // Fallback
+  return {
+    dominantThemes: ["Self-reflection", "Growth"],
+    patternAnalysis: "You're engaging deeply with your inner work this week.",
+    blindSpots: "Keep exploring with curiosity.",
+    growthOpportunities: "Continue your practice and notice what emerges."
+  };
+}

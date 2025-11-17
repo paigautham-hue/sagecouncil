@@ -441,6 +441,49 @@ export const appRouter = router({
       }),
   }),
 
+  // Shadow Mirror
+  shadowMirror: router({
+    getSummaries: protectedProcedure.query(async ({ ctx }) => {
+      return await db.getUserShadowMirrorSummaries(ctx.user.id);
+    }),
+    
+    getLatest: protectedProcedure.query(async ({ ctx }) => {
+      return await db.getLatestShadowMirrorSummary(ctx.user.id);
+    }),
+    
+    generateWeeklySummary: protectedProcedure.mutation(async ({ ctx }) => {
+      // Calculate last week's date range
+      const now = new Date();
+      const weekEndDate = new Date(now);
+      weekEndDate.setDate(now.getDate() - now.getDay()); // Last Sunday
+      const weekStartDate = new Date(weekEndDate);
+      weekStartDate.setDate(weekEndDate.getDate() - 6); // Previous Monday
+      
+      // Get user's content from last week
+      const { journalEntries, conversationMessages } = await db.getUserContentForWeek(
+        ctx.user.id,
+        weekStartDate,
+        weekEndDate
+      );
+      
+      // Generate AI summary
+      const summary = await aiService.generateShadowMirrorSummary(
+        journalEntries,
+        conversationMessages
+      );
+      
+      // Save summary
+      const summaryId = await db.createShadowMirrorSummary({
+        userId: ctx.user.id,
+        weekStartDate: weekStartDate.toISOString().split('T')[0] as any,
+        weekEndDate: weekEndDate.toISOString().split('T')[0] as any,
+        ...summary,
+      });
+      
+      return { summaryId, ...summary };
+    }),
+  }),
+
   // Micro-Retreats
   microRetreats: router({
     getAll: publicProcedure.query(async () => {
