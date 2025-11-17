@@ -375,3 +375,29 @@
 - [ ] Add reflection submission interface
 - [ ] Implement streak tracking for journeys
 - [ ] Create journey navigation (next/previous day)
+
+
+## Social Sharing & Additional Journeys
+
+### Social Sharing Quote Cards
+- [x] Create QuoteCard component with cosmic background
+- [x] Add sage portrait integration to quote cards
+- [x] Implement HTML-to-canvas conversion for download
+- [x] Add download button functionality
+- [x] Create share to social media buttons (with clipboard fallback)
+- [x] Integrate quote cards into Sages detail pages
+- [x] Add click-to-share functionality on quote cards
+- [x] Beautiful cosmic design with gradient backgrounds
+
+### Additional Journeys
+- [x] Create "Understanding the Ego" 7-day journey content (comprehensive)
+- [x] Write daily readings from Tolle, Nisargadatta, Ramana Maharshi (2000+ words per day)
+- [x] Create progressive ego-dissolution practices
+- [x] Write reflection prompts for ego journey
+- [x] Seed "Understanding the Ego" journey to database (Journey ID: 3)
+- [x] Create "Finding Purpose" 7-day journey content
+- [x] Write daily readings from Frankl, Rumi, Marcus Aurelius
+- [x] Create purpose-discovery practices
+- [x] Write reflection prompts for purpose journey
+- [x] Seed "Finding Purpose" journey to database (Journey ID: 4)
+- [x] All 3 journeys successfully seeded and available

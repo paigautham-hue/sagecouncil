@@ -6,9 +6,12 @@ import { trpc } from "@/lib/trpc";
 import { ArrowLeft, MessageCircle, BookOpen, Lightbulb, Quote } from "lucide-react";
 import { getSagePortrait } from "@/lib/sagePortraits";
 import { Streamdown } from "streamdown";
+import { QuoteCard } from "@/components/QuoteCard";
+import { useState } from "react";
 
 export default function SageDetail() {
   const { teacherId } = useParams();
+  const [selectedQuote, setSelectedQuote] = useState<string | null>(null);
   
   const { data: teacher, isLoading } = trpc.teachers.getByTeacherId.useQuery(
     { teacherId: teacherId! },
@@ -161,12 +164,36 @@ export default function SageDetail() {
           </TabsContent>
 
           <TabsContent value="quotes" className="space-y-6">
-            {quotes && quotes.length > 0 ? (
+            {selectedQuote ? (
+              <div className="max-w-2xl mx-auto">
+                <Button
+                  onClick={() => setSelectedQuote(null)}
+                  variant="ghost"
+                  size="sm"
+                  className="mb-4"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Back to all quotes
+                </Button>
+                <QuoteCard
+                  quote={selectedQuote}
+                  teacherName={teacher?.fullName || ''}
+                  teacherId={teacher?.teacherId || ''}
+                />
+              </div>
+            ) : quotes && quotes.length > 0 ? (
               <div className="grid md:grid-cols-2 gap-6">
                 {quotes.map((quote, idx) => (
-                  <Card key={idx} className="glass-card p-6">
+                  <Card
+                    key={idx}
+                    className="glass-card p-6 cursor-pointer hover:border-primary/50 transition-all"
+                    onClick={() => setSelectedQuote(quote.text)}
+                  >
                     <Quote className="w-8 h-8 text-accent/30 mb-3" />
                     <p className="text-lg italic mb-4">"{quote.text}"</p>
+                    <div className="flex gap-2 text-sm text-muted-foreground">
+                      <span>Click to share</span>
+                    </div>
                   </Card>
                 ))}
               </div>
