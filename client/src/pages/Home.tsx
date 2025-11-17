@@ -7,6 +7,7 @@ import { trpc } from "@/lib/trpc";
 import { useEffect, useState } from "react";
 import { TemplePortal } from "@/components/TemplePortal";
 import { TodaysDeepDrop } from "@/components/TodaysDeepDrop";
+import { ThemeCards } from "@/components/ThemeCards";
 import { getSagePortrait } from "@/lib/sagePortraits";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
@@ -172,6 +173,19 @@ export default function Home() {
       {/* Today's Deep Drop */}
       <section className="container py-16">
         <TodaysDeepDrop />
+      </section>
+
+      {/* Pick Your Focus Today */}
+      <section className="container py-20">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            Pick Your <span className="text-gradient-violet">Focus</span> Today
+          </h2>
+          <p className="text-lg text-slate-300 max-w-2xl mx-auto">
+            Explore timeless wisdom on life's essential questions. Each theme offers synthesis from multiple teachers, practices, and pathways for deeper understanding.
+          </p>
+        </div>
+        <ThemeCards />
       </section>
 
       {/* Features Section */}
