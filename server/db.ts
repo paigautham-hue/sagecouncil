@@ -4,7 +4,8 @@ import {
   InsertUser, users, teachers, themes, quotes, keyIdeas, practices,
   centralQuestions, misunderstandings, journeys, journeyDays,
   userJourneyProgress, journalEntries, conversations, conversationMessages,
-  embeddings, analytics, deepQuestions, userThemeStats, councilDebates
+  embeddings, analytics, deepQuestions, userThemeStats, councilDebates,
+  microRetreats, userMicroRetreatSessions
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -538,4 +539,50 @@ export async function createDebate(debate: typeof councilDebates.$inferInsert) {
   
   const result = await db.insert(councilDebates).values(debate);
   return Number(result[0].insertId);
+}
+
+// Micro-Retreats
+export async function getAllMicroRetreats() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(microRetreats)
+    .where(eq(microRetreats.isActive, true))
+    .orderBy(desc(microRetreats.createdAt));
+}
+
+export async function getMicroRetreatById(id: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.select().from(microRetreats)
+    .where(and(eq(microRetreats.id, id), eq(microRetreats.isActive, true)))
+    .limit(1);
+  
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function createMicroRetreat(retreat: typeof microRetreats.$inferInsert) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.insert(microRetreats).values(retreat);
+  return Number(result[0].insertId);
+}
+
+export async function saveRetreatSession(session: typeof userMicroRetreatSessions.$inferInsert) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.insert(userMicroRetreatSessions).values(session);
+  return Number(result[0].insertId);
+}
+
+export async function getUserRetreatSessions(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(userMicroRetreatSessions)
+    .where(eq(userMicroRetreatSessions.userId, userId))
+    .orderBy(desc(userMicroRetreatSessions.completedAt));
 }

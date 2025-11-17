@@ -441,6 +441,38 @@ export const appRouter = router({
       }),
   }),
 
+  // Micro-Retreats
+  microRetreats: router({
+    getAll: publicProcedure.query(async () => {
+      return await db.getAllMicroRetreats();
+    }),
+    
+    getById: publicProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        return await db.getMicroRetreatById(input.id);
+      }),
+    
+    saveSession: protectedProcedure
+      .input(z.object({
+        retreatId: z.number(),
+        reflectionNotes: z.string().optional(),
+        rating: z.number().min(1).max(5).optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        return await db.saveRetreatSession({
+          userId: ctx.user.id,
+          retreatId: input.retreatId,
+          reflectionNotes: input.reflectionNotes,
+          rating: input.rating,
+        });
+      }),
+    
+    getUserSessions: protectedProcedure.query(async ({ ctx }) => {
+      return await db.getUserRetreatSessions(ctx.user.id);
+    }),
+  }),
+
   // Council Debates
   debates: router({
     getWeekly: publicProcedure.query(async () => {

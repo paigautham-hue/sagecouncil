@@ -323,6 +323,35 @@ export type CouncilDebate = typeof councilDebates.$inferSelect;
 export type InsertCouncilDebate = typeof councilDebates.$inferInsert;
 
 /**
+ * Micro-Retreats - 15-minute guided experiences
+ */
+export const microRetreats = mysqlTable("micro_retreats", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 256 }).notNull(),
+  description: text("description"),
+  themeId: varchar("themeId", { length: 128 }),
+  durationMinutes: int("durationMinutes").notNull().default(15),
+  steps: json("steps").$type<Array<{ type: string; title: string; content: string; durationSeconds?: number }>>().notNull(),
+  isActive: boolean("isActive").default(true).notNull(),
+  createdAt: timestamp("createdAt").notNull().defaultNow(),
+});
+
+export type MicroRetreat = typeof microRetreats.$inferSelect;
+export type InsertMicroRetreat = typeof microRetreats.$inferInsert;
+
+export const userMicroRetreatSessions = mysqlTable("user_micro_retreat_sessions", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  retreatId: int("retreatId").notNull(),
+  completedAt: timestamp("completedAt").notNull().defaultNow(),
+  reflectionNotes: text("reflectionNotes"),
+  rating: int("rating"),
+});
+
+export type UserMicroRetreatSession = typeof userMicroRetreatSessions.$inferSelect;
+export type InsertUserMicroRetreatSession = typeof userMicroRetreatSessions.$inferInsert;
+
+/**
  * Analytics tracking
  */
 export const analytics = mysqlTable("analytics", {

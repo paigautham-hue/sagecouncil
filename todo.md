@@ -550,15 +550,17 @@
 - [ ] Build admin interface to create/edit debates (deferred)
 
 ### Feature Sprint 4: 15-Min Micro-Retreats
-- [ ] Create micro_retreats table
-- [ ] Create user_micro_retreat_sessions table
-- [ ] Build admin Micro-Retreat Builder interface
-- [ ] Create backend API to serve retreat steps
-- [ ] Implement backend logic for final AI Council reflection
-- [ ] Build multi-step frontend UI with timers
-- [ ] Add reflection input fields for each step
-- [ ] Save completed retreat to journal_entries
-- [ ] Add Micro-Retreats tab under Journeys section
+- [x] Create micro_retreats and user_micro_retreat_sessions tables
+- [x] Create backend API endpoints (getAll, getById, saveSession, getUserSessions)
+- [x] Build MicroRetreatExperience component with step-by-step UI and animated transitions
+- [x] Add timer functionality for timed steps with play/pause controls
+- [x] Implement auto-advance between steps when timer completes
+- [x] Add completion screen with reflection notes textarea and 5-star rating
+- [x] Implement session saving with reflections and ratings
+- [x] Create MicroRetreatsLibrary component with retreat cards
+- [x] Build dedicated /micro-retreats page with authentication guard
+- [x] Seed 3 sample retreats covering different themes
+- [ ] Build admin Micro-Retreat Builder interface (deferred)
 
 ### Feature Sprint 5: Shadow Mirror
 - [ ] Create shadow_mirror_summaries table
