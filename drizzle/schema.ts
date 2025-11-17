@@ -370,8 +370,74 @@ export type ShadowMirrorSummary = typeof shadowMirrorSummaries.$inferSelect;
 export type InsertShadowMirrorSummary = typeof shadowMirrorSummaries.$inferInsert;
 
 /**
- * Analytics tracking
+ * Story Alchemy - Transform journal entries into parables
  */
+export const stories = mysqlTable("stories", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  journalEntryId: int("journalEntryId"),
+  teacherId: varchar("teacherId", { length: 128 }).notNull(),
+  originalContent: text("originalContent").notNull(),
+  storyContent: text("storyContent").notNull(),
+  title: varchar("title", { length: 256 }),
+  createdAt: timestamp("createdAt").notNull().defaultNow(),
+});
+
+export type Story = typeof stories.$inferSelect;
+export type InsertStory = typeof stories.$inferInsert;
+
+/**
+ * Paradox Playground - Explore spiritual paradoxes
+ */
+export const paradoxes = mysqlTable("paradoxes", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 256 }).notNull(),
+  paradoxStatement: text("paradoxStatement").notNull(),
+  themeId: varchar("themeId", { length: 128 }),
+  teacherPerspectives: json("teacherPerspectives").$type<Array<{ teacherId: string; perspective: string }>>(),
+  isActive: boolean("isActive").default(true).notNull(),
+  createdAt: timestamp("createdAt").notNull().defaultNow(),
+});
+
+export const userParadoxReflections = mysqlTable("user_paradox_reflections", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  paradoxId: int("paradoxId").notNull(),
+  userReflection: text("userReflection").notNull(),
+  aiResponse: text("aiResponse"),
+  createdAt: timestamp("createdAt").notNull().defaultNow(),
+});
+
+/**
+ * Life Experiments - Real-world behavioral experiments
+ */
+export const lifeExperiments = mysqlTable("life_experiments", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 256 }).notNull(),
+  description: text("description").notNull(),
+  hypothesis: text("hypothesis").notNull(),
+  duration: int("duration").notNull(),
+  checkInPrompts: json("checkInPrompts").$type<string[]>(),
+  themeId: varchar("themeId", { length: 128 }),
+  isActive: boolean("isActive").default(true).notNull(),
+  createdAt: timestamp("createdAt").notNull().defaultNow(),
+});
+
+export const userExperimentLogs = mysqlTable("user_experiment_logs", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  experimentId: int("experimentId").notNull(),
+  status: varchar("status", { length: 64 }).default("active").notNull(),
+  startDate: date("startDate").notNull(),
+  endDate: date("endDate"),
+  checkInEntries: json("checkInEntries").$type<Array<{ date: string; entry: string }>>(),
+  finalReflection: text("finalReflection"),
+  createdAt: timestamp("createdAt").notNull().defaultNow(),
+});
+
+/**
+ * Analytics tracking
+*/
 export const analytics = mysqlTable("analytics", {
   id: int("id").autoincrement().primaryKey(),
   eventType: varchar("eventType", { length: 128 }).notNull(), // page_view, chat_message, journey_start, etc.

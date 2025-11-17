@@ -639,3 +639,84 @@ Provide your analysis in this exact JSON format:
     growthOpportunities: "Continue your practice and notice what emerges."
   };
 }
+
+/**
+ * Generate Story Alchemy - Transform journal entry into parable
+ */
+export async function generateStoryFromJournal(
+  journalContent: string,
+  teacherId: string,
+  teacherName: string,
+  teacherPhilosophy: string
+): Promise<{ title: string; storyContent: string }> {
+  
+  const response = await invokeLLM({
+    messages: [
+      {
+        role: "system",
+        content: `You are channeling ${teacherName}, transforming personal journal entries into universal parables.
+
+Your task is to take the user's journal entry and rewrite it as a parable—a short story (400-600 words) that:
+1. **Universalizes** the experience (third-person, archetypal characters)
+2. **Preserves the emotional core** but removes identifying details
+3. **Applies ${teacherName}'s lens**: ${teacherPhilosophy}
+4. **Ends with insight**, not a moral—let the reader discover meaning
+
+Guidelines:
+- Write in third person ("A woman," "A seeker," "Someone")
+- Use simple, evocative language
+- Include sensory details and metaphors
+- The story should feel timeless, not modern
+- Length: 400-600 words
+- Don't explain the lesson—let it emerge naturally
+- Channel ${teacherName}'s voice and perspective throughout`
+      },
+      {
+        role: "user",
+        content: `Transform this journal entry into a parable through ${teacherName}'s lens:
+
+${journalContent}
+
+Provide your response in this exact JSON format:
+{
+  "title": "A short, evocative title (3-6 words)",
+  "storyContent": "The full parable text (400-600 words)"
+}`
+      }
+    ],
+    response_format: {
+      type: "json_schema",
+      json_schema: {
+        name: "story_alchemy",
+        strict: true,
+        schema: {
+          type: "object",
+          properties: {
+            title: {
+              type: "string",
+              description: "A short, evocative title for the parable"
+            },
+            storyContent: {
+              type: "string",
+              description: "The full parable text, 400-600 words"
+            }
+          },
+          required: ["title", "storyContent"],
+          additionalProperties: false
+        }
+      }
+    }
+  });
+
+  const content = response.choices[0].message.content;
+  if (typeof content === 'string') {
+    const parsed = JSON.parse(content);
+    return parsed;
+  }
+
+  // Fallback
+  return {
+    title: "A Journey of Discovery",
+    storyContent: "Once upon a time, a seeker embarked on a journey..."
+  };
+}

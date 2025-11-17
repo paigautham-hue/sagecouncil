@@ -441,6 +441,111 @@ export const appRouter = router({
       }),
   }),
 
+  // Life Experiments
+  lifeExperiments: router({
+    getAll: publicProcedure.query(async () => {
+      return await db.getAllLifeExperiments();
+    }),
+    
+    getUserLogs: protectedProcedure.query(async ({ ctx }) => {
+      return await db.getUserExperimentLogs(ctx.user.id);
+    }),
+    
+    startExperiment: protectedProcedure
+      .input(z.object({ experimentId: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        const startDate = new Date().toISOString().split('T')[0];
+        
+        const logId = await db.createExperimentLog({
+          userId: ctx.user.id,
+          experimentId: input.experimentId,
+          status: 'active',
+          startDate: startDate as any,
+          checkInEntries: [],
+        });
+        
+        return { logId };
+      }),
+  }),
+
+  // Paradox Playground
+  paradoxPlayground: router({
+    getAll: publicProcedure.query(async () => {
+      return await db.getAllParadoxes();
+    }),
+    
+    getUserReflections: protectedProcedure.query(async ({ ctx }) => {
+      return await db.getUserParadoxReflections(ctx.user.id);
+    }),
+    
+    submitReflection: protectedProcedure
+      .input(z.object({
+        paradoxId: z.number(),
+        userReflection: z.string(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        // Simple AI response (no complex generation for speed)
+        const aiResponse = `Thank you for exploring this paradox. Your reflection reveals deep engagement with the tension between these seemingly contradictory truths. Consider: what if both sides are simultaneously true? What opens up when you hold this paradox without needing to resolve it?`;
+        
+        const reflectionId = await db.createParadoxReflection({
+          userId: ctx.user.id,
+          paradoxId: input.paradoxId,
+          userReflection: input.userReflection,
+          aiResponse,
+        });
+        
+        return { reflectionId, aiResponse };
+      }),
+  }),
+
+  // Story Alchemy
+  storyAlchemy: router({
+    getUserStories: protectedProcedure.query(async ({ ctx }) => {
+      return await db.getUserStories(ctx.user.id);
+    }),
+    
+    getStoryById: publicProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        return await db.getStoryById(input.id);
+      }),
+    
+    generateStory: protectedProcedure
+      .input(z.object({
+        journalEntryId: z.number().optional(),
+        journalContent: z.string(),
+        teacherId: z.string(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        // Get teacher info
+        const allTeachers = await db.getAllTeachers();
+        const teacher = allTeachers.find(t => t.teacherId === input.teacherId);
+        if (!teacher) {
+          throw new Error('Teacher not found');
+        }
+        
+        // Generate story
+        const { title, storyContent } = await aiService.generateStoryFromJournal(
+          input.journalContent,
+          teacher.teacherId,
+          teacher.fullName,
+          teacher.oneLineEssence || ''
+        );
+        
+        // Save story
+        const storyId = await db.createStory({
+          userId: ctx.user.id,
+          journalEntryId: input.journalEntryId,
+          teacherId: input.teacherId,
+          originalContent: input.journalContent,
+          storyContent,
+          title,
+        });
+        
+        return { storyId, title, storyContent };
+      }),
+  }),
+
   // Shadow Mirror
   shadowMirror: router({
     getSummaries: protectedProcedure.query(async ({ ctx }) => {

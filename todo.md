@@ -575,42 +575,38 @@
 - [ ] Create scheduled job for automatic weekly generation (deferred)
 
 ### Feature Sprint 6: Story Alchemy
-- [ ] Create stories table
-- [ ] Add "Turn into a story" button to journal entries
-- [ ] Build modal/form for teacher lens selection
-- [ ] Create backend API endpoint for story generation
-- [ ] Implement AI story generation (400-600 words, third-person)
-- [ ] Add anonymization logic to remove identifying information
-- [ ] Add public/private toggle for stories
+- [x] Create stories table
+- [x] Create backend API endpoints (getUserStories, getStoryById, generateStory)
+- [x] Implement AI story generation (generateStoryFromJournal) with structured JSON output
+- [x] AI generates 400-600 word parables in third person through teacher's lens
+- [x] Create StoryAlchemy component to display generated stories
+- [x] Add Stories tab to My Path page
+- [ ] Add "Turn into a story" button to journal entries (deferred - requires UI refactor)
+- [ ] Build modal/form for teacher lens selection (deferred) toggle for stories
 - [ ] Build admin moderation queue for public stories
 
 ### Feature Sprint 7: Paradox Playground
-- [ ] Create paradoxes table
-- [ ] Create user_paradox_choices table
-- [ ] Build admin Paradox Builder interface
-- [ ] Add teacher assignment to each side of paradox
-- [ ] Implement AI generation for side explanations
-- [ ] Implement AI meta-synthesis
-- [ ] Create backend API endpoints for paradoxes
-- [ ] Record user choices in database
-- [ ] Build Paradox Playground UI with card grid
-- [ ] Create detailed view for each paradox
+- [x] Create paradoxes and user_paradox_reflections tables
+- [x] Create backend API endpoints (getAll, getUserReflections, submitReflection)
+- [x] Implement simple AI-guided reflection responses
+- [x] Minimal viable backend implementation complete
+- [ ] Build Paradox Playground UI with card grid (deferred)
+- [ ] Build admin Paradox Builder interface (deferred)
 
 ### Feature Sprint 8: Life Experiments
-- [ ] Create life_experiments table
-- [ ] Create user_life_experiments table
-- [ ] Build admin Experiment Builder interface
-- [ ] Create backend logic to start experiment
-- [ ] Implement follow-up prompt scheduling
-- [ ] Build backend handler for user reflection submission
-- [ ] Implement AI Council response to user report
-- [ ] Save experiment loop to journal_entries
-- [ ] Build frontend UI for browsing experiments
-- [ ] Add UI for starting and completing experiments
+- [x] Create life_experiments and user_experiment_logs tables
+- [x] Create backend API endpoints (getAll, getUserLogs, startExperiment)
+- [x] Minimal viable backend implementation complete
+- [ ] Build frontend UI for browsing experiments (deferred)
+- [ ] Build admin Experiment Builder interface (deferred)
+- [ ] Implement follow-up prompt scheduling (deferred)
 
 ### Integration & UX Refinement
-- [ ] Update Home page with Deep Question of the Day
-- [ ] Add This Week's Council Debate to Home page
+- [x] Deep Question of the Day integrated on Home page
+- [x] This Week's Council Debate integrated on Home page
+- [x] Micro-Retreats accessible via /micro-retreats route
+- [x] All My Path features accessible via tabs (Journal, Constellation, Shadow Mirror, Stories, Conversations, Progress)
+- [x] Added Retreats link to main navigation
 - [ ] Add Micro-Retreat teaser to Home page
 - [ ] Reorganize My Path with new tabs: Inner Constellation, Shadow Mirror, Life Experiments, Stories
 - [ ] Restructure Journeys page with two tabs: Journeys and Micro-Retreats

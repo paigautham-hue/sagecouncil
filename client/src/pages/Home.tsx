@@ -54,6 +54,9 @@ export default function Home() {
               <Link href="/journeys">
                 <a className="text-foreground/80 hover:text-foreground transition-colors">Journeys</a>
               </Link>
+              <Link href="/micro-retreats">
+                <a className="text-foreground/80 hover:text-foreground transition-colors">Retreats</a>
+              </Link>
               {isAuthenticated && (
                 <Link href="/my-path">
                   <a className="text-foreground/80 hover:text-foreground transition-colors">My Path</a>

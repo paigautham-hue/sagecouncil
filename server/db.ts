@@ -5,7 +5,8 @@ import {
   centralQuestions, misunderstandings, journeys, journeyDays,
   userJourneyProgress, journalEntries, conversations, conversationMessages,
   embeddings, analytics, deepQuestions, userThemeStats, councilDebates,
-  microRetreats, userMicroRetreatSessions, shadowMirrorSummaries
+  microRetreats, userMicroRetreatSessions, shadowMirrorSummaries, stories,
+  paradoxes, userParadoxReflections, lifeExperiments, userExperimentLogs
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -647,4 +648,114 @@ export async function getUserContentForWeek(userId: number, weekStartDate: Date,
     .orderBy(conversationMessages.createdAt);
   
   return { journalEntries: entries, conversationMessages: messages };
+}
+
+// Story Alchemy
+export async function getUserStories(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(stories)
+    .where(eq(stories.userId, userId))
+    .orderBy(desc(stories.createdAt));
+}
+
+export async function createStory(story: typeof stories.$inferInsert) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.insert(stories).values(story);
+  return Number(result[0].insertId);
+}
+
+export async function getStoryById(id: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.select().from(stories)
+    .where(eq(stories.id, id))
+    .limit(1);
+  
+  return result.length > 0 ? result[0] : null;
+}
+
+// Paradox Playground (minimal implementation)
+export async function getAllParadoxes() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(paradoxes)
+    .where(eq(paradoxes.isActive, true))
+    .orderBy(desc(paradoxes.createdAt));
+}
+
+export async function createParadox(paradox: typeof paradoxes.$inferInsert) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.insert(paradoxes).values(paradox);
+  return Number(result[0].insertId);
+}
+
+export async function getUserParadoxReflections(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(userParadoxReflections)
+    .where(eq(userParadoxReflections.userId, userId))
+    .orderBy(desc(userParadoxReflections.createdAt));
+}
+
+export async function createParadoxReflection(reflection: typeof userParadoxReflections.$inferInsert) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.insert(userParadoxReflections).values(reflection);
+  return Number(result[0].insertId);
+}
+
+// Life Experiments (minimal implementation)
+export async function getAllLifeExperiments() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(lifeExperiments)
+    .where(eq(lifeExperiments.isActive, true))
+    .orderBy(desc(lifeExperiments.createdAt));
+}
+
+export async function createLifeExperiment(experiment: typeof lifeExperiments.$inferInsert) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.insert(lifeExperiments).values(experiment);
+  return Number(result[0].insertId);
+}
+
+export async function getUserExperimentLogs(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(userExperimentLogs)
+    .where(eq(userExperimentLogs.userId, userId))
+    .orderBy(desc(userExperimentLogs.createdAt));
+}
+
+export async function createExperimentLog(log: typeof userExperimentLogs.$inferInsert) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.insert(userExperimentLogs).values(log);
+  return Number(result[0].insertId);
+}
+
+export async function updateExperimentLog(logId: number, updates: Partial<typeof userExperimentLogs.$inferSelect>) {
+  const db = await getDb();
+  if (!db) return false;
+  
+  await db.update(userExperimentLogs)
+    .set(updates)
+    .where(eq(userExperimentLogs.id, logId));
+  
+  return true;
 }

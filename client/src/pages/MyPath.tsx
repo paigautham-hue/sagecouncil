@@ -19,12 +19,14 @@ import {
   MessageCircle,
   Sparkles,
   Eye,
+  Book,
 } from 'lucide-react';
 import { Link, useLocation } from 'wouter';
 import { getLoginUrl } from '@/const';
 import { Streamdown } from 'streamdown';
 import { InnerConstellation } from '@/components/InnerConstellation';
 import { ShadowMirror } from '@/components/ShadowMirror';
+import { StoryAlchemy } from '@/components/StoryAlchemy';
 
 export default function MyPath() {
   const { user, loading, isAuthenticated } = useAuth();
@@ -171,10 +173,11 @@ export default function MyPath() {
 
         {/* Main Content */}
         <Tabs defaultValue="journal" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5 max-w-3xl">
+          <TabsList className="grid w-full grid-cols-6 max-w-4xl">
             <TabsTrigger value="journal">Journal</TabsTrigger>
             <TabsTrigger value="constellation">Constellation</TabsTrigger>
             <TabsTrigger value="shadow-mirror">Shadow Mirror</TabsTrigger>
+            <TabsTrigger value="stories">Stories</TabsTrigger>
             <TabsTrigger value="conversations">Conversations</TabsTrigger>
             <TabsTrigger value="progress">Progress</TabsTrigger>
           </TabsList>
@@ -295,6 +298,11 @@ export default function MyPath() {
           {/* Shadow Mirror Tab */}
           <TabsContent value="shadow-mirror" className="space-y-6">
             <ShadowMirror />
+          </TabsContent>
+
+          {/* Story Alchemy Tab */}
+          <TabsContent value="stories" className="space-y-6">
+            <StoryAlchemy />
           </TabsContent>
 
           {/* Conversations Tab */}
