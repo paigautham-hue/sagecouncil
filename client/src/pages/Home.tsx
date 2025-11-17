@@ -313,10 +313,14 @@ export default function Home() {
                 © 2024 {APP_TITLE}. Wisdom for the modern seeker.
               </span>
             </div>
-            <div className="flex gap-6 text-sm text-muted-foreground">
+            <div className="flex flex-wrap gap-6 text-sm text-muted-foreground justify-center md:justify-end">
               <Link href="/sages"><a className="hover:text-foreground transition-colors">Sages</a></Link>
               <Link href="/journeys"><a className="hover:text-foreground transition-colors">Journeys</a></Link>
               <Link href="/council"><a className="hover:text-foreground transition-colors">Council</a></Link>
+              <Link href="/about"><a className="hover:text-foreground transition-colors">About</a></Link>
+              <Link href="/faq"><a className="hover:text-foreground transition-colors">FAQ</a></Link>
+              <Link href="/safety"><a className="hover:text-foreground transition-colors">Safety</a></Link>
+              <Link href="/privacy"><a className="hover:text-foreground transition-colors">Privacy</a></Link>
             </div>
           </div>
         </div>

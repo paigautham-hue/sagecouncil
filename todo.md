@@ -250,10 +250,12 @@
 - [ ] Implement teacher glow during their speaking turn
 
 ### Additional Pages
-- [ ] Create About page
-- [ ] Build FAQ page
-- [ ] Create Safety page with crisis resources
-- [ ] Build Privacy policy page
+- [x] Create About page
+- [x] Build FAQ page
+- [x] Create Safety page with crisis resources
+- [x] Build Privacy policy page
+- [x] Add routes for all new pages
+- [x] Update footer with links to all pages
 
 ### Advanced LLM Features
 - [x] Implement teacher selection algorithm based on question analysis
@@ -316,7 +318,9 @@
 - [ ] Add loading states for all async operations
 
 ### Additional Pages
-- [ ] Create About page
-- [ ] Build FAQ page
-- [ ] Create Safety page with crisis resources
-- [ ] Build Privacy policy page
+- [x] Create About page
+- [x] Build FAQ page
+- [x] Create Safety page with crisis resources
+- [x] Build Privacy policy page
+- [x] Add routes for all new pages
+- [x] Update footer with links to all pages

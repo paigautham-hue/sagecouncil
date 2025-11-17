@@ -5,6 +5,10 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
+import About from "./pages/About";
+import FAQ from "./pages/FAQ";
+import Safety from "./pages/Safety";
+import Privacy from "./pages/Privacy";
 import Council from "./pages/Council";
 import Sages from "./pages/Sages";
 import SageDetail from "./pages/SageDetail";
@@ -15,9 +19,12 @@ import AdminConsole from "./pages/AdminConsole";
 
 function Router() {
   return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route path="/council" component={Council} />
+    <Switch>      <Route path={"/"} component={Home} />
+      <Route path="/about" component={About} />
+      <Route path="/faq" component={FAQ} />
+      <Route path="/safety" component={Safety} />
+      <Route path="/privacy" component={Privacy} />
+      <Route path={"/404"} component={NotFound} />
       <Route path="/sages" component={Sages} />
       <Route path="/sages/:teacherId" component={SageDetail} />
       <Route path="/journeys" component={Journeys} />
