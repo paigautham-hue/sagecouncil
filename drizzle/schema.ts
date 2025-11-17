@@ -289,6 +289,21 @@ export type DeepQuestion = typeof deepQuestions.$inferSelect;
 export type InsertDeepQuestion = typeof deepQuestions.$inferInsert;
 
 /**
+ * User theme interaction statistics for Inner Constellation
+ */
+export const userThemeStats = mysqlTable("userThemeStats", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  themeId: varchar("themeId", { length: 128 }).notNull(),
+  interactionCount: int("interactionCount").notNull().default(0),
+  lastInteractionAt: timestamp("lastInteractionAt").notNull().defaultNow().onUpdateNow(),
+  createdAt: timestamp("createdAt").notNull().defaultNow(),
+});
+
+export type UserThemeStat = typeof userThemeStats.$inferSelect;
+export type InsertUserThemeStat = typeof userThemeStats.$inferInsert;
+
+/**
  * Analytics tracking
  */
 export const analytics = mysqlTable("analytics", {

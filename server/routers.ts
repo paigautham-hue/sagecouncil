@@ -441,6 +441,20 @@ export const appRouter = router({
       }),
   }),
 
+  // Inner Constellation
+  constellation: router({
+    getData: protectedProcedure.query(async ({ ctx }) => {
+      return await db.getConstellationData(ctx.user.id);
+    }),
+    
+    trackThemeInteraction: protectedProcedure
+      .input(z.object({ themeId: z.string() }))
+      .mutation(async ({ ctx, input }) => {
+        await db.incrementThemeInteraction(ctx.user.id, input.themeId);
+        return { success: true };
+      }),
+  }),
+
   // Analytics
   analytics: router({
     track: publicProcedure

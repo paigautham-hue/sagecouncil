@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { useState } from "react";
+import { Link } from "wouter";
+import { trpc } from "@/lib/trpc";
+import { useAuth } from "@/_core/hooks/useAuth";
 import { Brain, Heart, Skull, Users, Sparkles, Flame } from "lucide-react";
 
 interface Theme {
@@ -98,6 +101,15 @@ const themes: Theme[] = [
 
 export function ThemeCards() {
   const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
+  const { isAuthenticated } = useAuth();
+  const trackInteraction = trpc.constellation.trackThemeInteraction.useMutation();
+
+  const handleThemeClick = (theme: Theme) => {
+    setSelectedTheme(theme);
+    if (isAuthenticated) {
+      trackInteraction.mutate({ themeId: theme.id });
+    }
+  };
 
   return (
     <>
@@ -108,7 +120,7 @@ export function ThemeCards() {
             <Card
               key={theme.id}
               className="group cursor-pointer bg-slate-900/40 backdrop-blur-md border-slate-700/50 hover:border-gold/50 transition-all duration-300 hover:scale-105"
-              onClick={() => setSelectedTheme(theme)}
+              onClick={() => handleThemeClick(theme)}
             >
               <CardContent className="p-6 space-y-4">
                 <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${theme.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>

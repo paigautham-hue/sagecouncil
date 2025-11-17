@@ -4,7 +4,7 @@ import {
   InsertUser, users, teachers, themes, quotes, keyIdeas, practices,
   centralQuestions, misunderstandings, journeys, journeyDays,
   userJourneyProgress, journalEntries, conversations, conversationMessages,
-  embeddings, analytics, deepQuestions
+  embeddings, analytics, deepQuestions, userThemeStats
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -397,4 +397,97 @@ export async function createDeepQuestion(question: typeof deepQuestions.$inferIn
   
   const result = await db.insert(deepQuestions).values(question);
   return Number(result[0].insertId);
+}
+
+// User Theme Stats for Inner Constellation
+export async function getUserThemeStats(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(userThemeStats)
+    .where(eq(userThemeStats.userId, userId))
+    .orderBy(desc(userThemeStats.interactionCount));
+}
+
+export async function incrementThemeInteraction(userId: number, themeId: string) {
+  const db = await getDb();
+  if (!db) return;
+  
+  // Try to increment existing record
+  const existing = await db.select().from(userThemeStats)
+    .where(and(
+      eq(userThemeStats.userId, userId),
+      eq(userThemeStats.themeId, themeId)
+    ))
+    .limit(1);
+  
+  if (existing.length > 0) {
+    await db.update(userThemeStats)
+      .set({
+        interactionCount: sql`${userThemeStats.interactionCount} + 1`,
+        lastInteractionAt: new Date()
+      })
+      .where(eq(userThemeStats.id, existing[0].id));
+  } else {
+    await db.insert(userThemeStats).values({
+      userId,
+      themeId,
+      interactionCount: 1
+    });
+  }
+}
+
+export async function getConstellationData(userId: number) {
+  const db = await getDb();
+  if (!db) return { themes: [], teachers: [], connections: [] };
+  
+  // Get user's theme interactions
+  const themeStats = await getUserThemeStats(userId);
+  
+  // Get user's teacher interactions from conversations
+  const teacherInteractions = await db
+    .select({
+      teacherId: conversationMessages.teacherId,
+      count: sql<number>`COUNT(*)`.as('count')
+    })
+    .from(conversationMessages)
+    .innerJoin(conversations, eq(conversationMessages.conversationId, conversations.id))
+    .where(and(
+      eq(conversations.userId, userId),
+      sql`${conversationMessages.teacherId} IS NOT NULL`
+    ))
+    .groupBy(conversationMessages.teacherId);
+  
+  // Get teacher details
+  const teacherIds = teacherInteractions.map(t => t.teacherId).filter(Boolean) as number[];
+  const teacherDetails = teacherIds.length > 0 
+    ? await db.select().from(teachers).where(inArray(teachers.id, teacherIds))
+    : [];
+  
+  // Get theme details
+  const themeIds = themeStats.map(t => t.themeId);
+  const themeDetails = themeIds.length > 0
+    ? await db.select().from(themes).where(inArray(themes.themeId, themeIds))
+    : [];
+  
+  return {
+    themes: themeStats.map(stat => {
+      const theme = themeDetails.find(t => t.themeId === stat.themeId);
+      return {
+        id: stat.themeId,
+        label: theme?.label || stat.themeId,
+        interactionCount: stat.interactionCount,
+        lastInteractionAt: stat.lastInteractionAt
+      };
+    }),
+    teachers: teacherInteractions.map(interaction => {
+      const teacher = teacherDetails.find(t => t.id === interaction.teacherId);
+      return {
+        id: interaction.teacherId,
+        name: teacher?.fullName || 'Unknown',
+        interactionCount: Number(interaction.count)
+      };
+    }),
+    connections: [] // Will be computed on frontend based on shared themes
+  };
 }

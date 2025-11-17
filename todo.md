@@ -529,12 +529,13 @@
 - [ ] Add admin section for creating/managing deep questions (deferred)
 
 ### Feature Sprint 2: Living Inner Constellation
-- [ ] Create user_theme_stats table or implement on-demand computation
-- [ ] Build backend API to aggregate user interaction statistics
-- [ ] Install and configure graph visualization library (D3.js or React equivalent)
-- [ ] Build Inner Constellation view in My Path section
-- [ ] Create interactive node graph with hover tooltips
-- [ ] Add quick actions on theme nodes (view journal entries, start journey)
+- [x] Create user_theme_stats table for tracking interactions
+- [x] Build backend API to aggregate user interaction statistics
+- [x] Install and configure graph visualization library (react-force-graph-2d)
+- [x] Build Inner Constellation view in My Path section as new tab
+- [x] Create interactive node graph with hover tooltips and node selection
+- [x] Add automatic theme tracking when users click theme cards
+- [ ] Add quick actions on theme nodes (view journal entries, start journey) - deferred
 
 ### Feature Sprint 3: Council Debates
 - [ ] Create council_debates table in database

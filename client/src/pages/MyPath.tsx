@@ -17,10 +17,12 @@ import {
   X,
   ArrowLeft,
   MessageCircle,
+  Sparkles,
 } from 'lucide-react';
 import { Link, useLocation } from 'wouter';
 import { getLoginUrl } from '@/const';
 import { Streamdown } from 'streamdown';
+import { InnerConstellation } from '@/components/InnerConstellation';
 
 export default function MyPath() {
   const { user, loading, isAuthenticated } = useAuth();
@@ -167,8 +169,9 @@ export default function MyPath() {
 
         {/* Main Content */}
         <Tabs defaultValue="journal" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 max-w-md">
+          <TabsList className="grid w-full grid-cols-4 max-w-2xl">
             <TabsTrigger value="journal">Journal</TabsTrigger>
+            <TabsTrigger value="constellation">Constellation</TabsTrigger>
             <TabsTrigger value="conversations">Conversations</TabsTrigger>
             <TabsTrigger value="progress">Progress</TabsTrigger>
           </TabsList>
@@ -273,6 +276,17 @@ export default function MyPath() {
                 </Card>
               )}
             </div>
+          </TabsContent>
+
+          {/* Constellation Tab */}
+          <TabsContent value="constellation" className="space-y-6">
+            <div>
+              <h3 className="text-2xl font-bold mb-2">Your Inner Constellation</h3>
+              <p className="text-muted-foreground mb-6">
+                A living map of your spiritual exploration. Watch your constellation grow as you engage with themes and teachers.
+              </p>
+            </div>
+            <InnerConstellation />
           </TabsContent>
 
           {/* Conversations Tab */}
