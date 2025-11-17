@@ -2,7 +2,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
 import { Link } from "wouter";
-import { Sparkles, Users, BookOpen, Compass, ArrowRight, Menu, X } from "lucide-react";
+import { Sparkles, Users, BookOpen, Compass, ArrowRight, Menu, X, Brain, FlaskConical } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useEffect, useState } from "react";
 import { TemplePortal } from "@/components/TemplePortal";
@@ -57,6 +57,12 @@ export default function Home() {
               <Link href="/micro-retreats">
                 <a className="text-foreground/80 hover:text-foreground transition-colors">Retreats</a>
               </Link>
+              <Link href="/paradox-playground">
+                <a className="text-foreground/80 hover:text-foreground transition-colors">Paradoxes</a>
+              </Link>
+              <Link href="/life-experiments">
+                <a className="text-foreground/80 hover:text-foreground transition-colors">Experiments</a>
+              </Link>
               {isAuthenticated && (
                 <Link href="/my-path">
                   <a className="text-foreground/80 hover:text-foreground transition-colors">My Path</a>
@@ -89,6 +95,24 @@ export default function Home() {
                     <Button variant="ghost" className="w-full justify-start" onClick={() => setMobileMenuOpen(false)}>
                       <Compass className="w-4 h-4 mr-2" />
                       Journeys
+                    </Button>
+                  </Link>
+                  <Link href="/micro-retreats">
+                    <Button variant="ghost" className="w-full justify-start" onClick={() => setMobileMenuOpen(false)}>
+                      <Sparkles className="w-4 h-4 mr-2" />
+                      Retreats
+                    </Button>
+                  </Link>
+                  <Link href="/paradox-playground">
+                    <Button variant="ghost" className="w-full justify-start" onClick={() => setMobileMenuOpen(false)}>
+                      <Brain className="w-4 h-4 mr-2" />
+                      Paradoxes
+                    </Button>
+                  </Link>
+                  <Link href="/life-experiments">
+                    <Button variant="ghost" className="w-full justify-start" onClick={() => setMobileMenuOpen(false)}>
+                      <FlaskConical className="w-4 h-4 mr-2" />
+                      Experiments
                     </Button>
                   </Link>
                   {isAuthenticated && (
@@ -255,6 +279,56 @@ export default function Home() {
             </Link>
           </div>
         </div>
+        </div>
+      </section>
+
+      {/* Advanced Features */}
+      <section className="border-t border-border/30">
+        <div className="container py-24">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">
+            Advanced <span className="text-gradient-violet">Practices</span>
+          </h2>
+          <p className="text-lg text-slate-300 text-center max-w-2xl mx-auto mb-16">
+            Go deeper with structured experiences designed to challenge assumptions and catalyze growth.
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Paradox Playground */}
+            <Link href="/paradox-playground">
+              <div className="glass-card p-8 rounded-2xl cursor-pointer group hover:border-violet-500/50 transition-all">
+                <div className="w-16 h-16 rounded-full bg-violet-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <Brain className="w-8 h-8 text-violet-400" />
+                </div>
+                <h3 className="text-2xl font-bold mb-4">Paradox Playground</h3>
+                <p className="text-foreground/70 mb-4">
+                  Explore spiritual paradoxes where opposing truths coexist. Reflect on tensions like effort vs. surrender, and receive AI-guided insights from multiple teacher perspectives.
+                </p>
+                <div className="flex items-center gap-2 text-sm text-violet-400">
+                  <span>8 Paradoxes</span>
+                  <span>•</span>
+                  <span>Teacher Perspectives</span>
+                </div>
+              </div>
+            </Link>
+
+            {/* Life Experiments */}
+            <Link href="/life-experiments">
+              <div className="glass-card p-8 rounded-2xl cursor-pointer group hover:border-amber-500/50 transition-all">
+                <div className="w-16 h-16 rounded-full bg-amber-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <FlaskConical className="w-8 h-8 text-amber-400" />
+                </div>
+                <h3 className="text-2xl font-bold mb-4">Life Experiments</h3>
+                <p className="text-foreground/70 mb-4">
+                  Test spiritual teachings in real life. Start 5-7 day behavioral experiments like gratitude practices, ego observation, or death meditation. Track your insights daily.
+                </p>
+                <div className="flex items-center gap-2 text-sm text-amber-400">
+                  <span>7 Experiments</span>
+                  <span>•</span>
+                  <span>Real-World Practice</span>
+                </div>
+              </div>
+            </Link>
+          </div>
         </div>
       </section>
 

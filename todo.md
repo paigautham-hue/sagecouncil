@@ -675,3 +675,37 @@
 - [ ] Test Paradox Playground (reflection submission)
 - [ ] Test Life Experiments (start + track experiment)
 - [ ] Verify all My Path tabs work correctly
+
+
+## FINAL POLISH - Navigation & Testing (Nov 17, 2025)
+
+### Navigation Improvements
+- [x] Add Paradox Playground link to main navigation (desktop + mobile)
+- [x] Add Life Experiments link to main navigation (desktop + mobile)
+- [x] Add Retreats link to mobile menu for consistency
+- [x] Ensure all new feature pages are discoverable
+
+### Homepage Feature Cards
+- [x] Create feature card for Paradox Playground
+- [x] Create feature card for Life Experiments
+- [x] Create new "Advanced Practices" section after "Three Ways to Explore Wisdom"
+- [x] Ensure visual consistency with existing glass-card design
+- [x] Add icons (Brain, FlaskConical) and color coding (violet, amber)
+- [x] Include feature counts and descriptions
+
+### Comprehensive Authenticated Testing
+- [x] Verify login page loads correctly
+- [x] Verify OAuth providers available (Google, Microsoft, Apple)
+- [x] Verify all routes accessible
+- [x] Verify all navigation links functional
+- [x] Verify homepage displays all features
+- [x] Verify authentication guards work on protected routes
+- [ ] Sign in and test Deep Question answer submission (requires user credentials)
+- [ ] Test Inner Constellation with real user data (requires user credentials)
+- [ ] Complete full Micro-Retreat experience (requires user credentials)
+- [ ] Generate Shadow Mirror summary (requires user credentials)
+- [ ] Transform journal entry to parable (requires user credentials)
+- [ ] Submit paradox reflection (requires user credentials)
+- [ ] Start and track life experiment (requires user credentials)
+
+**Note**: Authenticated testing requires real user login and should be completed by end user before public launch.
