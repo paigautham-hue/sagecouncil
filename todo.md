@@ -965,3 +965,12 @@
 - [x] Added error handling with initials fallback
 - [x] Replaced ProgressiveImage with simple img tag for better mobile compatibility
 - [ ] Test portrait loading on actual mobile device (user to verify)
+
+
+## Responsive Breakpoint Detection Bug (Nov 18, 2025)
+- [x] Debug why Safari mobile shows desktop SVG animation instead of static image
+- [x] Chrome mobile correctly shows static image version
+- [x] Replace CSS media query (md:hidden/md:block) with JavaScript window.innerWidth detection
+- [x] Use useEffect with window resize listener for reliable cross-browser detection
+- [x] Desktop now correctly shows interactive SVG tree
+- [ ] Test on mobile Safari to confirm static image shows (user to verify)

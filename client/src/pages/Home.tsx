@@ -22,6 +22,21 @@ export default function Home() {
   const { user, isAuthenticated } = useAuth();
   const [quote, setQuote] = useState<{ text: string; teacher: string } | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Reliable mobile detection using JavaScript
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Initial check
+    checkMobile();
+    
+    // Listen for resize
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const { data: randomQuote } = trpc.quotes.getRandom.useQuery();
   const { data: teachers } = trpc.teachers.getAll.useQuery();
@@ -206,14 +221,12 @@ export default function Home() {
 
         {/* Wisdom Tree - Background */}
         <div className="relative z-0 -mt-[550px] md:-mt-48">
-          {/* Mobile: Static image with hotspots */}
-          <div className="md:hidden">
+          {/* Conditional rendering based on JavaScript detection */}
+          {isMobile ? (
             <WisdomTreeMobile />
-          </div>
-          {/* Desktop: Interactive SVG */}
-          <div className="hidden md:block">
+          ) : (
             <WisdomTree />
-          </div>
+          )}
         </div>
 
         {/* Scroll Hint */}
