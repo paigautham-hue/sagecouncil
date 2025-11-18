@@ -5,14 +5,14 @@ import { Link } from "wouter";
 import { Sparkles, Users, BookOpen, Compass, ArrowRight, Menu, X, Brain, FlaskConical, ArrowLeft, ChevronDown } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useEffect, useState } from "react";
-import { TemplePortal } from "@/components/TemplePortal";
+// Removed TemplePortal - using only static Wisdom Tree
 import WisdomTree from "@/components/WisdomTree";
 import { TodaysDeepDrop } from "@/components/TodaysDeepDrop";
 import { DeepQuestionOfTheDay } from "@/components/DeepQuestionOfTheDay";
 import { CouncilDebate } from "@/components/CouncilDebate";
 import { ThemeCards } from "@/components/ThemeCards";
-import { getSagePortrait } from "@/lib/sagePortraits";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
+import { getSagePortrait } from "@/lib/sagePortraits";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ScrollProgressIndicator } from "@/components/ScrollProgressIndicator";
 import { LazySection } from "@/components/LazySection";
@@ -132,8 +132,6 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 md:py-32">
-        <TemplePortal />
-        
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-4xl md:text-6xl font-bold mb-6 text-gradient-gold">
