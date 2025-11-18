@@ -957,3 +957,11 @@
 - [x] Added favorites system integration to mobile tree
 - [x] Zero TypeScript errors, clean build
 - [ ] Final mobile device testing by user to verify positioning
+
+
+## Mobile Portrait Loading Fix (Nov 18, 2025)
+- [x] Debug why sage portraits show "?" broken image icons on mobile
+- [x] Fixed by using teacher.avatarUrl from database instead of getSagePortrait()
+- [x] Added error handling with initials fallback
+- [x] Replaced ProgressiveImage with simple img tag for better mobile compatibility
+- [ ] Test portrait loading on actual mobile device (user to verify)

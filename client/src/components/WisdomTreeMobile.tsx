@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { SageQuickView } from "@/components/SageQuickView";
-import { getSagePortrait } from "@/lib/sagePortraits";
+import { getSagePortrait, getSageInitials } from "@/lib/sagePortraits";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 
 // Sage positions on the static image (approximate coordinates as percentages)
@@ -44,6 +44,11 @@ export default function WisdomTreeMobile() {
   const [quickViewSage, setQuickViewSage] = useState<any>(null);
   const [showQuickView, setShowQuickView] = useState(false);
   const [tappedIndex, setTappedIndex] = useState<number | null>(null);
+  const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
+
+  const handleImageError = (index: number) => {
+    setImageErrors(prev => new Set(prev).add(index));
+  };
 
   const handleSageTap = (index: number) => {
     if (!teachers || teachers.length === 0) return;
@@ -86,7 +91,7 @@ export default function WisdomTreeMobile() {
           const teacher = teachers?.[pos.index];
           if (!teacher) return null;
 
-          const portraitUrl = getSagePortrait(teacher.teacherId);
+          const portraitUrl = teacher.avatarUrl || getSagePortrait(teacher.fullName);
 
           return (
             <button
@@ -108,12 +113,19 @@ export default function WisdomTreeMobile() {
               }}
               aria-label={`View ${teacher.fullName}`}
             >
-              {/* Actual sage portrait */}
-              <ProgressiveImage
-                src={portraitUrl}
-                alt={teacher.fullName}
-                className="w-full h-full object-cover"
-              />
+              {/* Actual sage portrait or initials fallback */}
+              {imageErrors.has(pos.index) ? (
+                <div className="w-full h-full bg-gradient-to-br from-violet-600 to-teal-600 flex items-center justify-center text-white font-bold text-xs">
+                  {getSageInitials(teacher.fullName)}
+                </div>
+              ) : (
+                <img
+                  src={portraitUrl}
+                  alt={teacher.fullName}
+                  className="w-full h-full object-cover"
+                  onError={() => handleImageError(pos.index)}
+                />
+              )}
 
               {/* Tooltip on tap */}
               {tappedIndex === pos.index && (
