@@ -162,7 +162,7 @@ export default function Home() {
       {/* Hero Section with Wisdom Tree */}
       <section className="relative overflow-hidden pb-8">
         {/* Hero Content - Positioned above tree */}
-        <div className="relative z-10 container mx-auto px-4 pt-20 md:pt-24 pb-8 md:pb-12">
+        <div className="relative z-10 container mx-auto px-4 pt-12 md:pt-16 pb-6 md:pb-8">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="font-bold mb-8 leading-[1.3] drop-shadow-2xl min-h-[120px] md:min-h-[160px] flex flex-col items-center justify-center">
               <span className="block">Seek Wisdom from the</span>
@@ -204,7 +204,7 @@ export default function Home() {
         </div>
 
         {/* Wisdom Tree - Background */}
-        <div className="relative z-0 -mt-16">
+        <div className="relative z-0 -mt-24 md:-mt-32">
           <WisdomTree />
         </div>
       </section>
