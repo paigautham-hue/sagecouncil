@@ -97,7 +97,7 @@ export default function WisdomTree() {
 
     const nodes: SageNode[] = [];
     const centerX = isMobile ? 300 : 600;
-    const startY = isMobile ? 180 : 800; // Move tree up on mobile
+    const startY = isMobile ? 100 : 800; // Move tree up on mobile
     const branches = isMobile ? 6 : 6; // Keep 6 branches
     const maxNodes = isMobile ? 18 : 36; // Reduce nodes on mobile
     const nodesPerBranch = Math.floor(maxNodes / branches);
@@ -167,7 +167,7 @@ export default function WisdomTree() {
     if (sageNodes.length === 0) return [];
 
     const centerX = isMobile ? 300 : 600;
-    const startY = isMobile ? 400 : 800;
+    const startY = isMobile ? 100 : 800; // Match sage nodes position
     const branches: string[] = [];
 
     // Group nodes by branch

@@ -931,3 +931,9 @@
 - [x] Add visual indicators (red border + heart badge) to favorited sages in tree
 - [x] Create Favorites page for quick access to bookmarked sages
 - [x] Add route for /favorites page
+
+
+## Mobile Tree Positioning Critical Fix (Nov 18, 2025)
+- [x] Move mobile tree startY to 80-100 (currently at 180, still too low)
+- [x] Fixed BOTH startY values (sage nodes AND branches) to 100
+- [x] Test on actual mobile device to verify tree appears immediately below buttons
