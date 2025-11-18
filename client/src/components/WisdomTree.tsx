@@ -1,21 +1,23 @@
-import React from 'react';
-
 /**
- * Unified Wisdom Tree Component
- * Displays a beautiful static graphic with integrated sage portraits
- * Works seamlessly on both mobile and desktop
- * Cache-busting: v=4 forces complete rebuild and refresh
+ * Wisdom Tree - Static Graphic Component
+ * Displays a beautiful, unified static image with integrated sage portraits
+ * This component works seamlessly on all devices (mobile, tablet, desktop)
+ * No interactive SVG, no animations - just a stunning visual
+ * Uses wisdom-tree-final.png to ensure fresh deployment
  */
-export default function WisdomTree(): React.ReactElement {
+
+export default function WisdomTree() {
   return (
-    <div className="w-full flex justify-center py-8 md:py-12">
-      <img
-        src="/wisdom-tree-unified.png?v=4"
-        alt="Council of Sages - Wisdom Tree"
-        className="w-full max-w-4xl h-auto object-contain"
-        loading="lazy"
-        decoding="async"
-      />
+    <div className="w-full max-w-6xl mx-auto px-4 py-12">
+      <picture>
+        <img
+          src="/wisdom-tree-final.png"
+          alt="The Council of Sages - Wisdom Tree with 19 Sage Portraits"
+          className="w-full h-auto"
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
     </div>
   );
 }
