@@ -37,8 +37,14 @@ export default function Council() {
     { enabled: !!conversationId }
   );
 
+  const utils = trpc.useUtils();
   const createConversation = trpc.conversations.create.useMutation();
-  const sendMessage = trpc.chat.sendMessage.useMutation();
+  const sendMessage = trpc.chat.sendMessage.useMutation({
+    onSuccess: () => {
+      // Invalidate messages query to refresh the chat
+      utils.conversations.getMessages.invalidate();
+    },
+  });
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });

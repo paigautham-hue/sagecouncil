@@ -9,6 +9,7 @@ import { Sparkles, Brain, ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { Link } from "wouter";
 import { Streamdown } from "streamdown";
+import { toast } from "sonner";
 
 export default function ParadoxPlayground() {
   const { isAuthenticated } = useAuth();
@@ -21,30 +22,37 @@ export default function ParadoxPlayground() {
     undefined,
     { enabled: isAuthenticated }
   );
-  const submitReflection = trpc.paradoxPlayground.submitReflection.useMutation();
+  
+  const utils = trpc.useUtils();
+  const submitReflection = trpc.paradoxPlayground.submitReflection.useMutation({
+    onSuccess: () => {
+      toast.success("Reflection submitted! AI insight generated.");
+      setReflection("");
+      setSubmitting(false);
+      // Invalidate queries to refresh reflections
+      utils.paradoxPlayground.getUserReflections.invalidate();
+    },
+    onError: (error) => {
+      toast.error("Failed to submit reflection. Please try again.");
+      console.error(error);
+      setSubmitting(false);
+    },
+  });
 
   const selectedParadoxData = paradoxes?.find(p => p.id === selectedParadox);
   const userReflectionForSelected = userReflections?.find(r => r.paradoxId === selectedParadox);
 
   const handleSubmitReflection = async () => {
-    if (!selectedParadox || !reflection.trim()) return;
+    if (!selectedParadox || !reflection.trim()) {
+      toast.error("Please write your reflection first");
+      return;
+    }
     
     setSubmitting(true);
-    try {
-      await submitReflection.mutateAsync({
-        paradoxId: selectedParadox,
-        userReflection: reflection,
-      });
-      setReflection("");
-      // Refetch to show AI response
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
-    } catch (error) {
-      console.error("Failed to submit reflection:", error);
-    } finally {
-      setSubmitting(false);
-    }
+    await submitReflection.mutateAsync({
+      paradoxId: selectedParadox,
+      userReflection: reflection,
+    });
   };
 
   if (!isAuthenticated) {
@@ -125,7 +133,15 @@ export default function ParadoxPlayground() {
                     <p className="text-foreground/70 mb-4 line-clamp-3">
                       {paradox.paradoxStatement}
                     </p>
-                    <Button variant="outline" size="sm" className="w-full">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedParadox(paradox.id);
+                      }}
+                    >
                       Explore Paradox
                     </Button>
                   </Card>

@@ -5,6 +5,7 @@ import { getLoginUrl } from "@/const";
 import { trpc } from "@/lib/trpc";
 import { Sparkles, FlaskConical, ArrowLeft, CheckCircle2, Clock } from "lucide-react";
 import { Link } from "wouter";
+import { toast } from "sonner";
 
 export default function LifeExperiments() {
   const { isAuthenticated } = useAuth();
@@ -14,16 +15,28 @@ export default function LifeExperiments() {
     undefined,
     { enabled: isAuthenticated }
   );
-  const startExperiment = trpc.lifeExperiments.startExperiment.useMutation();
+  
+  const utils = trpc.useUtils();
+  const startExperiment = trpc.lifeExperiments.startExperiment.useMutation({
+    onSuccess: () => {
+      toast.success("Experiment started! Track your progress daily.");
+      // Invalidate queries to refresh the UI
+      utils.lifeExperiments.getUserLogs.invalidate();
+    },
+    onError: (error) => {
+      toast.error("Failed to start experiment. Please try again.");
+      console.error(error);
+    },
+  });
 
   const handleStartExperiment = async (experimentId: number) => {
-    try {
-      await startExperiment.mutateAsync({ experimentId });
-      // Refetch to update UI
-      window.location.reload();
-    } catch (error) {
-      console.error("Failed to start experiment:", error);
+    if (!isAuthenticated) {
+      toast.error("Please sign in to start experiments");
+      window.location.href = getLoginUrl();
+      return;
     }
+    
+    await startExperiment.mutateAsync({ experimentId });
   };
 
   const getExperimentStatus = (experimentId: number) => {

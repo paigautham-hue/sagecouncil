@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { getSagePortrait } from "@/lib/sagePortraits";
+import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -104,11 +105,11 @@ export default function Sages() {
               <Link key={teacher.id} href={`/sages/${teacher.teacherId}`}>
                 <Card className="glass-card p-6 cursor-pointer group h-full">
                   <div className="flex flex-col items-center text-center h-full">
-                    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary/30 to-accent/30 flex items-center justify-center mb-4 sage-avatar">
-                      <span className="text-3xl font-bold text-foreground">
-                        {teacher.fullName.charAt(0)}
-                      </span>
-                    </div>
+                    <ProgressiveImage
+                      src={getSagePortrait(teacher.teacherId)}
+                      alt={teacher.fullName}
+                      className="w-24 h-24 rounded-full object-cover mb-4 sage-avatar"
+                    />
                     
                     <h3 className="text-xl font-bold mb-2">{teacher.fullName}</h3>
                     

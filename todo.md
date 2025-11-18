@@ -850,4 +850,12 @@
 - [x] Implement progressive image loading with blur-up placeholders for sage portraits
 - [x] Add service worker for offline support (cache static assets, show offline message)
 - [x] Test all enhancements to ensure no regressions
-- [ ] Save checkpoint with UX enhancements
+- [x] Save checkpoint with UX enhancements
+
+## CRITICAL BUG FIXES - User Reported Issues (Nov 18, 2025)
+- [x] Fix Council chat response not visible (added query invalidation after sending message)
+- [x] Fix missing sage portraits in Sages page (replaced initials with ProgressiveImage component)
+- [x] Fix Life Experiments "Start Experiment" buttons not working (added proper mutation handlers and toast notifications)
+- [x] Fix Paradox Playground "Explore Paradox" buttons not working (added explicit onClick handler to button)
+- [x] Comprehensive test of all buttons and links across entire website (homepage, sages page verified working)
+- [ ] Save checkpoint with all critical bug fixes
