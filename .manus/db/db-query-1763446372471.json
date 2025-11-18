@@ -1,0 +1,28 @@
+{
+  "query": "SELECT COLUMN_NAME, DATA_TYPE, IS_NULLABLE, COLUMN_DEFAULT \nFROM INFORMATION_SCHEMA.COLUMNS \nWHERE TABLE_NAME = 'users' \nAND COLUMN_NAME IN ('depthLevel', 'tonePreference', 'preferredTeachers');",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4PQbAAV1fA3eoWB.9bb51d851611 --database my7vf9kVVC5tHsnhvudijY --execute SELECT COLUMN_NAME, DATA_TYPE, IS_NULLABLE, COLUMN_DEFAULT \nFROM INFORMATION_SCHEMA.COLUMNS \nWHERE TABLE_NAME = 'users' \nAND COLUMN_NAME IN ('depthLevel', 'tonePreference', 'preferredTeachers');",
+  "rows": [
+    {
+      "COLUMN_NAME": "depthLevel",
+      "DATA_TYPE": "int",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "5"
+    },
+    {
+      "COLUMN_NAME": "tonePreference",
+      "DATA_TYPE": "varchar",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "balanced"
+    },
+    {
+      "COLUMN_NAME": "preferredTeachers",
+      "DATA_TYPE": "json",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL"
+    }
+  ],
+  "messages": [],
+  "stdout": "COLUMN_NAME\tDATA_TYPE\tIS_NULLABLE\tCOLUMN_DEFAULT\ndepthLevel\tint\tYES\t5\ntonePreference\tvarchar\tYES\tbalanced\npreferredTeachers\tjson\tYES\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 1502
+}

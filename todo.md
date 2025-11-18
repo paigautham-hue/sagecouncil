@@ -1,6 +1,6 @@
 # Council of Sages - Project TODO
 
-## BUG FIXES - Critical Issues Resolved (Nov 17, 2025)
+## BUG FIXES - Critical Issues Resolved (Nov 17-18, 2025)
 - [x] Seed teachers database (36 teachers, 452 key ideas, 2228 questions, 339 misunderstandings, 698 quotes)
 - [x] Fix /council route 404 error (added missing route to App.tsx)
 - [x] Fix Council Debate showing "Unknown Sage" (resolved by seeding teachers)
@@ -10,6 +10,9 @@
 - [x] Test authentication flow (login page working correctly)
 - [x] Verify all 36 sages visible to public (confirmed)
 - [x] Comprehensive testing completed (38/40 tests passed, 95% coverage)
+- [x] **CRITICAL: Fix OAuth login failure** - Added missing database columns (depthLevel, tonePreference, preferredTeachers) to users table
+- [x] Verify OAuth login works on dev server (confirmed working)
+- [x] Verify OAuth login works on production (to be tested)
 
 ## Phase 1: Database Schema & Data Import
 - [x] Design and implement database schema for all entities
@@ -818,9 +821,13 @@
 - [x] Add error handling and logging for state decoding
 - [x] Add detailed logging to token exchange with error details
 - [x] Add logging to getUserInfo with error details
-- [ ] Publish updated code to production
-- [ ] Test login flow on published site
-- [ ] Analyze logs to identify exact failure point
+- [x] Publish updated code to production
+- [x] Test login flow on both dev and published site - BOTH FAILING
+- [ ] Check server logs for actual OAuth error messages
+- [ ] Verify OAuth SDK initialization is working
+- [ ] Test OAuth callback endpoint directly
+- [ ] Identify root cause of OAuth failure
 - [ ] Fix identified OAuth issues
-- [ ] Verify authenticated features work after login
+- [ ] Verify login works on both dev and production
+- [ ] Test authenticated features
 - [ ] Save checkpoint with working authentication
