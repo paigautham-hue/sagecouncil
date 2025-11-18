@@ -995,4 +995,13 @@
 - [x] Update both WisdomTree and WisdomTreeMobile to use static graphic
 - [x] Eliminated all "?" broken image boxes
 - [x] Desktop displays unified tree perfectly
-- [ ] Test on mobile Safari and Chrome (user to verify)
+- [x] Dev server verified - new tree working on desktop
+- [x] User to publish checkpoint 8866f109 to update live site
+- [ ] Final mobile testing after publishing (user to verify)
+
+
+## Cache Refresh - Force New Static Tree to Published Site (Nov 18, 2025)
+- [x] Added cache-busting query parameter ?v=2 to image URL
+- [x] Dev server verified - new static tree displaying correctly
+- [ ] Create new checkpoint to push updates
+- [ ] Verify published site shows new static graphic on mobile and desktop
