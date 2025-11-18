@@ -937,3 +937,23 @@
 - [x] Move mobile tree startY to 80-100 (currently at 180, still too low)
 - [x] Fixed BOTH startY values (sage nodes AND branches) to 100
 - [x] Test on actual mobile device to verify tree appears immediately below buttons
+
+
+## Final Mobile Tree Fix or Static Image Replacement (Nov 18, 2025)
+- [ ] Try extreme startY=50 or 30 for mobile
+- [ ] If still not working, generate beautiful static Wisdom Tree image
+- [ ] Implement conditional rendering: static image on mobile, interactive SVG on desktop
+- [ ] Test final solution on mobile device
+
+
+## Mobile Wisdom Tree Fix - COMPLETED (Nov 18, 2025)
+- [x] Attempted extreme startY positioning (50px) for mobile SVG tree
+- [x] Generated beautiful static Wisdom Tree image with AI (wisdom-tree-mobile.png)
+- [x] Created WisdomTreeMobile component with clickable sage portraits
+- [x] Implemented conditional rendering: static image on mobile (<768px), interactive SVG on desktop
+- [x] Overlaid actual sage portraits on static background with proper positioning
+- [x] Added tap-to-view tooltips showing sage name and tradition
+- [x] Integrated SageQuickView modal for detailed sage information
+- [x] Added favorites system integration to mobile tree
+- [x] Zero TypeScript errors, clean build
+- [ ] Final mobile device testing by user to verify positioning

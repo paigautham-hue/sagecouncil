@@ -7,6 +7,7 @@ import { trpc } from "@/lib/trpc";
 import { useEffect, useState } from "react";
 import { TemplePortal } from "@/components/TemplePortal";
 import WisdomTree from "@/components/WisdomTree";
+import WisdomTreeMobile from "@/components/WisdomTreeMobile";
 import { TodaysDeepDrop } from "@/components/TodaysDeepDrop";
 import { DeepQuestionOfTheDay } from "@/components/DeepQuestionOfTheDay";
 import { CouncilDebate } from "@/components/CouncilDebate";
@@ -205,7 +206,14 @@ export default function Home() {
 
         {/* Wisdom Tree - Background */}
         <div className="relative z-0 -mt-[550px] md:-mt-48">
-          <WisdomTree />
+          {/* Mobile: Static image with hotspots */}
+          <div className="md:hidden">
+            <WisdomTreeMobile />
+          </div>
+          {/* Desktop: Interactive SVG */}
+          <div className="hidden md:block">
+            <WisdomTree />
+          </div>
         </div>
 
         {/* Scroll Hint */}
