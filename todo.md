@@ -858,4 +858,9 @@
 - [x] Fix Life Experiments "Start Experiment" buttons not working (added proper mutation handlers and toast notifications)
 - [x] Fix Paradox Playground "Explore Paradox" buttons not working (added explicit onClick handler to button)
 - [x] Comprehensive test of all buttons and links across entire website (homepage, sages page verified working)
-- [ ] Save checkpoint with all critical bug fixes
+- [x] Save checkpoint with all critical bug fixes
+
+## UI IMPROVEMENTS - Layout Spacing (Nov 18, 2025)
+- [x] Reduce excessive vertical space between navigation and hero section on desktop (changed h-screen to h-[85vh] min-h-[600px])
+- [x] Test desktop layout after spacing adjustments (verified on dev server)
+- [ ] Save checkpoint with layout improvements
