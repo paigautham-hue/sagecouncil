@@ -39,40 +39,76 @@ class OAuthService {
   }
 
   private decodeState(state: string): string {
-    const redirectUri = atob(state);
-    return redirectUri;
+    try {
+      const redirectUri = atob(state);
+      console.log('[OAuth] Decoded redirect URI from state:', redirectUri);
+      return redirectUri;
+    } catch (error) {
+      console.error('[OAuth] Failed to decode state:', error, 'state:', state);
+      throw new Error('Invalid state parameter');
+    }
   }
 
   async getTokenByCode(
     code: string,
     state: string
   ): Promise<ExchangeTokenResponse> {
+    const redirectUri = this.decodeState(state);
     const payload: ExchangeTokenRequest = {
       clientId: ENV.appId,
       grantType: "authorization_code",
       code,
-      redirectUri: this.decodeState(state),
+      redirectUri,
     };
 
-    const { data } = await this.client.post<ExchangeTokenResponse>(
-      EXCHANGE_TOKEN_PATH,
-      payload
-    );
+    console.log('[OAuth] Token exchange request:', {
+      clientId: ENV.appId,
+      redirectUri,
+      codeLength: code.length,
+      endpoint: EXCHANGE_TOKEN_PATH
+    });
 
-    return data;
+    try {
+      const { data } = await this.client.post<ExchangeTokenResponse>(
+        EXCHANGE_TOKEN_PATH,
+        payload
+      );
+      console.log('[OAuth] Token exchange successful');
+      return data;
+    } catch (error: any) {
+      console.error('[OAuth] Token exchange failed:', {
+        status: error.response?.status,
+        statusText: error.response?.statusText,
+        data: error.response?.data,
+        message: error.message
+      });
+      throw error;
+    }
   }
 
   async getUserInfoByToken(
     token: ExchangeTokenResponse
   ): Promise<GetUserInfoResponse> {
-    const { data } = await this.client.post<GetUserInfoResponse>(
-      GET_USER_INFO_PATH,
-      {
-        accessToken: token.accessToken,
-      }
-    );
-
-    return data;
+    console.log('[OAuth] Getting user info with access token');
+    
+    try {
+      const { data } = await this.client.post<GetUserInfoResponse>(
+        GET_USER_INFO_PATH,
+        {
+          accessToken: token.accessToken,
+        }
+      );
+      console.log('[OAuth] User info retrieved successfully');
+      return data;
+    } catch (error: any) {
+      console.error('[OAuth] Get user info failed:', {
+        status: error.response?.status,
+        statusText: error.response?.statusText,
+        data: error.response?.data,
+        message: error.message
+      });
+      throw error;
+    }
   }
 }
 
