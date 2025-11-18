@@ -909,3 +909,8 @@
 - [x] Add animated scroll hint (chevron/text) below Wisdom Tree
 - [x] Implement sage quick-view modal (tap shows bio, second tap navigates)
 - [x] Add sequential fade-in animation for sage nodes on tree load
+
+## Tree Internal Positioning Fix (Nov 18, 2025)
+- [x] Move tree SVG coordinates up so tree appears at top of container (not bottom)
+- [x] Adjust mobile tree positioning to be visible in initial viewport
+- [x] Test on mobile to ensure tree is immediately visible below buttons

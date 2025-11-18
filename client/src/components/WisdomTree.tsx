@@ -89,7 +89,7 @@ export default function WisdomTree() {
 
     const nodes: SageNode[] = [];
     const centerX = isMobile ? 300 : 600;
-    const startY = isMobile ? 400 : 800;
+    const startY = isMobile ? 180 : 800; // Move tree up on mobile
     const branches = isMobile ? 6 : 6; // Keep 6 branches
     const maxNodes = isMobile ? 18 : 36; // Reduce nodes on mobile
     const nodesPerBranch = Math.floor(maxNodes / branches);
@@ -531,7 +531,7 @@ export default function WisdomTree() {
         {/* Center trunk */}
         <motion.circle
           cx={isMobile ? "300" : "600"}
-          cy={isMobile ? "400" : "800"}
+          cy={isMobile ? "180" : "800"}
           r={isMobile ? "25" : "40"}
           fill="url(#nodeGradient)"
           filter="url(#nodeGlow)"
