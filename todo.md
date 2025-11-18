@@ -899,3 +899,8 @@
 ## Tree Positioning Fix (Nov 18, 2025)
 - [x] Increase negative margin on Wisdom Tree to pull it much closer to buttons on mobile
 - [x] Ensure tree is visible in initial mobile viewport without scrolling
+
+## Critical Mobile Spacing Issue (Nov 18, 2025)
+- [x] Massively increase tree negative margin (need at least -500px to -600px on mobile)
+- [x] Reduce ALL vertical spacing in hero section to absolute minimum
+- [x] Make tree visible in initial mobile viewport as shown in user's manual positioning

@@ -164,7 +164,7 @@ export default function Home() {
         {/* Hero Content - Positioned above tree */}
         <div className="relative z-10 container mx-auto px-4 pt-0 md:pt-8 pb-0 md:pb-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="font-bold mb-2 md:mb-6 leading-[1.1] drop-shadow-2xl min-h-[60px] md:min-h-[120px] flex flex-col items-center justify-center">
+            <h1 className="font-bold mb-1 md:mb-6 leading-[1.05] drop-shadow-2xl min-h-[50px] md:min-h-[120px] flex flex-col items-center justify-center">
               <span className="block">Seek Wisdom from the</span>
               <span 
                 className="block" 
@@ -180,7 +180,7 @@ export default function Home() {
               </span>
             </h1>
             
-            <p className="text-base md:text-xl text-foreground/80 mb-2 md:mb-6 max-w-3xl mx-auto drop-shadow-lg">
+            <p className="text-sm md:text-xl text-foreground/80 mb-1 md:mb-6 max-w-3xl mx-auto drop-shadow-lg">
               Engage in dialogue with history's greatest spiritual teachers. Compare perspectives, explore practices, and discover your path.
             </p>
 
@@ -204,7 +204,7 @@ export default function Home() {
         </div>
 
         {/* Wisdom Tree - Background */}
-        <div className="relative z-0 -mt-[350px] md:-mt-48">
+        <div className="relative z-0 -mt-[550px] md:-mt-48">
           <WisdomTree />
         </div>
       </section>
