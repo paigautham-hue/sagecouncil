@@ -162,7 +162,7 @@ export default function Home() {
       {/* Hero Section with Wisdom Tree */}
       <section className="relative overflow-hidden pb-8">
         {/* Hero Content - Positioned above tree */}
-        <div className="relative z-10 container mx-auto px-4 pt-20 md:pt-24 pb-16 md:pb-20">
+        <div className="relative z-10 container mx-auto px-4 pt-20 md:pt-24 pb-8 md:pb-12">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="font-bold mb-8 leading-[1.3] drop-shadow-2xl min-h-[120px] md:min-h-[160px] flex flex-col items-center justify-center">
               <span className="block">Seek Wisdom from the</span>
@@ -184,7 +184,7 @@ export default function Home() {
               Engage in dialogue with history's greatest spiritual teachers. Compare perspectives, explore practices, and discover your path.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/council">
                 <Button size="lg" className="ripple text-lg px-8 py-6 shadow-2xl">
                   <Users className="w-5 h-5 mr-2" />
@@ -204,7 +204,7 @@ export default function Home() {
         </div>
 
         {/* Wisdom Tree - Background */}
-        <div className="relative z-0 -mt-32">
+        <div className="relative z-0 -mt-16">
           <WisdomTree />
         </div>
       </section>
