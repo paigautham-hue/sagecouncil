@@ -6,6 +6,7 @@ import { Sparkles, Users, BookOpen, Compass, ArrowRight, Menu, X, Brain, FlaskCo
 import { trpc } from "@/lib/trpc";
 import { useEffect, useState } from "react";
 import { TemplePortal } from "@/components/TemplePortal";
+import WisdomTree from "@/components/WisdomTree";
 import { TodaysDeepDrop } from "@/components/TodaysDeepDrop";
 import { DeepQuestionOfTheDay } from "@/components/DeepQuestionOfTheDay";
 import { CouncilDebate } from "@/components/CouncilDebate";
@@ -145,33 +146,26 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section with Temple Portal */}
-      <section className="relative overflow-hidden py-20 md:py-32">
-        {/* Temple Portal Animation - Behind content */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-50">
-          <TemplePortal />
-        </div>
+      {/* Hero Section with Wisdom Tree */}
+      <section className="relative">
+        <WisdomTree />
         
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card">
-              <Sparkles className="w-4 h-4 text-accent" />
-              <span className="text-sm text-muted-foreground">Wisdom from 36 spiritual teachers</span>
-            </div>
-            
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+        {/* Overlay content */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="max-w-4xl mx-auto text-center px-4 pointer-events-auto">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight drop-shadow-2xl">
               Seek Wisdom from the{" "}
               <span className="text-gradient-gold">Council of Sages</span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-foreground/70 mb-12 max-w-2xl mx-auto">
+            <p className="text-xl md:text-2xl text-foreground/90 mb-12 max-w-2xl mx-auto drop-shadow-lg">
               Engage in dialogue with history's greatest spiritual teachers. 
               Compare perspectives, explore practices, and discover your path.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/council">
-                <Button size="lg" className="ripple text-lg px-8 py-6">
+                <Button size="lg" className="ripple text-lg px-8 py-6 shadow-2xl">
                   <Users className="w-5 h-5 mr-2" />
                   Enter the Council
                   <ArrowRight className="w-5 h-5 ml-2" />
@@ -179,7 +173,7 @@ export default function Home() {
               </Link>
               
               <Link href="/sages">
-                <Button size="lg" variant="outline" className="ripple text-lg px-8 py-6">
+                <Button size="lg" variant="outline" className="ripple text-lg px-8 py-6 shadow-2xl backdrop-blur-sm bg-background/50">
                   <BookOpen className="w-5 h-5 mr-2" />
                   Explore Sages
                 </Button>
@@ -187,17 +181,19 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Floating quote */}
-        {quote && (
-          <div className="mt-20 max-w-2xl mx-auto">
+      {/* Floating quote */}
+      {quote && (
+        <section className="container py-16">
+          <div className="max-w-2xl mx-auto">
             <div className="glass-card p-8 rounded-2xl">
               <p className="text-lg italic text-foreground/90 mb-4">"{quote.text}"</p>
               <p className="text-sm text-accent">— {quote.teacher}</p>
             </div>
           </div>
-        )}
-      </section>
+        </section>
+      )}
 
       {/* Today's Deep Drop */}
       <section className="container py-16">
