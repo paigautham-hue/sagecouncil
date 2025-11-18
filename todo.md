@@ -973,7 +973,10 @@
 - [x] Replace CSS media query (md:hidden/md:block) with JavaScript window.innerWidth detection
 - [x] Use useEffect with window resize listener for reliable cross-browser detection
 - [x] Desktop now correctly shows interactive SVG tree
+- [x] Added window.visualViewport?.width for Safari mobile accuracy
+- [x] Added visualViewport resize listener for Safari
 - [ ] Test on mobile Safari to confirm static image shows (user to verify)
+- [ ] Confirm no "?" boxes appear on mobile (user to verify)
 
 
 ## Simplify Mobile Tree - Remove Portrait Overlays (Nov 18, 2025)
