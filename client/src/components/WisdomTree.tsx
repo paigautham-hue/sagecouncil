@@ -43,8 +43,34 @@ export default function WisdomTree() {
   const [isMobile, setIsMobile] = useState(false);
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isVisible, setIsVisible] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Intersection Observer for lazy loading
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            // Once visible, stop observing
+            observer.disconnect();
+          }
+        });
+      },
+      {
+        rootMargin: '100px', // Start loading 100px before entering viewport
+        threshold: 0.1,
+      }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   // Detect mobile screen size
   useEffect(() => {
@@ -56,7 +82,7 @@ export default function WisdomTree() {
 
   // Generate tree structure with 36 nodes (18 on mobile)
   useEffect(() => {
-    if (!teachers || teachers.length === 0) return;
+    if (!teachers || teachers.length === 0 || !isVisible) return;
 
     const nodes: SageNode[] = [];
     const centerX = isMobile ? 300 : 600;
@@ -116,13 +142,14 @@ export default function WisdomTree() {
     }));
 
     setQuoteLeaves(leaves);
-  }, [teachers, isMobile]);
+  }, [teachers, isMobile, isVisible]);
 
-  // Trigger growth animation on mount
+  // Trigger growth animation when tree becomes visible
   useEffect(() => {
+    if (!isVisible) return;
     const timer = setTimeout(() => setIsGrown(true), 500);
     return () => clearTimeout(timer);
-  }, []);
+  }, [isVisible]);
 
   // Generate tree paths (branches)
   const generateBranches = () => {
@@ -334,8 +361,18 @@ export default function WisdomTree() {
                 onMouseEnter={() => setHoveredNode(node.id)}
                 onMouseLeave={() => setHoveredNode(null)}
                 onClick={() => {
-                  setSelectedNode(node.id);
-                  window.location.href = `/sages/${node.teacherId}`;
+                  if (isMobile) {
+                    // On mobile: first tap shows tooltip, second tap navigates
+                    if (hoveredNode === node.id) {
+                      window.location.href = `/sages/${node.teacherId}`;
+                    } else {
+                      setHoveredNode(node.id);
+                    }
+                  } else {
+                    // On desktop: click navigates immediately
+                    setSelectedNode(node.id);
+                    window.location.href = `/sages/${node.teacherId}`;
+                  }
                 }}
                 className="cursor-pointer transition-all duration-300"
               />
@@ -352,31 +389,74 @@ export default function WisdomTree() {
               initial={{ scale: 0, opacity: 0 }}
               animate={isGrown ? { scale: 1, opacity: 1 } : {}}
               transition={{ duration: 0.5, delay: 0.5 + i * 0.05 }}
-              onMouseEnter={() => setHoveredNode(node.id)}
-              onMouseLeave={() => setHoveredNode(null)}
+              onMouseEnter={() => !isMobile && setHoveredNode(node.id)}
+              onMouseLeave={() => !isMobile && setHoveredNode(null)}
               onClick={() => {
-                setSelectedNode(node.id);
-                window.location.href = `/sages/${node.teacherId}`;
+                if (isMobile) {
+                  // On mobile: first tap shows tooltip, second tap navigates
+                  if (hoveredNode === node.id) {
+                    window.location.href = `/sages/${node.teacherId}`;
+                  } else {
+                    setHoveredNode(node.id);
+                  }
+                } else {
+                  // On desktop: click navigates immediately
+                  setSelectedNode(node.id);
+                  window.location.href = `/sages/${node.teacherId}`;
+                }
               }}
               className="cursor-pointer"
             />
 
-            {/* Name label on hover */}
+            {/* Enhanced tooltip on hover/tap */}
             {hoveredNode === node.id && (
-              <motion.text
-                x={node.x}
-                y={node.y - (isMobile ? 25 : 45)}
-                textAnchor="middle"
-                fill="#f4d03f"
-                fontSize={isMobile ? "10" : "14"}
-                fontWeight="600"
-                fontFamily="Cinzel, serif"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                {node.name}
-              </motion.text>
+              <g>
+                {/* Tooltip background */}
+                <motion.rect
+                  x={node.x - (isMobile ? 60 : 90)}
+                  y={node.y - (isMobile ? 45 : 70)}
+                  width={isMobile ? 120 : 180}
+                  height={isMobile ? 32 : 48}
+                  rx="8"
+                  fill="rgba(15, 23, 42, 0.95)"
+                  stroke="#f4d03f"
+                  strokeWidth="1.5"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.2 }}
+                />
+                
+                {/* Sage name */}
+                <motion.text
+                  x={node.x}
+                  y={node.y - (isMobile ? 32 : 52)}
+                  textAnchor="middle"
+                  fill="#f4d03f"
+                  fontSize={isMobile ? "11" : "15"}
+                  fontWeight="600"
+                  fontFamily="Cinzel, serif"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3, delay: 0.1 }}
+                >
+                  {node.name}
+                </motion.text>
+                
+                {/* Tradition */}
+                <motion.text
+                  x={node.x}
+                  y={node.y - (isMobile ? 20 : 36)}
+                  textAnchor="middle"
+                  fill="rgba(244, 208, 63, 0.7)"
+                  fontSize={isMobile ? "8" : "11"}
+                  fontFamily="Inter, sans-serif"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3, delay: 0.15 }}
+                >
+                  {node.tradition}
+                </motion.text>
+              </g>
             )}
           </g>
         ))}

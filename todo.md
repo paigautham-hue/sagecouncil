@@ -884,3 +884,9 @@
 - [ ] Restore proper spacing and visual hierarchy
 - [ ] Test desktop layout thoroughly
 - [ ] Save checkpoint with perfect layout
+
+
+## Homepage Layout & Performance Enhancements (Nov 18, 2025)
+- [x] Test mobile layout across different screen sizes (iPhone SE, standard phones, tablets)
+- [x] Add interactive tooltips for Wisdom Tree sage nodes (hover/tap to show names and descriptions)
+- [x] Implement lazy loading for Wisdom Tree with intersection observer
