@@ -974,3 +974,12 @@
 - [x] Use useEffect with window resize listener for reliable cross-browser detection
 - [x] Desktop now correctly shows interactive SVG tree
 - [ ] Test on mobile Safari to confirm static image shows (user to verify)
+
+
+## Simplify Mobile Tree - Remove Portrait Overlays (Nov 18, 2025)
+- [x] Remove all portrait overlay code from WisdomTreeMobile
+- [x] Keep only the static background image
+- [x] Remove clickable hotspots, tooltips, and quick-view modals
+- [x] Let users explore sages through "Meet the Sages" section instead
+- [x] Clean, simple visual presentation - component now only 14 lines
+- [x] Zero TypeScript errors, clean build
