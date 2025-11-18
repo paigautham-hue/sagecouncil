@@ -863,4 +863,11 @@
 ## UI IMPROVEMENTS - Layout Spacing (Nov 18, 2025)
 - [x] Reduce excessive vertical space between navigation and hero section on desktop (changed h-screen to h-[85vh] min-h-[600px])
 - [x] Test desktop layout after spacing adjustments (verified on dev server)
-- [ ] Save checkpoint with layout improvements
+- [x] Save checkpoint with layout improvements
+
+## PERFORMANCE & UX ENHANCEMENTS (Nov 18, 2025)
+- [x] Implement fluid typography using clamp() for headings (smooth scaling between mobile and desktop)
+- [x] Add scroll progress indicator to homepage (subtle bar showing scroll depth)
+- [x] Implement lazy loading with intersection observer for heavy sections (TodaysDeepDrop, DeepQuestionOfTheDay, CouncilDebate)
+- [x] Test all enhancements across devices (verified working on dev server)
+- [ ] Save checkpoint with performance improvements

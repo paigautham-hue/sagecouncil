@@ -14,6 +14,8 @@ import { ThemeCards } from "@/components/ThemeCards";
 import { getSagePortrait } from "@/lib/sagePortraits";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { ScrollProgressIndicator } from "@/components/ScrollProgressIndicator";
+import { LazySection } from "@/components/LazySection";
 
 export default function Home() {
   const { user, isAuthenticated } = useAuth();
@@ -35,6 +37,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen cosmic-bg">
+      <ScrollProgressIndicator />
       {/* Navigation */}
       <nav className="border-b border-border/50 backdrop-blur-xl bg-background/50 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
@@ -206,19 +209,19 @@ export default function Home() {
       )}
 
       {/* Today's Deep Drop */}
-      <section className="container py-16">
+      <LazySection className="container py-16">
         <TodaysDeepDrop />
-      </section>
+      </LazySection>
 
       {/* Deep Question of the Day */}
-      <section className="container py-16">
+      <LazySection className="container py-16">
         <DeepQuestionOfTheDay />
-      </section>
+      </LazySection>
 
       {/* Council Debate */}
-      <section className="container py-16">
+      <LazySection className="container py-16">
         <CouncilDebate />
-      </section>
+      </LazySection>
 
       {/* Pick Your Focus Today */}
       <section className="container py-20">
