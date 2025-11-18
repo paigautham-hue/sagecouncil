@@ -204,7 +204,7 @@ export default function Home() {
         </div>
 
         {/* Wisdom Tree - Background */}
-        <div className="relative z-0 -mt-64 md:-mt-48">
+        <div className="relative z-0 -mt-[350px] md:-mt-48">
           <WisdomTree />
         </div>
       </section>

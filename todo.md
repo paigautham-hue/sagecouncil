@@ -895,3 +895,7 @@
 - [x] Reduce top gap between navigation and title on mobile
 - [x] Drastically reduce gap between buttons and Wisdom Tree on mobile
 - [x] Ensure tree is visible in initial mobile viewport
+
+## Tree Positioning Fix (Nov 18, 2025)
+- [x] Increase negative margin on Wisdom Tree to pull it much closer to buttons on mobile
+- [x] Ensure tree is visible in initial mobile viewport without scrolling
