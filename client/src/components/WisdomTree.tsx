@@ -4,6 +4,7 @@
  * This component works seamlessly on all devices (mobile, tablet, desktop)
  * No interactive SVG, no animations - just a stunning visual
  * Uses wisdom-tree-final.png to ensure fresh deployment
+ * FORCE REBUILD: 2025-11-18 08:30 UTC - Clearing old cached build
  */
 
 export default function WisdomTree() {
