@@ -10,6 +10,7 @@ import { ScrollProgressIndicator } from "@/components/ScrollProgressIndicator";
 import { LazySection } from "@/components/LazySection";
 import { ThemeCards } from "@/components/ThemeCards";
 import { TodaysDeepDrop } from "@/components/TodaysDeepDrop";
+import wisdomTreeImage from "../../../client/public/wisdom-tree-20251118-v2.png";
 
 /**
  * Home Page - Rebuilt from scratch 2025-11-18
@@ -152,7 +153,7 @@ export default function Home() {
           {/* Wisdom Tree Static Image - Direct and Simple */}
           <div className="w-full max-w-6xl mx-auto px-4 py-8 md:py-12">
             <img
-              src="/wisdom-tree-20251118-v2.png"
+              src={wisdomTreeImage}
               alt="The Council of Sages - Wisdom Tree with 19 Sage Portraits"
               className="w-full h-auto"
               loading="lazy"
