@@ -870,4 +870,10 @@
 - [x] Add scroll progress indicator to homepage (subtle bar showing scroll depth)
 - [x] Implement lazy loading with intersection observer for heavy sections (TodaysDeepDrop, DeepQuestionOfTheDay, CouncilDebate)
 - [x] Test all enhancements across devices (verified working on dev server)
-- [ ] Save checkpoint with performance improvements
+- [x] Save checkpoint with performance improvements
+
+## LAYOUT FIXES - Hero Section (Nov 18, 2025)
+- [x] Fix CTA buttons covering Wisdom Tree animation (repositioned content above tree with negative margin)
+- [x] Reduce excessive top spacing on desktop (reduced tree height to 70vh/500px min, adjusted hero padding)
+- [x] Test layout across all screen sizes (verified working on dev server screenshot)
+- [ ] Save checkpoint with layout improvements

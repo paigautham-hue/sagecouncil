@@ -160,23 +160,22 @@ export default function Home() {
       </nav>
 
       {/* Hero Section with Wisdom Tree */}
-      <section className="relative">
-        <WisdomTree />
-        
-        {/* Overlay content */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="max-w-4xl mx-auto text-center px-4 pointer-events-auto">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight drop-shadow-2xl">
+      <section className="relative overflow-hidden">
+        {/* Hero Content - Positioned above tree */}
+        <div className="relative z-10 container mx-auto px-4 pt-8 md:pt-12 pb-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-5xl md:text-7xl font-bold mb-4 md:mb-6 leading-tight drop-shadow-2xl">
               Seek Wisdom from the{" "}
-              <span className="text-gradient-gold">Council of Sages</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cosmic-gold via-cosmic-violet to-cosmic-teal">
+                Council of Sages
+              </span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-foreground/90 mb-12 max-w-2xl mx-auto drop-shadow-lg">
-              Engage in dialogue with history's greatest spiritual teachers. 
-              Compare perspectives, explore practices, and discover your path.
+            <p className="text-lg md:text-xl text-foreground/80 mb-6 md:mb-8 max-w-3xl mx-auto drop-shadow-lg">
+              Engage in dialogue with history's greatest spiritual teachers. Compare perspectives, explore practices, and discover your path.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
               <Link href="/council">
                 <Button size="lg" className="ripple text-lg px-8 py-6 shadow-2xl">
                   <Users className="w-5 h-5 mr-2" />
@@ -194,9 +193,12 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
 
-      {/* Floating quote */}
+        {/* Wisdom Tree - Background */}
+        <div className="relative z-0 -mt-16 md:-mt-24">
+          <WisdomTree />
+        </div>
+      </section>
       {quote && (
         <section className="container py-16">
           <div className="max-w-2xl mx-auto">
