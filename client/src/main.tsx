@@ -7,7 +7,6 @@ import superjson from "superjson";
 import App from "./App";
 import { getLoginUrl } from "./const";
 import "./index.css";
-import { OnboardingProvider } from "./contexts/OnboardingContext";
 
 const queryClient = new QueryClient();
 
@@ -56,9 +55,7 @@ const trpcClient = trpc.createClient({
 createRoot(document.getElementById("root")!).render(
   <trpc.Provider client={trpcClient} queryClient={queryClient}>
     <QueryClientProvider client={queryClient}>
-      <OnboardingProvider>
-        <App />
-      </OnboardingProvider>
+      <App />
     </QueryClientProvider>
   </trpc.Provider>
 );

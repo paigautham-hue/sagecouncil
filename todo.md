@@ -199,9 +199,6 @@
 - [x] Update Sages library with portrait graphics
 - [x] Create getSagePortrait helper function
 - [x] Save checkpoint with enhanced visuals
-- [x] Replace cartoonish icons in theme cards with sophisticated SVG icons
-- [x] Generate missing sage portrait images (all 36 teachers)
-- [x] Update database with portrait URLs for all teachers
 
 
 ## 100% Completion - Missing Features Implementation
@@ -717,195 +714,25 @@
 ## CONTENT EXPANSION & AUTOMATION (Nov 17, 2025)
 
 ### Content Library Expansion
-- [x] Create 10 additional Council Debates on provocative topics (6 seeded successfully)
-- [x] Expand Deep Questions from 24 to 36+ questions (12 new questions added)
-- [x] Create 5 additional Micro-Retreats with diverse themes (all 5 seeded successfully)
-- [x] Ensure content quality and teacher voice authenticity
+- [ ] Create 10 additional Council Debates on provocative topics
+- [ ] Expand Deep Questions from 24 to 50+ questions
+- [ ] Create 5 additional Micro-Retreats with diverse themes
+- [ ] Ensure content quality and teacher voice authenticity
 
 ### Automated Scheduling
-- [x] Implement cron job for weekly Council Debate rotation (Mondays at midnight UTC)
-- [x] Implement cron job for Sunday evening Shadow Mirror generation (Sundays at 8 PM UTC)
-- [x] Add logging and error handling for cron jobs
-- [x] Register cron jobs on server startup
-- [ ] Set up email notification system for Shadow Mirror summaries (requires email service integration)
-- [ ] Set up email notifications for new Council Debates (requires email service integration)
+- [ ] Implement cron job for weekly Council Debate rotation
+- [ ] Implement cron job for Sunday evening Shadow Mirror generation
+- [ ] Set up email notification system for Shadow Mirror summaries
+- [ ] Set up email notifications for new Council Debates
+- [ ] Test all automated jobs
+- [ ] Add logging and error handling for cron jobs
 
 
-## ADMIN DASHBOARD & USER ONBOARDING (Nov 17, 2025)
-
-### Admin Dashboard
-- [x] Create admin-only dashboard page (/admin)
-- [x] Add role-based access control (admin only with redirect)
-- [x] Add content statistics and analytics (overview tab)
-- [x] Create tabbed interface for all content types
-- [x] Add route to App.tsx
-- [ ] Build Council Debates management interface (CRUD) - placeholder created
-- [ ] Build Deep Questions management interface (CRUD) - placeholder created
-- [ ] Build Micro-Retreats management interface (CRUD) - placeholder created
-- [ ] Build Paradoxes management interface (CRUD) - placeholder created
-- [ ] Build Life Experiments management interface (CRUD) - placeholder created
-
-### User Onboarding Flow
-- [x] Install react-joyride for guided tours
-- [x] Create OnboardingContext for tracking user progress
-- [x] Create welcome modal for new users with feature overview
-- [x] Add OnboardingProvider to app root
-- [x] Integrate WelcomeModal into App.tsx
-- [x] Add onboarding progress tracking (localStorage)
-- [ ] Implement guided tour for Deep Questions (deferred)
-- [ ] Implement guided tour for Council Debates (deferred)
-- [ ] Implement guided tour for Micro-Retreats (deferred)
-- [ ] Test onboarding flow end-to-end
-
-
-## CRITICAL FIXES & VISUAL ENHANCEMENT (Nov 17, 2025)
-
-### Loading Issues
-- [ ] Debug infinite loading spinner in Deep Question of the Day component
-- [ ] Debug infinite loading spinner in Council Debate component
-- [ ] Check tRPC query errors and API responses
-- [ ] Verify database queries return data correctly
-- [ ] Test mobile responsiveness of all components
-
-### Visual Enhancement - Replace Cartoonish Icons
-- [ ] Replace flame icon in Suffering & Growth theme card
-- [ ] Replace sparkles icon in Presence & Awareness theme card
-- [ ] Replace people icon in Purpose & Meaning theme card
-- [ ] Replace all lucide-react icons with sophisticated graphics
-- [ ] Design or source premium icon set for all features
-- [ ] Update theme card visual design with elegant graphics
-- [ ] Enhance Advanced Practices section icons (Brain, FlaskConical)
-- [ ] Update navigation icons if any
-- [ ] Ensure consistent sophisticated aesthetic throughout
-
-### Premium Visual Polish
-- [ ] Review and enhance all card designs
-- [ ] Add subtle animations and micro-interactions
-- [ ] Improve typography hierarchy
-- [ ] Enhance color palette sophistication
-- [ ] Add premium visual flourishes (gradients, shadows, borders)
-
-
-## CRITICAL FIXES & VISUAL ENHANCEMENTS (Nov 17, 2025)
-
-### Loading Issues Fixed
-- [x] Debug infinite loading spinners in Deep Question and Council Debate sections
-- [x] Verify all content loading correctly on homepage
-- [x] Test all API endpoints returning data properly
-- [x] Confirm no console errors blocking rendering
-
-### Sophisticated Icon Replacement
-- [x] Create custom SVG icon library (SophisticatedIcons.tsx)
-- [x] Design LotusIcon with sacred geometry pattern
-- [x] Design CompassIcon with mystical compass rose
-- [x] Design LabyrinthIcon with maze pattern
-- [x] Design SeedIcon with growth symbolism
-- [x] Design SacredGeometryIcon with flower of life pattern
-- [x] Replace all Sparkles icons with LotusIcon (header, navigation, CTAs, footer)
-- [x] Replace all Users icons with SacredGeometryIcon (Council, navigation)
-- [x] Replace all Compass icons with CompassIcon (My Path, Compare Two)
-- [x] Replace all Brain icons with LabyrinthIcon (Paradoxes, Ego theme)
-- [x] Replace all FlaskConical icons with SeedIcon (Experiments, Death theme)
-- [x] Replace all BookOpen icons with LotusIcon (Sages navigation)
-- [x] Update ThemeCards.tsx with sophisticated icons for all 6 themes
-- [x] Update Home.tsx with sophisticated icons throughout
-- [x] Test all icons rendering correctly on homepage
-- [x] Verify no TypeScript errors after icon replacement
-- [x] Restart server and confirm zero build errors
-
-### Visual Quality Assurance
-- [x] Verify sophisticated icons display on mobile
-- [x] Confirm icons maintain visual hierarchy
-- [x] Test icon hover states and animations
-- [x] Ensure consistent icon sizing across components
-- [x] Verify color theming works with new icons
-- [x] Test icons in light and dark themes
-- [x] Confirm accessibility (ARIA labels, contrast)
-- [x] Save checkpoint with stunning visual enhancements
-
-
-## FINAL POLISH - Authenticated Testing, Animations & Mobile (Nov 17, 2025)
-
-### Authenticated User Flow Testing
-- [ ] Sign in to the application
-- [ ] Test Deep Question of the Day submission (all 3 depth levels)
-- [ ] Verify Council response generation with RAG context
-- [ ] Test Inner Constellation visualization with real user data
-- [ ] Complete a full Micro-Retreat experience (15 minutes)
-- [ ] Generate a Shadow Mirror weekly summary
-- [ ] Transform a journal entry into a parable (Story Alchemy)
-- [ ] Explore a paradox and submit reflection
-- [ ] Start a Life Experiment and verify tracking
-- [ ] Test all My Path tabs (Journal, Constellation, Shadow Mirror, Stories, Conversations, Progress)
-- [ ] Verify navigation between all features works smoothly
-- [ ] Test Council chat in all 3 modes (One Sage, Compare Two, Full Council)
-- [ ] Submit journal entries with rich text formatting
-- [ ] Test conversation bookmarking and tagging
-
-### Sophisticated Animations & Visual Polish
-- [ ] Add gentle glow animation on icon hover (0.3s transition)
-- [ ] Implement slow rotation effect on hover for sacred geometry icons (360deg in 8s)
-- [ ] Add gradient overlays to theme cards with hover intensity increase
-- [ ] Create smooth page transitions (fade + slide, 300ms)
-- [ ] Add subtle pulse animation to CTA buttons
-- [ ] Implement floating particle effects on hero section
-- [ ] Add smooth scroll behavior for anchor links
-- [ ] Create loading skeleton animations for content
-- [ ] Add ripple effect on button clicks
-- [ ] Implement card lift animation on hover (translateY + shadow)
-- [ ] Add stagger animation for list items (0.1s delay between items)
-- [ ] Create breathing animation for active elements
-- [ ] Test all animations on 60fps performance
-- [ ] Ensure animations respect prefers-reduced-motion
-
-### Mobile Experience Optimization
-- [ ] Test homepage on mobile (320px, 375px, 414px widths)
-- [ ] Verify navigation menu works on mobile
-- [ ] Test all icons scale properly on small screens
-- [ ] Optimize touch targets (minimum 44x44px)
-- [ ] Test Deep Question component on mobile
-- [ ] Verify Council Debate cards stack correctly
-- [ ] Test theme cards grid responsiveness
-- [ ] Verify Advanced Practices section on mobile
-- [ ] Test Micro-Retreats player on mobile
-- [ ] Verify Inner Constellation graph on mobile (touch interactions)
-- [ ] Test Paradox Playground cards on mobile
-- [ ] Verify Life Experiments layout on mobile
-- [ ] Test My Path tabs on mobile
-- [ ] Optimize font sizes for mobile readability
-- [ ] Test all forms on mobile (keyboard handling)
-- [ ] Verify modal dialogs on mobile
-- [ ] Test scroll performance on mobile
-- [ ] Optimize images for mobile bandwidth
-- [ ] Test landscape orientation on mobile
-- [ ] Verify iOS Safari compatibility
-- [ ] Test Android Chrome compatibility
-
-### Final Quality Assurance
-- [ ] Run Lighthouse audit (target: 90+ performance, 100 accessibility)
-- [ ] Test all features in production mode
-- [ ] Verify all API endpoints working
-- [ ] Test error handling and edge cases
-- [ ] Verify loading states throughout
-- [ ] Test with slow network (3G simulation)
-- [ ] Cross-browser testing (Chrome, Firefox, Safari, Edge)
-- [ ] Verify WCAG AAA contrast compliance
-- [ ] Test keyboard navigation throughout
-- [ ] Verify screen reader compatibility
-- [ ] Final visual QA on all pages
-- [ ] Save production-ready checkpoint
-
-
-## AAA-Level Homepage Redesign - Wisdom Tree Concept
-- [x] Create WisdomTree component with SVG structure
-- [x] Implement 36 sage nodes with glowing circular frames
-- [x] Add tree growth animation on page load
-- [x] Create bioluminescent pulsing effect (8-second cycle)
-- [x] Implement philosophical tradition roots extending downward
-- [x] Add floating wisdom quote leaves with drift animation
-- [x] Create interactive node zoom on click
-- [x] Add hover effects with portrait expansion
-- [x] Integrate particle system for light effects
-- [x] Replace current hero section with WisdomTree
-- [x] Add click-to-navigate functionality to sage detail pages
-- [x] Optimize animations with GPU acceleration
+## Typography Upgrade - Luxury Fonts
+- [x] Add Google Fonts imports for Cinzel and Cormorant Garamond
+- [x] Update CSS font-family variables in index.css
+- [x] Update body font to Cormorant Garamond (18px, line-height 1.7)
+- [x] Update headings to Cinzel with refined letter-spacing
+- [x] Test typography across all pages
+- [x] Verify readability and contrast (WCAG AAA compliant)
+- [x] Save checkpoint with luxury typography

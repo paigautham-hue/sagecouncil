@@ -2,14 +2,12 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import MicroRetreats from "./pages/MicroRetreats";
-import Admin from "./pages/Admin";
 import ParadoxPlayground from "./pages/ParadoxPlayground";
 import LifeExperiments from "./pages/LifeExperiments";
 import AdminAnalytics from "@/pages/AdminAnalytics";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import { WelcomeModal } from "./components/WelcomeModal";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import FAQ from "./pages/FAQ";
@@ -30,8 +28,7 @@ function Router() {
       <Route path={"/council"} component={Council} />
       <Route path={"/micro-retreats"} component={MicroRetreats} />
       <Route path={"/paradox-playground"} component={ParadoxPlayground} />
-      <Route path="/life-experiments" component={LifeExperiments} />
-      <Route path="/admin" component={Admin} />
+      <Route path={"/life-experiments"} component={LifeExperiments} />
       <Route path={"/404"} component={NotFound} />
       <Route path="/faq" component={FAQ} />
       <Route path="/safety" component={Safety} />
@@ -56,7 +53,6 @@ function App() {
       <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
           <Toaster />
-          <WelcomeModal />
           <Router />
         </TooltipProvider>
       </ThemeProvider>
