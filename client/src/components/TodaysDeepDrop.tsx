@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { MessageCircle, Users } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
@@ -53,13 +54,15 @@ export function TodaysDeepDrop() {
           
           {/* Teacher Info */}
           <div className="flex items-center justify-center gap-4">
-            <div className="relative">
+            <div className="relative w-16 h-16">
               <div className="absolute inset-0 bg-gold/20 rounded-full blur-xl"></div>
-              <img
-                src={drop.teacher.portrait}
-                alt={drop.teacher.fullName}
-                className="relative w-16 h-16 rounded-full border-2 border-gold/50 object-cover"
-              />
+              <div className="relative w-16 h-16 rounded-full border-2 border-gold/50 overflow-hidden">
+                <ProgressiveImage
+                  src={drop.teacher.portrait}
+                  alt={drop.teacher.fullName}
+                  className="w-full h-full"
+                />
+              </div>
             </div>
             <div className="text-left">
               <div className="text-lg font-semibold text-white">{drop.teacher.fullName}</div>

@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/card';
 import { Download, Share2 } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { getSagePortrait } from '@/lib/sagePortraits';
+import { ProgressiveImage } from '@/components/ProgressiveImage';
 
 interface QuoteCardProps {
   quote: string;
@@ -93,13 +94,15 @@ export function QuoteCard({ quote, teacherName, teacherId, showActions = true }:
           {/* Teacher info */}
           <div className="flex items-center justify-center gap-4">
             {portraitUrl && (
-              <div className="relative">
+              <div className="relative w-16 h-16">
                 <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl" />
-                <img
-                  src={portraitUrl}
-                  alt={teacherName}
-                  className="relative w-16 h-16 rounded-full object-cover border-2 border-primary/50"
-                />
+                <div className="relative w-16 h-16 rounded-full border-2 border-primary/50 overflow-hidden">
+                  <ProgressiveImage
+                    src={portraitUrl}
+                    alt={teacherName}
+                    className="w-full h-full"
+                  />
+                </div>
               </div>
             )}
             <div className="text-center">

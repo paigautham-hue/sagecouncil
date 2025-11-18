@@ -12,6 +12,7 @@ import { DeepQuestionOfTheDay } from "@/components/DeepQuestionOfTheDay";
 import { CouncilDebate } from "@/components/CouncilDebate";
 import { ThemeCards } from "@/components/ThemeCards";
 import { getSagePortrait } from "@/lib/sagePortraits";
+import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export default function Home() {
@@ -357,10 +358,10 @@ export default function Home() {
               <Link key={teacher.id} href={`/sages/${teacher.teacherId}`}>
                 <div className="glass-card p-4 rounded-xl cursor-pointer group text-center">
                   <div className="w-20 h-20 mx-auto mb-3 rounded-full border-2 border-amber-500/50 shadow-lg shadow-amber-500/30 overflow-hidden bg-slate-900/50 sage-avatar">
-                    <img 
+                    <ProgressiveImage
                       src={getSagePortrait(teacher.fullName)} 
                       alt={teacher.fullName}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full"
                     />
                   </div>
                   <h4 className="font-semibold text-sm mb-1 line-clamp-2">{teacher.fullName}</h4>

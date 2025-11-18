@@ -1,6 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 import { trpc } from "@/lib/trpc";
 import { motion } from "framer-motion";
+import { useGesture } from "@use-gesture/react";
+import { Button } from "@/components/ui/button";
+import { RotateCcw } from "lucide-react";
 
 interface SageNode {
   id: number;
@@ -38,7 +41,10 @@ export default function WisdomTree() {
   const [isGrown, setIsGrown] = useState(false);
   const [quoteLeaves, setQuoteLeaves] = useState<QuoteLeaf[]>([]);
   const [isMobile, setIsMobile] = useState(false);
+  const [scale, setScale] = useState(1);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
   const svgRef = useRef<SVGSVGElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Detect mobile screen size
   useEffect(() => {
@@ -153,18 +159,71 @@ export default function WisdomTree() {
 
   const branches = generateBranches();
 
+  // Touch gesture handlers for mobile
+  const bind = useGesture(
+    {
+      onPinch: ({ offset: [scale] }) => {
+        if (isMobile) {
+          setScale(Math.max(0.5, Math.min(3, scale)));
+        }
+      },
+      onDrag: ({ offset: [x, y], pinching }) => {
+        if (isMobile && !pinching) {
+          setPosition({ x, y });
+        }
+      },
+    },
+    {
+      drag: { from: () => [position.x, position.y] },
+      pinch: { scaleBounds: { min: 0.5, max: 3 }, from: () => [scale, 0] },
+    }
+  );
+
+  // Reset view to original position and scale
+  const resetView = () => {
+    setScale(1);
+    setPosition({ x: 0, y: 0 });
+  };
+
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-gradient-to-b from-[#0a0e27] via-[#1a1a2e] to-[#0a0e27]">
+    <div 
+      ref={containerRef}
+      className="relative w-full h-screen overflow-hidden bg-gradient-to-b from-[#0a0e27] via-[#1a1a2e] to-[#0a0e27]"
+      {...(isMobile ? bind() : {})}
+      style={{ touchAction: isMobile ? 'none' : 'auto' }}
+    >
       {/* Ambient glow background */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-violet-900/20 via-transparent to-transparent" />
       
+      {/* Reset button for mobile */}
+      {isMobile && (scale !== 1 || position.x !== 0 || position.y !== 0) && (
+        <Button
+          onClick={resetView}
+          size="sm"
+          variant="outline"
+          className="absolute top-4 right-4 z-50 bg-background/80 backdrop-blur-sm"
+        >
+          <RotateCcw className="w-4 h-4 mr-2" />
+          Reset View
+        </Button>
+      )}
+
       {/* SVG Tree */}
-      <svg
-        ref={svgRef}
-        className="absolute inset-0 w-full h-full"
-        viewBox={isMobile ? "0 0 600 500" : "0 0 1200 900"}
-        preserveAspectRatio="xMidYMid meet"
+      <div
+        style={{
+          transform: isMobile ? `translate(${position.x}px, ${position.y}px) scale(${scale})` : 'none',
+          transformOrigin: 'center center',
+          transition: 'transform 0.1s ease-out',
+          width: '100%',
+          height: '100%',
+        }}
       >
+        <svg
+          ref={svgRef}
+          className="absolute inset-0 w-full h-full"
+          viewBox={isMobile ? "0 0 600 500" : "0 0 1200 900"}
+          preserveAspectRatio="xMidYMid meet"
+        >
         <defs>
           {/* Glow filter for branches */}
           <filter id="glow">
@@ -365,6 +424,7 @@ export default function WisdomTree() {
           }}
         />
       </svg>
+      </div>
 
       {/* Floating particles (fewer on mobile) */}
       <div className="absolute inset-0 pointer-events-none">
