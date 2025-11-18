@@ -1,0 +1,90 @@
+{
+  "query": "SELECT \n  t.fullName,\n  LENGTH(ig.beginnerPath) as beginnerLength,\n  LENGTH(ig.intermediatePath) as intermediateLength,\n  LENGTH(ig.advancedPath) as advancedLength,\n  JSON_LENGTH(ig.dailyIntegration) as dailyTipsCount,\n  JSON_LENGTH(ig.complementaryTeachers) as complementaryCount\nFROM teachers t\nLEFT JOIN integration_guides ig ON t.id = ig.teacherId\nORDER BY t.fullName\nLIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4PQbAAV1fA3eoWB.9bb51d851611 --database my7vf9kVVC5tHsnhvudijY --execute SELECT \n  t.fullName,\n  LENGTH(ig.beginnerPath) as beginnerLength,\n  LENGTH(ig.intermediatePath) as intermediateLength,\n  LENGTH(ig.advancedPath) as advancedLength,\n  JSON_LENGTH(ig.dailyIntegration) as dailyTipsCount,\n  JSON_LENGTH(ig.complementaryTeachers) as complementaryCount\nFROM teachers t\nLEFT JOIN integration_guides ig ON t.id = ig.teacherId\nORDER BY t.fullName\nLIMIT 10;",
+  "rows": [
+    {
+      "fullName": "Adyashanti",
+      "beginnerLength": "1061",
+      "intermediateLength": "1066",
+      "advancedLength": "988",
+      "dailyTipsCount": "8",
+      "complementaryCount": "5"
+    },
+    {
+      "fullName": "Alan Watts",
+      "beginnerLength": "1241",
+      "intermediateLength": "1095",
+      "advancedLength": "1118",
+      "dailyTipsCount": "8",
+      "complementaryCount": "5"
+    },
+    {
+      "fullName": "Baruch Spinoza",
+      "beginnerLength": "979",
+      "intermediateLength": "825",
+      "advancedLength": "879",
+      "dailyTipsCount": "8",
+      "complementaryCount": "6"
+    },
+    {
+      "fullName": "Bessel van der Kolk",
+      "beginnerLength": "1008",
+      "intermediateLength": "905",
+      "advancedLength": "893",
+      "dailyTipsCount": "8",
+      "complementaryCount": "5"
+    },
+    {
+      "fullName": "Carl Jung",
+      "beginnerLength": "1072",
+      "intermediateLength": "1008",
+      "advancedLength": "938",
+      "dailyTipsCount": "8",
+      "complementaryCount": "5"
+    },
+    {
+      "fullName": "David Bohm",
+      "beginnerLength": "1060",
+      "intermediateLength": "954",
+      "advancedLength": "952",
+      "dailyTipsCount": "8",
+      "complementaryCount": "5"
+    },
+    {
+      "fullName": "Eckhart Tolle",
+      "beginnerLength": "1089",
+      "intermediateLength": "1106",
+      "advancedLength": "1029",
+      "dailyTipsCount": "8",
+      "complementaryCount": "5"
+    },
+    {
+      "fullName": "Epictetus",
+      "beginnerLength": "1057",
+      "intermediateLength": "980",
+      "advancedLength": "1041",
+      "dailyTipsCount": "8",
+      "complementaryCount": "5"
+    },
+    {
+      "fullName": "Francisco Varela",
+      "beginnerLength": "1244",
+      "intermediateLength": "1192",
+      "advancedLength": "1068",
+      "dailyTipsCount": "8",
+      "complementaryCount": "5"
+    },
+    {
+      "fullName": "Gabor Maté",
+      "beginnerLength": "1311",
+      "intermediateLength": "1171",
+      "advancedLength": "1150",
+      "dailyTipsCount": "8",
+      "complementaryCount": "5"
+    }
+  ],
+  "messages": [],
+  "stdout": "fullName\tbeginnerLength\tintermediateLength\tadvancedLength\tdailyTipsCount\tcomplementaryCount\nAdyashanti\t1061\t1066\t988\t8\t5\nAlan Watts\t1241\t1095\t1118\t8\t5\nBaruch Spinoza\t979\t825\t879\t8\t6\nBessel van der Kolk\t1008\t905\t893\t8\t5\nCarl Jung\t1072\t1008\t938\t8\t5\nDavid Bohm\t1060\t954\t952\t8\t5\nEckhart Tolle\t1089\t1106\t1029\t8\t5\nEpictetus\t1057\t980\t1041\t8\t5\nFrancisco Varela\t1244\t1192\t1068\t8\t5\nGabor Maté\t1311\t1171\t1150\t8\t5\n",
+  "stderr": "",
+  "execution_time_ms": 1542
+}

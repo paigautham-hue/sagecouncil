@@ -1,0 +1,80 @@
+{
+  "query": "SELECT \n  t.fullName,\n  LENGTH(tb.lifeStory) as lifeStoryLength,\n  LENGTH(tb.historicalContext) as contextLength,\n  JSON_LENGTH(tb.keyLifeEvents) as eventsCount,\n  JSON_LENGTH(tb.influencesReceived) as influencesCount\nFROM teachers t\nLEFT JOIN teacher_biographies tb ON t.id = tb.teacherId\nORDER BY t.fullName\nLIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4PQbAAV1fA3eoWB.9bb51d851611 --database my7vf9kVVC5tHsnhvudijY --execute SELECT \n  t.fullName,\n  LENGTH(tb.lifeStory) as lifeStoryLength,\n  LENGTH(tb.historicalContext) as contextLength,\n  JSON_LENGTH(tb.keyLifeEvents) as eventsCount,\n  JSON_LENGTH(tb.influencesReceived) as influencesCount\nFROM teachers t\nLEFT JOIN teacher_biographies tb ON t.id = tb.teacherId\nORDER BY t.fullName\nLIMIT 10;",
+  "rows": [
+    {
+      "fullName": "Adyashanti",
+      "lifeStoryLength": "2616",
+      "contextLength": "1619",
+      "eventsCount": "8",
+      "influencesCount": "5"
+    },
+    {
+      "fullName": "Alan Watts",
+      "lifeStoryLength": "5112",
+      "contextLength": "2956",
+      "eventsCount": "9",
+      "influencesCount": "0"
+    },
+    {
+      "fullName": "Baruch Spinoza",
+      "lifeStoryLength": "4190",
+      "contextLength": "2730",
+      "eventsCount": "8",
+      "influencesCount": "0"
+    },
+    {
+      "fullName": "Bessel van der Kolk",
+      "lifeStoryLength": "4537",
+      "contextLength": "3002",
+      "eventsCount": "9",
+      "influencesCount": "0"
+    },
+    {
+      "fullName": "Carl Jung",
+      "lifeStoryLength": "5008",
+      "contextLength": "2824",
+      "eventsCount": "10",
+      "influencesCount": "0"
+    },
+    {
+      "fullName": "David Bohm",
+      "lifeStoryLength": "3865",
+      "contextLength": "2735",
+      "eventsCount": "10",
+      "influencesCount": "0"
+    },
+    {
+      "fullName": "Eckhart Tolle",
+      "lifeStoryLength": "4289",
+      "contextLength": "2794",
+      "eventsCount": "9",
+      "influencesCount": "0"
+    },
+    {
+      "fullName": "Epictetus",
+      "lifeStoryLength": "4791",
+      "contextLength": "2312",
+      "eventsCount": "8",
+      "influencesCount": "0"
+    },
+    {
+      "fullName": "Francisco Varela",
+      "lifeStoryLength": "4636",
+      "contextLength": "2800",
+      "eventsCount": "10",
+      "influencesCount": "0"
+    },
+    {
+      "fullName": "Gabor Maté",
+      "lifeStoryLength": "4103",
+      "contextLength": "2680",
+      "eventsCount": "9",
+      "influencesCount": "0"
+    }
+  ],
+  "messages": [],
+  "stdout": "fullName\tlifeStoryLength\tcontextLength\teventsCount\tinfluencesCount\nAdyashanti\t2616\t1619\t8\t5\nAlan Watts\t5112\t2956\t9\t0\nBaruch Spinoza\t4190\t2730\t8\t0\nBessel van der Kolk\t4537\t3002\t9\t0\nCarl Jung\t5008\t2824\t10\t0\nDavid Bohm\t3865\t2735\t10\t0\nEckhart Tolle\t4289\t2794\t9\t0\nEpictetus\t4791\t2312\t8\t0\nFrancisco Varela\t4636\t2800\t10\t0\nGabor Maté\t4103\t2680\t9\t0\n",
+  "stderr": "",
+  "execution_time_ms": 1579
+}

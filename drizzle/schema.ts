@@ -39,6 +39,7 @@ export const teachers = mysqlTable("teachers", {
   oneLineEssence: text("oneLineEssence"),
   shortSummary: text("shortSummary"),
   mediumSummary: text("mediumSummary"),
+  longSummary: text("longSummary"),
   avatarUrl: varchar("avatarUrl", { length: 512 }), // URL to avatar image
   isActive: boolean("isActive").default(true).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
@@ -56,10 +57,15 @@ export const keyIdeas = mysqlTable("keyIdeas", {
   teacherId: int("teacherId").notNull(),
   ideaId: varchar("ideaId", { length: 128 }).notNull(),
   name: varchar("name", { length: 512 }).notNull(),
+  summary: text("summary"),
+  examples: text("examples"),
   clearExplanation: text("clearExplanation"),
   whenItApplies: text("whenItApplies"),
   lifeDomains: json("lifeDomains").$type<string[]>(),
+  strengths: text("strengths"),
+  potentialMisuse: text("potentialMisuse"),
   commonMisuse: text("commonMisuse"),
+  integrationTips: text("integrationTips"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
@@ -76,8 +82,13 @@ export const practices = mysqlTable("practices", {
   name: varchar("name", { length: 512 }).notNull(),
   type: varchar("type", { length: 64 }), // meditation, reflection, etc.
   stepByStep: text("stepByStep"),
+  variations: json("variations").$type<Array<{ level: string; description: string }>>(),
+  progression: text("progression"),
+  obstacles: json("obstacles").$type<Array<{ obstacle: string; solution: string }>>(),
+  progressIndicators: json("progressIndicators").$type<string[]>(),
   intendedEffect: text("intendedEffect"),
   cautions: text("cautions"),
+  timeCommitment: varchar("timeCommitment", { length: 128 }),
   durationMinutes: int("durationMinutes"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
@@ -251,6 +262,9 @@ export const centralQuestions = mysqlTable("centralQuestions", {
   id: int("id").autoincrement().primaryKey(),
   teacherId: int("teacherId").notNull(),
   question: text("question").notNull(),
+  category: varchar("category", { length: 128 }),
+  explanation: text("explanation"),
+  lifeRelevance: text("lifeRelevance"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
@@ -448,3 +462,77 @@ export const analytics = mysqlTable("analytics", {
 
 export type Analytics = typeof analytics.$inferSelect;
 export type InsertAnalytics = typeof analytics.$inferInsert;
+
+/**
+ * Teacher biographies from v3.0 dataset
+ */
+export const teacherBiographies = mysqlTable("teacher_biographies", {
+  id: int("id").autoincrement().primaryKey(),
+  teacherId: int("teacherId").notNull().unique(),
+  lifeStory: text("lifeStory"),
+  historicalContext: text("historicalContext"),
+  keyLifeEvents: json("keyLifeEvents").$type<Array<{ event: string; context: string }>>(),
+  influencesReceived: json("influencesReceived").$type<string[]>(),
+  influencesGiven: json("influencesGiven").$type<string[]>(),
+  legacyImpact: text("legacyImpact"),
+  keySources: json("keySources").$type<Array<{ title: string; type: string }>>(),
+  createdAt: timestamp("createdAt").notNull().defaultNow(),
+});
+
+export type TeacherBiography = typeof teacherBiographies.$inferSelect;
+export type InsertTeacherBiography = typeof teacherBiographies.$inferInsert;
+
+/**
+ * Case studies showing real-world applications
+ */
+export const caseStudies = mysqlTable("case_studies", {
+  id: int("id").autoincrement().primaryKey(),
+  teacherId: int("teacherId").notNull(),
+  domain: varchar("domain", { length: 128 }).notNull(),
+  scenario: text("scenario").notNull(),
+  relevantTeaching: text("relevantTeaching"),
+  application: text("application"),
+  outcome: text("outcome"),
+  commonObstacles: text("commonObstacles"),
+  createdAt: timestamp("createdAt").notNull().defaultNow(),
+});
+
+export type CaseStudy = typeof caseStudies.$inferSelect;
+export type InsertCaseStudy = typeof caseStudies.$inferInsert;
+
+/**
+ * Integration guides for learning paths
+ */
+export const integrationGuides = mysqlTable("integration_guides", {
+  id: int("id").autoincrement().primaryKey(),
+  teacherId: int("teacherId").notNull().unique(),
+  beginnerPath: text("beginnerPath"),
+  intermediatePath: text("intermediatePath"),
+  advancedPath: text("advancedPath"),
+  dailyIntegration: json("dailyIntegration").$type<string[]>(),
+  complementaryTeachers: json("complementaryTeachers").$type<string[]>(),
+  potentialPitfalls: json("potentialPitfalls").$type<string[]>(),
+  signsOfProgress: json("signsOfProgress").$type<string[]>(),
+  whenThisHelps: text("whenThisHelps"),
+  whenToLookElsewhere: text("whenToLookElsewhere"),
+  createdAt: timestamp("createdAt").notNull().defaultNow(),
+});
+
+export type IntegrationGuide = typeof integrationGuides.$inferSelect;
+export type InsertIntegrationGuide = typeof integrationGuides.$inferInsert;
+
+/**
+ * Global glossary terms
+ */
+export const glossaryTerms = mysqlTable("glossary_terms", {
+  id: int("id").autoincrement().primaryKey(),
+  term: varchar("term", { length: 256 }).notNull().unique(),
+  definition: text("definition").notNull(),
+  traditions: json("traditions").$type<string[]>(),
+  relatedTerms: json("relatedTerms").$type<string[]>(),
+  teacherIds: json("teacherIds").$type<number[]>(),
+  createdAt: timestamp("createdAt").notNull().defaultNow(),
+});
+
+export type GlossaryTerm = typeof glossaryTerms.$inferSelect;
+export type InsertGlossaryTerm = typeof glossaryTerms.$inferInsert;
