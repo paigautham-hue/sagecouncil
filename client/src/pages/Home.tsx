@@ -46,27 +46,27 @@ export default function Home() {
             </Link>
             
             <div className="hidden md:flex items-center gap-6">
-              <Link href="/council">
-                <a className="text-foreground/80 hover:text-foreground transition-colors">Council</a>
+              <Link href="/council" className="text-foreground/80 hover:text-foreground transition-colors">
+                Council
               </Link>
-              <Link href="/sages">
-                <a className="text-foreground/80 hover:text-foreground transition-colors">Sages</a>
+              <Link href="/sages" className="text-foreground/80 hover:text-foreground transition-colors">
+                Sages
               </Link>
-              <Link href="/journeys">
-                <a className="text-foreground/80 hover:text-foreground transition-colors">Journeys</a>
+              <Link href="/journeys" className="text-foreground/80 hover:text-foreground transition-colors">
+                Journeys
               </Link>
-              <Link href="/micro-retreats">
-                <a className="text-foreground/80 hover:text-foreground transition-colors">Retreats</a>
+              <Link href="/micro-retreats" className="text-foreground/80 hover:text-foreground transition-colors">
+                Retreats
               </Link>
-              <Link href="/paradox-playground">
-                <a className="text-foreground/80 hover:text-foreground transition-colors">Paradoxes</a>
+              <Link href="/paradox-playground" className="text-foreground/80 hover:text-foreground transition-colors">
+                Paradoxes
               </Link>
-              <Link href="/life-experiments">
-                <a className="text-foreground/80 hover:text-foreground transition-colors">Experiments</a>
+              <Link href="/life-experiments" className="text-foreground/80 hover:text-foreground transition-colors">
+                Experiments
               </Link>
               {isAuthenticated && (
-                <Link href="/my-path">
-                  <a className="text-foreground/80 hover:text-foreground transition-colors">My Path</a>
+                <Link href="/my-path" className="text-foreground/80 hover:text-foreground transition-colors">
+                  My Path
                 </Link>
               )}
             </div>
@@ -399,13 +399,13 @@ export default function Home() {
               </span>
             </div>
             <div className="flex flex-wrap gap-6 text-sm text-muted-foreground justify-center md:justify-end">
-              <Link href="/sages"><a className="hover:text-foreground transition-colors">Sages</a></Link>
-              <Link href="/journeys"><a className="hover:text-foreground transition-colors">Journeys</a></Link>
-              <Link href="/council"><a className="hover:text-foreground transition-colors">Council</a></Link>
-              <Link href="/about"><a className="hover:text-foreground transition-colors">About</a></Link>
-              <Link href="/faq"><a className="hover:text-foreground transition-colors">FAQ</a></Link>
-              <Link href="/safety"><a className="hover:text-foreground transition-colors">Safety</a></Link>
-              <Link href="/privacy"><a className="hover:text-foreground transition-colors">Privacy</a></Link>
+              <Link href="/sages" className="hover:text-foreground transition-colors">Sages</Link>
+              <Link href="/journeys" className="hover:text-foreground transition-colors">Journeys</Link>
+              <Link href="/council" className="hover:text-foreground transition-colors">Council</Link>
+              <Link href="/about" className="hover:text-foreground transition-colors">About</Link>
+              <Link href="/faq" className="hover:text-foreground transition-colors">FAQ</Link>
+              <Link href="/safety" className="hover:text-foreground transition-colors">Safety</Link>
+              <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
             </div>
           </div>
         </div>
