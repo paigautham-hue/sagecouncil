@@ -22,6 +22,8 @@ export default function Home() {
   const [quote, setQuote] = useState<{ text: string; teacher: string } | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
+  // DEPLOYMENT: 2795ff8b - Unified Static Wisdom Tree with wisdom-tree-final.png
+  // This version uses ONLY the static image, no SVG animations
   // No longer need mobile detection - using unified static tree for all devices
 
   const { data: randomQuote } = trpc.quotes.getRandom.useQuery();
