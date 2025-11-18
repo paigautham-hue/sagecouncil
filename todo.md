@@ -890,3 +890,8 @@
 - [x] Test mobile layout across different screen sizes (iPhone SE, standard phones, tablets)
 - [x] Add interactive tooltips for Wisdom Tree sage nodes (hover/tap to show names and descriptions)
 - [x] Implement lazy loading for Wisdom Tree with intersection observer
+
+## Mobile Layout Spacing Fix (Nov 18, 2025)
+- [x] Reduce top gap between navigation and title on mobile
+- [x] Drastically reduce gap between buttons and Wisdom Tree on mobile
+- [x] Ensure tree is visible in initial mobile viewport
