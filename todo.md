@@ -1003,5 +1003,9 @@
 ## Cache Refresh - Force New Static Tree to Published Site (Nov 18, 2025)
 - [x] Added cache-busting query parameter ?v=2 to image URL
 - [x] Dev server verified - new static tree displaying correctly
+- [x] Debugged why published site still showed old tree
+- [x] Upgraded cache-busting to v=3 for more aggressive invalidation
+- [x] Added decoding="async" attribute for better performance
+- [x] Dev server confirmed working with new parameters
 - [ ] Create new checkpoint to push updates
 - [ ] Verify published site shows new static graphic on mobile and desktop
