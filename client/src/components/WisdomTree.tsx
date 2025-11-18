@@ -12,7 +12,7 @@ export default function WisdomTree() {
     <div className="w-full max-w-6xl mx-auto px-4 py-12">
       <picture>
         <img
-          src="/wisdom-tree-final.png"
+          src="/wisdom-tree-20251118-v2.png"
           alt="The Council of Sages - Wisdom Tree with 19 Sage Portraits"
           className="w-full h-auto"
           loading="lazy"
