@@ -7,7 +7,6 @@ import { trpc } from "@/lib/trpc";
 import { useEffect, useState } from "react";
 import { TemplePortal } from "@/components/TemplePortal";
 import WisdomTree from "@/components/WisdomTree";
-import WisdomTreeMobile from "@/components/WisdomTreeMobile";
 import { TodaysDeepDrop } from "@/components/TodaysDeepDrop";
 import { DeepQuestionOfTheDay } from "@/components/DeepQuestionOfTheDay";
 import { CouncilDebate } from "@/components/CouncilDebate";
@@ -23,43 +22,7 @@ export default function Home() {
   const [quote, setQuote] = useState<{ text: string; teacher: string } | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
-  // Initialize with immediate detection - check window.innerWidth immediately
-  const [isMobile, setIsMobile] = useState(() => {
-    if (typeof window !== 'undefined') {
-      // Use visualViewport for Safari, which is more accurate on mobile
-      const width = window.visualViewport?.width ?? window.innerWidth;
-      return width < 768;
-    }
-    return false;
-  });
-
-  // Reliable mobile detection using JavaScript
-  useEffect(() => {
-    const checkMobile = () => {
-      // Use visualViewport for Safari, which is more accurate on mobile
-      const width = window.visualViewport?.width ?? window.innerWidth;
-      const mobile = width < 768;
-      setIsMobile(mobile);
-    };
-    
-    // Check immediately
-    checkMobile();
-    
-    // Listen for resize
-    window.addEventListener('resize', checkMobile);
-    
-    // Also listen to visualViewport changes for Safari
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', checkMobile);
-    }
-    
-    return () => {
-      window.removeEventListener('resize', checkMobile);
-      if (window.visualViewport) {
-        window.visualViewport.removeEventListener('resize', checkMobile);
-      }
-    };
-  }, []);
+  // No longer need mobile detection - using unified static tree for all devices
 
   const { data: randomQuote } = trpc.quotes.getRandom.useQuery();
   const { data: teachers } = trpc.teachers.getAll.useQuery();
@@ -198,12 +161,8 @@ export default function Home() {
 
           {/* Wisdom Tree - Background */}
           <div className="relative z-0 -mt-[550px] md:-mt-48">
-            {/* Conditional rendering based on JavaScript detection */}
-            {isMobile ? (
-              <WisdomTreeMobile />
-            ) : (
-              <WisdomTree />
-            )}
+            {/* Unified static tree for all devices */}
+            <WisdomTree />
           </div>
 
           {/* Scroll Hint */}

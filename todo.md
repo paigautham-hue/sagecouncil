@@ -986,3 +986,13 @@
 - [x] Let users explore sages through "Meet the Sages" section instead
 - [x] Clean, simple visual presentation - component now only 14 lines
 - [x] Zero TypeScript errors, clean build
+
+
+## Unified Static Wisdom Tree Graphic (Nov 18, 2025)
+- [x] Generate single beautiful static graphic with sage portraits integrated
+- [x] Created stunning unified image with 19 sage portraits in golden tree
+- [x] Remove interactive SVG tree component - replaced with simple image display
+- [x] Update both WisdomTree and WisdomTreeMobile to use static graphic
+- [x] Eliminated all "?" broken image boxes
+- [x] Desktop displays unified tree perfectly
+- [ ] Test on mobile Safari and Chrome (user to verify)
