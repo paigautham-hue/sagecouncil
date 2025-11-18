@@ -876,4 +876,11 @@
 - [x] Fix CTA buttons covering Wisdom Tree animation (repositioned content above tree with negative margin)
 - [x] Reduce excessive top spacing on desktop (reduced tree height to 70vh/500px min, adjusted hero padding)
 - [x] Test layout across all screen sizes (verified working on dev server screenshot)
-- [ ] Save checkpoint with layout improvements
+- [x] Save checkpoint with layout improvements
+
+## CRITICAL - Homepage Layout Broken (Nov 18, 2025)
+- [ ] Fix missing "Council of Sages" text in hero title
+- [ ] Fix Wisdom Tree positioning (barely visible, pushed too far down)
+- [ ] Restore proper spacing and visual hierarchy
+- [ ] Test desktop layout thoroughly
+- [ ] Save checkpoint with perfect layout

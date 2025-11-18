@@ -160,22 +160,31 @@ export default function Home() {
       </nav>
 
       {/* Hero Section with Wisdom Tree */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden pb-8">
         {/* Hero Content - Positioned above tree */}
-        <div className="relative z-10 container mx-auto px-4 pt-8 md:pt-12 pb-8">
+        <div className="relative z-10 container mx-auto px-4 pt-20 md:pt-24 pb-16 md:pb-20">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-7xl font-bold mb-4 md:mb-6 leading-tight drop-shadow-2xl">
-              Seek Wisdom from the{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cosmic-gold via-cosmic-violet to-cosmic-teal">
+            <h1 className="font-bold mb-8 leading-[1.3] drop-shadow-2xl min-h-[120px] md:min-h-[160px] flex flex-col items-center justify-center">
+              <span className="block">Seek Wisdom from the</span>
+              <span 
+                className="block" 
+                style={{
+                  background: 'linear-gradient(to right, oklch(0.70 0.15 85), oklch(0.55 0.25 290), oklch(0.55 0.15 200))',
+                  WebkitBackgroundClip: 'text',
+                  backgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  color: 'transparent'
+                }}
+              >
                 Council of Sages
               </span>
             </h1>
             
-            <p className="text-lg md:text-xl text-foreground/80 mb-6 md:mb-8 max-w-3xl mx-auto drop-shadow-lg">
+            <p className="text-lg md:text-xl text-foreground/80 mb-10 max-w-3xl mx-auto drop-shadow-lg">
               Engage in dialogue with history's greatest spiritual teachers. Compare perspectives, explore practices, and discover your path.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <Link href="/council">
                 <Button size="lg" className="ripple text-lg px-8 py-6 shadow-2xl">
                   <Users className="w-5 h-5 mr-2" />
@@ -195,7 +204,7 @@ export default function Home() {
         </div>
 
         {/* Wisdom Tree - Background */}
-        <div className="relative z-0 -mt-16 md:-mt-24">
+        <div className="relative z-0 -mt-32">
           <WisdomTree />
         </div>
       </section>

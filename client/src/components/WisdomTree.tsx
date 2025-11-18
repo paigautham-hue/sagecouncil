@@ -188,7 +188,7 @@ export default function WisdomTree() {
   return (
     <div 
       ref={containerRef}
-      className="relative w-full h-[70vh] min-h-[500px] overflow-hidden bg-gradient-to-b from-[#0a0e27] via-[#1a1a2e] to-[#0a0e27]"
+      className="relative w-full h-[60vh] min-h-[450px] overflow-hidden bg-gradient-to-b from-[#0a0e27] via-[#1a1a2e] to-[#0a0e27]"
       {...(isMobile ? bind() : {})}
       style={{ touchAction: isMobile ? 'none' : 'auto' }}
     >
