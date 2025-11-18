@@ -37,25 +37,37 @@ export default function WisdomTree() {
   const [hoveredNode, setHoveredNode] = useState<number | null>(null);
   const [isGrown, setIsGrown] = useState(false);
   const [quoteLeaves, setQuoteLeaves] = useState<QuoteLeaf[]>([]);
+  const [isMobile, setIsMobile] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
 
-  // Generate tree structure with 36 nodes
+  // Detect mobile screen size
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Generate tree structure with 36 nodes (18 on mobile)
   useEffect(() => {
     if (!teachers || teachers.length === 0) return;
 
     const nodes: SageNode[] = [];
-    const centerX = 600;
-    const startY = 800;
-    const branches = 6; // 6 main branches
-    const nodesPerBranch = 6; // 6 nodes per branch = 36 total
+    const centerX = isMobile ? 300 : 600;
+    const startY = isMobile ? 400 : 800;
+    const branches = isMobile ? 6 : 6; // Keep 6 branches
+    const maxNodes = isMobile ? 18 : 36; // Reduce nodes on mobile
+    const nodesPerBranch = Math.floor(maxNodes / branches);
 
-    teachers.slice(0, 36).forEach((teacher: any, index: number) => {
+    teachers.slice(0, maxNodes).forEach((teacher: any, index: number) => {
       const branchIndex = Math.floor(index / nodesPerBranch);
       const nodeInBranch = index % nodesPerBranch;
       
       // Calculate position using golden ratio spiral
       const angle = (branchIndex * 60) + (nodeInBranch * 10) - 90; // Start from top
-      const radius = 80 + (nodeInBranch * 60); // Increase radius as we go up
+      const baseRadius = isMobile ? 40 : 80;
+      const radiusIncrement = isMobile ? 30 : 60;
+      const radius = baseRadius + (nodeInBranch * radiusIncrement); // Increase radius as we go up
       
       const x = centerX + radius * Math.cos((angle * Math.PI) / 180);
       const y = startY - radius * Math.sin((angle * Math.PI) / 180);
@@ -74,7 +86,7 @@ export default function WisdomTree() {
 
     setSageNodes(nodes);
 
-    // Generate floating quote leaves
+    // Generate floating quote leaves (fewer on mobile)
     const quotes = [
       "The wound is the place where the Light enters you.",
       "Be the change you wish to see in the world.",
@@ -86,16 +98,19 @@ export default function WisdomTree() {
       "Let go or be dragged.",
     ];
 
-    const leaves: QuoteLeaf[] = quotes.map((text, i) => ({
+    const maxQuotes = isMobile ? 4 : 8;
+    const maxWidth = isMobile ? 400 : 800;
+    const maxHeight = isMobile ? 200 : 400;
+    const leaves: QuoteLeaf[] = quotes.slice(0, maxQuotes).map((text, i) => ({
       id: i,
       text,
-      x: 200 + Math.random() * 800,
-      y: 200 + Math.random() * 400,
+      x: (isMobile ? 100 : 200) + Math.random() * maxWidth,
+      y: (isMobile ? 100 : 200) + Math.random() * maxHeight,
       delay: Math.random() * 5,
     }));
 
     setQuoteLeaves(leaves);
-  }, [teachers]);
+  }, [teachers, isMobile]);
 
   // Trigger growth animation on mount
   useEffect(() => {
@@ -107,8 +122,8 @@ export default function WisdomTree() {
   const generateBranches = () => {
     if (sageNodes.length === 0) return [];
 
-    const centerX = 600;
-    const startY = 800;
+    const centerX = isMobile ? 300 : 600;
+    const startY = isMobile ? 400 : 800;
     const branches: string[] = [];
 
     // Group nodes by branch
@@ -147,7 +162,7 @@ export default function WisdomTree() {
       <svg
         ref={svgRef}
         className="absolute inset-0 w-full h-full"
-        viewBox="0 0 1200 900"
+        viewBox={isMobile ? "0 0 600 500" : "0 0 1200 900"}
         preserveAspectRatio="xMidYMid meet"
       >
         <defs>
@@ -176,8 +191,8 @@ export default function WisdomTree() {
           </radialGradient>
         </defs>
 
-        {/* Philosophical Tradition Roots */}
-        {PHILOSOPHICAL_TRADITIONS.map((tradition, i) => (
+        {/* Philosophical Tradition Roots (hidden on mobile) */}
+        {!isMobile && PHILOSOPHICAL_TRADITIONS.map((tradition, i) => (
           <g key={tradition.name}>
             <motion.path
               d={`M 600 800 Q ${tradition.x} 850, ${tradition.x} 900`}
@@ -228,7 +243,7 @@ export default function WisdomTree() {
             <motion.circle
               cx={node.x}
               cy={node.y}
-              r={hoveredNode === node.id ? 35 : 25}
+              r={hoveredNode === node.id ? (isMobile ? 20 : 35) : (isMobile ? 15 : 25)}
               fill="url(#nodeGradient)"
               filter="url(#nodeGlow)"
               initial={{ scale: 0, opacity: 0 }}
@@ -242,17 +257,17 @@ export default function WisdomTree() {
             {/* Node portrait (clipped to circle) */}
             <defs>
               <clipPath id={`clip-${node.id}`}>
-                <circle cx={node.x} cy={node.y} r={hoveredNode === node.id ? 28 : 20} />
+                <circle cx={node.x} cy={node.y} r={hoveredNode === node.id ? (isMobile ? 16 : 28) : (isMobile ? 12 : 20)} />
               </clipPath>
             </defs>
 
             {node.avatarUrl && (
               <motion.image
                 href={node.avatarUrl}
-                x={node.x - (hoveredNode === node.id ? 28 : 20)}
-                y={node.y - (hoveredNode === node.id ? 28 : 20)}
-                width={hoveredNode === node.id ? 56 : 40}
-                height={hoveredNode === node.id ? 56 : 40}
+                x={node.x - (hoveredNode === node.id ? (isMobile ? 16 : 28) : (isMobile ? 12 : 20))}
+                y={node.y - (hoveredNode === node.id ? (isMobile ? 16 : 28) : (isMobile ? 12 : 20))}
+                width={hoveredNode === node.id ? (isMobile ? 32 : 56) : (isMobile ? 24 : 40)}
+                height={hoveredNode === node.id ? (isMobile ? 32 : 56) : (isMobile ? 24 : 40)}
                 clipPath={`url(#clip-${node.id})`}
                 initial={{ opacity: 0 }}
                 animate={isGrown ? { opacity: 0.9 } : {}}
@@ -271,7 +286,7 @@ export default function WisdomTree() {
             <motion.circle
               cx={node.x}
               cy={node.y}
-              r={hoveredNode === node.id ? 30 : 22}
+              r={hoveredNode === node.id ? (isMobile ? 18 : 30) : (isMobile ? 14 : 22)}
               fill="none"
               stroke="#f4d03f"
               strokeWidth={hoveredNode === node.id ? 3 : 2}
@@ -291,10 +306,10 @@ export default function WisdomTree() {
             {hoveredNode === node.id && (
               <motion.text
                 x={node.x}
-                y={node.y - 45}
+                y={node.y - (isMobile ? 25 : 45)}
                 textAnchor="middle"
                 fill="#f4d03f"
-                fontSize="14"
+                fontSize={isMobile ? "10" : "14"}
                 fontWeight="600"
                 fontFamily="Cinzel, serif"
                 initial={{ opacity: 0, y: 10 }}
@@ -315,7 +330,7 @@ export default function WisdomTree() {
             y={leaf.y}
             textAnchor="middle"
             fill="#f4d03f"
-            fontSize="11"
+            fontSize={isMobile ? "9" : "11"}
             fontStyle="italic"
             fontFamily="Cormorant Garamond, serif"
             opacity="0.4"
@@ -337,9 +352,9 @@ export default function WisdomTree() {
 
         {/* Center trunk */}
         <motion.circle
-          cx="600"
-          cy="800"
-          r="40"
+          cx={isMobile ? "300" : "600"}
+          cy={isMobile ? "400" : "800"}
+          r={isMobile ? "25" : "40"}
           fill="url(#nodeGradient)"
           filter="url(#nodeGlow)"
           initial={{ scale: 0, opacity: 0 }}
@@ -351,9 +366,9 @@ export default function WisdomTree() {
         />
       </svg>
 
-      {/* Floating particles */}
+      {/* Floating particles (fewer on mobile) */}
       <div className="absolute inset-0 pointer-events-none">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(isMobile ? 10 : 20)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-gold rounded-full"

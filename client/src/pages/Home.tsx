@@ -2,7 +2,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
 import { Link } from "wouter";
-import { Sparkles, Users, BookOpen, Compass, ArrowRight, Menu, X, Brain, FlaskConical } from "lucide-react";
+import { Sparkles, Users, BookOpen, Compass, ArrowRight, Menu, X, Brain, FlaskConical, ArrowLeft } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useEffect, useState } from "react";
 import { TemplePortal } from "@/components/TemplePortal";
@@ -46,6 +46,9 @@ export default function Home() {
             </Link>
             
             <div className="hidden md:flex items-center gap-6">
+              <a href="https://soulprint.manus.space" className="text-foreground/80 hover:text-foreground transition-colors flex items-center gap-1">
+                <span>←</span> SoulPrint
+              </a>
               <Link href="/council" className="text-foreground/80 hover:text-foreground transition-colors">
                 Council
               </Link>
@@ -80,6 +83,12 @@ export default function Home() {
               </SheetTrigger>
               <SheetContent side="right" className="w-64 cosmic-bg border-border/50">
                 <div className="flex flex-col gap-4 mt-8">
+                  <a href="https://soulprint.manus.space">
+                    <Button variant="ghost" className="w-full justify-start" onClick={() => setMobileMenuOpen(false)}>
+                      <ArrowLeft className="w-4 h-4 mr-2" />
+                      SoulPrint
+                    </Button>
+                  </a>
                   <Link href="/council">
                     <Button variant="ghost" className="w-full justify-start" onClick={() => setMobileMenuOpen(false)}>
                       <Users className="w-4 h-4 mr-2" />
