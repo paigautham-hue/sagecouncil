@@ -160,7 +160,7 @@ export default function Home() {
           </div>
 
           {/* Wisdom Tree - Background */}
-          <div className="relative z-0 -mt-[550px] md:-mt-48">
+          <div className="relative z-0 -mt-32 md:-mt-48">
             {/* Unified static tree for all devices */}
             <WisdomTree />
           </div>
