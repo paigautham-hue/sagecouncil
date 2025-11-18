@@ -1,0 +1,26 @@
+{
+  "query": "SELECT \n  'Teachers for Council Chat' as feature,\n  COUNT(*) as available_count\nFROM teachers\nWHERE fullName IS NOT NULL\nUNION ALL\nSELECT 'Embeddings for RAG',\n  COUNT(*)\nFROM embeddings\nWHERE embedding IS NOT NULL\nUNION ALL\nSELECT 'Key Ideas for Context',\n  COUNT(*)\nFROM keyIdeas\nWHERE teacherId IS NOT NULL\nUNION ALL\nSELECT 'Practices for Recommendations',\n  COUNT(*)\nFROM practices\nWHERE teacherId IS NOT NULL;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4PQbAAV1fA3eoWB.9bb51d851611 --database my7vf9kVVC5tHsnhvudijY --execute SELECT \n  'Teachers for Council Chat' as feature,\n  COUNT(*) as available_count\nFROM teachers\nWHERE fullName IS NOT NULL\nUNION ALL\nSELECT 'Embeddings for RAG',\n  COUNT(*)\nFROM embeddings\nWHERE embedding IS NOT NULL\nUNION ALL\nSELECT 'Key Ideas for Context',\n  COUNT(*)\nFROM keyIdeas\nWHERE teacherId IS NOT NULL\nUNION ALL\nSELECT 'Practices for Recommendations',\n  COUNT(*)\nFROM practices\nWHERE teacherId IS NOT NULL;",
+  "rows": [
+    {
+      "feature": "Practices for Recommendations",
+      "available_count": "7"
+    },
+    {
+      "feature": "Embeddings for RAG",
+      "available_count": "0"
+    },
+    {
+      "feature": "Teachers for Council Chat",
+      "available_count": "36"
+    },
+    {
+      "feature": "Key Ideas for Context",
+      "available_count": "2211"
+    }
+  ],
+  "messages": [],
+  "stdout": "feature\tavailable_count\nPractices for Recommendations\t7\nEmbeddings for RAG\t0\nTeachers for Council Chat\t36\nKey Ideas for Context\t2211\n",
+  "stderr": "",
+  "execution_time_ms": 1518
+}

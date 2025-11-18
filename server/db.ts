@@ -6,7 +6,8 @@ import {
   userJourneyProgress, journalEntries, conversations, conversationMessages,
   embeddings, analytics, deepQuestions, userThemeStats, councilDebates,
   microRetreats, userMicroRetreatSessions, shadowMirrorSummaries, stories,
-  paradoxes, userParadoxReflections, lifeExperiments, userExperimentLogs
+  paradoxes, userParadoxReflections, lifeExperiments, userExperimentLogs,
+  teacherBiographies, integrationGuides
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -159,6 +160,24 @@ export async function getMisunderstandingsByTeacher(teacherId: number) {
   if (!db) return [];
   
   return await db.select().from(misunderstandings).where(eq(misunderstandings.teacherId, teacherId));
+}
+
+// Teacher Biographies
+export async function getTeacherBiography(teacherId: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.select().from(teacherBiographies).where(eq(teacherBiographies.teacherId, teacherId)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+// Integration Guides
+export async function getIntegrationGuide(teacherId: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.select().from(integrationGuides).where(eq(integrationGuides.teacherId, teacherId)).limit(1);
+  return result.length > 0 ? result[0] : null;
 }
 
 // Themes

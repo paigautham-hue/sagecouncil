@@ -1,0 +1,50 @@
+{
+  "query": "SELECT \n  'Journeys' as tableName,\n  COUNT(*) as totalRecords\nFROM journeys\nUNION ALL\nSELECT 'Journey Days',\n  COUNT(*)\nFROM journeyDays\nUNION ALL\nSELECT 'Conversations',\n  COUNT(*)\nFROM conversations\nUNION ALL\nSELECT 'Conversation Messages',\n  COUNT(*)\nFROM conversationMessages\nUNION ALL\nSELECT 'Embeddings',\n  COUNT(*)\nFROM embeddings\nUNION ALL\nSELECT 'Users',\n  COUNT(*)\nFROM users\nUNION ALL\nSELECT 'Journal Entries',\n  COUNT(*)\nFROM journalEntries\nUNION ALL\nSELECT 'Paradoxes',\n  COUNT(*)\nFROM paradoxes\nUNION ALL\nSELECT 'Life Experiments',\n  COUNT(*)\nFROM life_experiments\nUNION ALL\nSELECT 'Micro Retreats',\n  COUNT(*)\nFROM micro_retreats;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4PQbAAV1fA3eoWB.9bb51d851611 --database my7vf9kVVC5tHsnhvudijY --execute SELECT \n  'Journeys' as tableName,\n  COUNT(*) as totalRecords\nFROM journeys\nUNION ALL\nSELECT 'Journey Days',\n  COUNT(*)\nFROM journeyDays\nUNION ALL\nSELECT 'Conversations',\n  COUNT(*)\nFROM conversations\nUNION ALL\nSELECT 'Conversation Messages',\n  COUNT(*)\nFROM conversationMessages\nUNION ALL\nSELECT 'Embeddings',\n  COUNT(*)\nFROM embeddings\nUNION ALL\nSELECT 'Users',\n  COUNT(*)\nFROM users\nUNION ALL\nSELECT 'Journal Entries',\n  COUNT(*)\nFROM journalEntries\nUNION ALL\nSELECT 'Paradoxes',\n  COUNT(*)\nFROM paradoxes\nUNION ALL\nSELECT 'Life Experiments',\n  COUNT(*)\nFROM life_experiments\nUNION ALL\nSELECT 'Micro Retreats',\n  COUNT(*)\nFROM micro_retreats;",
+  "rows": [
+    {
+      "tableName": "Journey Days",
+      "totalRecords": "0"
+    },
+    {
+      "tableName": "Journeys",
+      "totalRecords": "0"
+    },
+    {
+      "tableName": "Conversation Messages",
+      "totalRecords": "0"
+    },
+    {
+      "tableName": "Conversations",
+      "totalRecords": "0"
+    },
+    {
+      "tableName": "Embeddings",
+      "totalRecords": "0"
+    },
+    {
+      "tableName": "Journal Entries",
+      "totalRecords": "0"
+    },
+    {
+      "tableName": "Paradoxes",
+      "totalRecords": "8"
+    },
+    {
+      "tableName": "Users",
+      "totalRecords": "0"
+    },
+    {
+      "tableName": "Micro Retreats",
+      "totalRecords": "8"
+    },
+    {
+      "tableName": "Life Experiments",
+      "totalRecords": "7"
+    }
+  ],
+  "messages": [],
+  "stdout": "tableName\ttotalRecords\nJourney Days\t0\nJourneys\t0\nConversation Messages\t0\nConversations\t0\nEmbeddings\t0\nJournal Entries\t0\nParadoxes\t8\nUsers\t0\nMicro Retreats\t8\nLife Experiments\t7\n",
+  "stderr": "",
+  "execution_time_ms": 1627
+}

@@ -1,0 +1,34 @@
+{
+  "query": "SELECT \n  'Published Journeys' as feature,\n  COUNT(*) as available_count\nFROM journeys\nUNION ALL\nSELECT 'Journey Days with Content',\n  COUNT(*)\nFROM journeyDays\nWHERE content IS NOT NULL\nUNION ALL\nSELECT 'Paradoxes Available',\n  COUNT(*)\nFROM paradoxes\nUNION ALL\nSELECT 'Life Experiments Available',\n  COUNT(*)\nFROM life_experiments\nUNION ALL\nSELECT 'Micro Retreats Available',\n  COUNT(*)\nFROM micro_retreats\nUNION ALL\nSELECT 'Deep Questions Available',\n  COUNT(*)\nFROM deepQuestions;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4PQbAAV1fA3eoWB.9bb51d851611 --database my7vf9kVVC5tHsnhvudijY --execute SELECT \n  'Published Journeys' as feature,\n  COUNT(*) as available_count\nFROM journeys\nUNION ALL\nSELECT 'Journey Days with Content',\n  COUNT(*)\nFROM journeyDays\nWHERE content IS NOT NULL\nUNION ALL\nSELECT 'Paradoxes Available',\n  COUNT(*)\nFROM paradoxes\nUNION ALL\nSELECT 'Life Experiments Available',\n  COUNT(*)\nFROM life_experiments\nUNION ALL\nSELECT 'Micro Retreats Available',\n  COUNT(*)\nFROM micro_retreats\nUNION ALL\nSELECT 'Deep Questions Available',\n  COUNT(*)\nFROM deepQuestions;",
+  "rows": [
+    {
+      "feature": "Paradoxes Available",
+      "available_count": "8"
+    },
+    {
+      "feature": "Life Experiments Available",
+      "available_count": "7"
+    },
+    {
+      "feature": "Micro Retreats Available",
+      "available_count": "8"
+    },
+    {
+      "feature": "Journey Days with Content",
+      "available_count": "0"
+    },
+    {
+      "feature": "Published Journeys",
+      "available_count": "0"
+    },
+    {
+      "feature": "Deep Questions Available",
+      "available_count": "24"
+    }
+  ],
+  "messages": [],
+  "stdout": "feature\tavailable_count\nParadoxes Available\t8\nLife Experiments Available\t7\nMicro Retreats Available\t8\nJourney Days with Content\t0\nPublished Journeys\t0\nDeep Questions Available\t24\n",
+  "stderr": "",
+  "execution_time_ms": 1522
+}

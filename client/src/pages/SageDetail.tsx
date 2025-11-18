@@ -7,6 +7,8 @@ import { ArrowLeft, MessageCircle, BookOpen, Lightbulb, Quote } from "lucide-rea
 import { getSagePortrait } from "@/lib/sagePortraits";
 import { Streamdown } from "streamdown";
 import { QuoteCard } from "@/components/QuoteCard";
+import { TeacherBiography } from "@/components/TeacherBiography";
+import { IntegrationGuide } from "@/components/IntegrationGuide";
 import { useState } from "react";
 
 export default function SageDetail() {
@@ -29,6 +31,16 @@ export default function SageDetail() {
   );
   
   const { data: quotes } = trpc.quotes.getByTeacher.useQuery(
+    { teacherId: teacher?.id! },
+    { enabled: !!teacher?.id }
+  );
+  
+  const { data: biography } = trpc.teachers.getBiography.useQuery(
+    { teacherId: teacher?.id! },
+    { enabled: !!teacher?.id }
+  );
+  
+  const { data: integrationGuide } = trpc.teachers.getIntegrationGuide.useQuery(
     { teacherId: teacher?.id! },
     { enabled: !!teacher?.id }
   );
@@ -107,8 +119,10 @@ export default function SageDetail() {
         </div>
 
         <Tabs defaultValue="overview" className="space-y-8">
-          <TabsList className="grid w-full grid-cols-4 max-w-2xl mx-auto">
+          <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6 max-w-4xl mx-auto">
             <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="biography">Biography</TabsTrigger>
+            <TabsTrigger value="integration">Integration</TabsTrigger>
             <TabsTrigger value="ideas">Key Ideas</TabsTrigger>
             <TabsTrigger value="practices">Practices</TabsTrigger>
             <TabsTrigger value="quotes">Quotes</TabsTrigger>
@@ -120,10 +134,68 @@ export default function SageDetail() {
                 <BookOpen className="w-6 h-6 text-accent" />
                 Overview
               </h3>
-              <p className="text-foreground/80">
-                Explore the key ideas, practices, and quotes from {teacher.fullName}.
-              </p>
+              <div className="space-y-4 text-foreground/80">
+                <p>{teacher.shortSummary}</p>
+                {teacher.longSummary && (
+                  <p className="pt-4 border-t border-border/30">{teacher.longSummary}</p>
+                )}
+              </div>
             </Card>
+          </TabsContent>
+          
+          <TabsContent value="biography" className="space-y-6">
+            {biography ? (
+              <TeacherBiography 
+                biography={{
+                  lifeStory: biography.lifeStory || '',
+                  historicalContext: biography.historicalContext || '',
+                  keyLifeEvents: Array.isArray(biography.keyLifeEvents)
+                    ? biography.keyLifeEvents.map((e: any) => `${e.event}\n${e.context}`).join('\n\n')
+                    : (biography.keyLifeEvents || ''),
+                  influencesReceived: Array.isArray(biography.influencesReceived)
+                    ? biography.influencesReceived.join('\n\n')
+                    : (biography.influencesReceived || ''),
+                  influencesGiven: Array.isArray(biography.influencesGiven)
+                    ? biography.influencesGiven.join('\n\n')
+                    : (biography.influencesGiven || ''),
+                  legacyImpact: biography.legacyImpact || '',
+                }} 
+                teacherName={teacher.fullName} 
+              />
+            ) : (
+              <Card className="glass-card p-12 text-center">
+                <p className="text-foreground/70">Biography not available yet.</p>
+              </Card>
+            )}
+          </TabsContent>
+          
+          <TabsContent value="integration" className="space-y-6">
+            {integrationGuide ? (
+              <IntegrationGuide 
+                guide={{
+                  beginnerPath: integrationGuide.beginnerPath || '',
+                  intermediatePath: integrationGuide.intermediatePath || '',
+                  advancedPath: integrationGuide.advancedPath || '',
+                  dailyIntegration: Array.isArray(integrationGuide.dailyIntegration) 
+                    ? integrationGuide.dailyIntegration.join('\n\n') 
+                    : (integrationGuide.dailyIntegration || ''),
+                  complementaryTeachers: Array.isArray(integrationGuide.complementaryTeachers)
+                    ? integrationGuide.complementaryTeachers.join('\n\n')
+                    : (integrationGuide.complementaryTeachers || ''),
+                  potentialPitfalls: Array.isArray(integrationGuide.potentialPitfalls)
+                    ? integrationGuide.potentialPitfalls.join('\n\n')
+                    : (integrationGuide.potentialPitfalls || ''),
+                  signsOfProgress: Array.isArray(integrationGuide.signsOfProgress)
+                    ? integrationGuide.signsOfProgress.join('\n\n')
+                    : (integrationGuide.signsOfProgress || ''),
+                }} 
+                teacherName={teacher.fullName} 
+              />
+            ) : (
+              <Card className="glass-card p-12 text-center">
+                <p className="text-foreground/70">Integration guide not available yet.</p>
+              </Card>
+            )}
           </TabsContent>
 
           <TabsContent value="ideas" className="space-y-6">

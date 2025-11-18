@@ -1,0 +1,22 @@
+{
+  "query": "SELECT \n  'Featured Quotes for Today' as feature,\n  COUNT(*) as available_count\nFROM quotes\nWHERE isFeatured = 1\nUNION ALL\nSELECT 'Teachers with Practices',\n  COUNT(DISTINCT t.id)\nFROM teachers t\nINNER JOIN practices p ON t.id = p.teacherId\nUNION ALL\nSELECT 'Themes with Content',\n  COUNT(DISTINCT th.id)\nFROM themes th\nWHERE th.id IN (SELECT DISTINCT themeId FROM keyIdeas WHERE themeId IS NOT NULL);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4PQbAAV1fA3eoWB.9bb51d851611 --database my7vf9kVVC5tHsnhvudijY --execute SELECT \n  'Featured Quotes for Today' as feature,\n  COUNT(*) as available_count\nFROM quotes\nWHERE isFeatured = 1\nUNION ALL\nSELECT 'Teachers with Practices',\n  COUNT(DISTINCT t.id)\nFROM teachers t\nINNER JOIN practices p ON t.id = p.teacherId\nUNION ALL\nSELECT 'Themes with Content',\n  COUNT(DISTINCT th.id)\nFROM themes th\nWHERE th.id IN (SELECT DISTINCT themeId FROM keyIdeas WHERE themeId IS NOT NULL);",
+  "rows": [
+    {
+      "feature": "Teachers with Practices",
+      "available_count": "3"
+    },
+    {
+      "feature": "Featured Quotes for Today",
+      "available_count": "0"
+    },
+    {
+      "feature": "Themes with Content",
+      "available_count": "0"
+    }
+  ],
+  "messages": [],
+  "stdout": "feature\tavailable_count\nTeachers with Practices\t3\nFeatured Quotes for Today\t0\nThemes with Content\t0\n",
+  "stderr": "",
+  "execution_time_ms": 1676
+}

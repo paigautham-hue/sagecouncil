@@ -70,6 +70,18 @@ export const appRouter = router({
       .query(async ({ input }) => {
         return await db.getMisunderstandingsByTeacher(input.teacherId);
       }),
+    
+    getBiography: publicProcedure
+      .input(z.object({ teacherId: z.number() }))
+      .query(async ({ input }) => {
+        return await db.getTeacherBiography(input.teacherId);
+      }),
+    
+    getIntegrationGuide: publicProcedure
+      .input(z.object({ teacherId: z.number() }))
+      .query(async ({ input }) => {
+        return await db.getIntegrationGuide(input.teacherId);
+      }),
   }),
 
   // Themes
