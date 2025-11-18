@@ -10,7 +10,7 @@ import { ScrollProgressIndicator } from "@/components/ScrollProgressIndicator";
 import { LazySection } from "@/components/LazySection";
 import { ThemeCards } from "@/components/ThemeCards";
 import { TodaysDeepDrop } from "@/components/TodaysDeepDrop";
-import wisdomTreeImage from "../../../client/public/wisdom-tree-20251118-v2.png";
+import wisdomTreeImage from "../../../client/public/wisdom-tree-20251118-v2.png?url";
 
 /**
  * Home Page - Rebuilt from scratch 2025-11-18
