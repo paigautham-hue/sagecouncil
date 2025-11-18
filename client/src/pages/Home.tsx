@@ -2,7 +2,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
 import { Link } from "wouter";
-import { Sparkles, Users, BookOpen, Compass, ArrowRight, Menu, X, Brain, FlaskConical, ArrowLeft } from "lucide-react";
+import { Sparkles, Users, BookOpen, Compass, ArrowRight, Menu, X, Brain, FlaskConical, ArrowLeft, ChevronDown } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useEffect, useState } from "react";
 import { TemplePortal } from "@/components/TemplePortal";
@@ -206,6 +206,12 @@ export default function Home() {
         {/* Wisdom Tree - Background */}
         <div className="relative z-0 -mt-[550px] md:-mt-48">
           <WisdomTree />
+        </div>
+
+        {/* Scroll Hint */}
+        <div className="relative z-10 flex flex-col items-center mt-8 md:mt-12 animate-bounce">
+          <ChevronDown className="w-6 h-6 text-accent/60" />
+          <p className="text-sm text-accent/60 mt-1">Scroll to explore</p>
         </div>
       </section>
       {quote && (

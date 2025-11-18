@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useGesture } from "@use-gesture/react";
 import { Button } from "@/components/ui/button";
 import { RotateCcw } from "lucide-react";
+import { SageQuickView } from "@/components/SageQuickView";
 
 interface SageNode {
   id: number;
@@ -44,6 +45,8 @@ export default function WisdomTree() {
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(false);
+  const [quickViewSage, setQuickViewSage] = useState<any>(null);
+  const [showQuickView, setShowQuickView] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -333,8 +336,15 @@ export default function WisdomTree() {
               fill="url(#nodeGradient)"
               filter="url(#nodeGlow)"
               initial={{ scale: 0, opacity: 0 }}
-              animate={isGrown ? { scale: 1, opacity: 0.8 } : {}}
-              transition={{ duration: 0.5, delay: 0.5 + i * 0.05 }}
+              animate={isGrown ? { 
+                scale: [0, 1.2, 1], 
+                opacity: [0, 1, 0.8] 
+              } : {}}
+              transition={{ 
+                duration: 0.8, 
+                delay: 0.5 + i * 0.08,
+                ease: [0.34, 1.56, 0.64, 1] // Custom spring easing
+              }}
               style={{
                 animation: isGrown ? `pulse 8s ease-in-out infinite ${i * 0.2}s` : "none",
               }}
@@ -355,23 +365,52 @@ export default function WisdomTree() {
                 width={hoveredNode === node.id ? (isMobile ? 32 : 56) : (isMobile ? 24 : 40)}
                 height={hoveredNode === node.id ? (isMobile ? 32 : 56) : (isMobile ? 24 : 40)}
                 clipPath={`url(#clip-${node.id})`}
-                initial={{ opacity: 0 }}
-                animate={isGrown ? { opacity: 0.9 } : {}}
-                transition={{ duration: 0.5, delay: 1 + i * 0.05 }}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={isGrown ? { 
+                  opacity: [0, 1, 0.9], 
+                  scale: [0, 1.1, 1] 
+                } : {}}
+                transition={{ 
+                  duration: 0.8, 
+                  delay: 0.5 + i * 0.08,
+                  ease: [0.34, 1.56, 0.64, 1]
+                }}
                 onMouseEnter={() => setHoveredNode(node.id)}
                 onMouseLeave={() => setHoveredNode(null)}
                 onClick={() => {
                   if (isMobile) {
-                    // On mobile: first tap shows tooltip, second tap navigates
+                    // On mobile: first tap shows tooltip, second tap shows modal
                     if (hoveredNode === node.id) {
-                      window.location.href = `/sages/${node.teacherId}`;
+                      const teacher = teachers?.find(t => t.teacherId === node.teacherId);
+                      if (teacher) {
+                        setQuickViewSage({
+                          id: teacher.teacherId,
+                          name: teacher.fullName,
+                          tradition: node.tradition,
+                          era: teacher.era || 'Ancient',
+                          bio: teacher.shortSummary || teacher.oneLineEssence,
+                          keyTeachings: teacher.traditionTags || []
+                        });
+                        setShowQuickView(true);
+                      }
                     } else {
                       setHoveredNode(node.id);
                     }
                   } else {
-                    // On desktop: click navigates immediately
+                    // On desktop: click shows modal
+                    const teacher = teachers?.find(t => t.teacherId === node.teacherId);
+                    if (teacher) {
+                      setQuickViewSage({
+                        id: teacher.teacherId,
+                        name: teacher.fullName,
+                        tradition: node.tradition,
+                        era: teacher.era || 'Ancient',
+                        bio: teacher.shortSummary || teacher.oneLineEssence,
+                        keyTeachings: teacher.traditionTags || []
+                      });
+                      setShowQuickView(true);
+                    }
                     setSelectedNode(node.id);
-                    window.location.href = `/sages/${node.teacherId}`;
                   }
                 }}
                 className="cursor-pointer transition-all duration-300"
@@ -542,6 +581,13 @@ export default function WisdomTree() {
           }
         }
       `}</style>
+
+      {/* Sage Quick View Modal */}
+      <SageQuickView
+        sage={quickViewSage}
+        open={showQuickView}
+        onOpenChange={setShowQuickView}
+      />
     </div>
   );
 }

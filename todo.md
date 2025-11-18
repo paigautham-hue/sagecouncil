@@ -904,3 +904,8 @@
 - [x] Massively increase tree negative margin (need at least -500px to -600px on mobile)
 - [x] Reduce ALL vertical spacing in hero section to absolute minimum
 - [x] Make tree visible in initial mobile viewport as shown in user's manual positioning
+
+## UX Enhancements (Nov 18, 2025)
+- [x] Add animated scroll hint (chevron/text) below Wisdom Tree
+- [x] Implement sage quick-view modal (tap shows bio, second tap navigates)
+- [x] Add sequential fade-in animation for sage nodes on tree load
