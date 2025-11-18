@@ -914,3 +914,20 @@
 - [x] Move tree SVG coordinates up so tree appears at top of container (not bottom)
 - [x] Adjust mobile tree positioning to be visible in initial viewport
 - [x] Test on mobile to ensure tree is immediately visible below buttons
+
+## Sage Favorites/Bookmarks Feature (Nov 18, 2025)
+- [ ] Create database schema for sage favorites (user_id, teacher_id, created_at)
+- [ ] Add tRPC procedures for add/remove/list favorites
+- [ ] Add heart icon toggle to SageQuickView modal
+- [ ] Add visual indicators (heart badge) to tree for favorited sages
+- [ ] Create favorites page/section for quick access to bookmarked sages
+- [ ] Test favorites system end-to-end
+
+
+## Sage Favorites/Bookmarks Feature (Nov 18, 2025)
+- [x] Create database schema for sage_favorites table
+- [x] Add tRPC procedures for add/remove/getAll favorites
+- [x] Update SageQuickView modal with heart icon toggle
+- [x] Add visual indicators (red border + heart badge) to favorited sages in tree
+- [x] Create Favorites page for quick access to bookmarked sages
+- [x] Add route for /favorites page

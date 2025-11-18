@@ -1,8 +1,12 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Heart } from "lucide-react";
 import { Link } from "wouter";
 import { getSagePortrait } from "@/lib/sagePortraits";
+import { trpc } from "@/lib/trpc";
+import { toast } from "sonner";
+import { useAuth } from "@/_core/hooks/useAuth";
+import { getLoginUrl } from "@/const";
 
 interface Sage {
   id: string;
@@ -20,6 +24,55 @@ interface SageQuickViewProps {
 }
 
 export function SageQuickView({ sage, open, onOpenChange }: SageQuickViewProps) {
+  const { isAuthenticated } = useAuth();
+  const utils = trpc.useUtils();
+  
+  // Check if sage is favorited
+  const { data: isFavorited, isLoading: checkingFavorite } = trpc.favorites.isFavorited.useQuery(
+    { teacherId: parseInt(sage?.id || "0") },
+    { enabled: !!sage && isAuthenticated }
+  );
+  
+  // Add favorite mutation
+  const addFavorite = trpc.favorites.add.useMutation({
+    onSuccess: () => {
+      utils.favorites.isFavorited.invalidate({ teacherId: parseInt(sage!.id) });
+      utils.favorites.getAll.invalidate();
+      toast.success("Added to favorites");
+    },
+    onError: () => {
+      toast.error("Failed to add favorite");
+    },
+  });
+  
+  // Remove favorite mutation
+  const removeFavorite = trpc.favorites.remove.useMutation({
+    onSuccess: () => {
+      utils.favorites.isFavorited.invalidate({ teacherId: parseInt(sage!.id) });
+      utils.favorites.getAll.invalidate();
+      toast.success("Removed from favorites");
+    },
+    onError: () => {
+      toast.error("Failed to remove favorite");
+    },
+  });
+  
+  const handleFavoriteToggle = () => {
+    if (!isAuthenticated) {
+      toast.error("Please sign in to save favorites");
+      window.location.href = getLoginUrl();
+      return;
+    }
+    
+    if (!sage) return;
+    
+    if (isFavorited) {
+      removeFavorite.mutate({ teacherId: parseInt(sage.id) });
+    } else {
+      addFavorite.mutate({ teacherId: parseInt(sage.id) });
+    }
+  };
+  
   if (!sage) return null;
 
   return (
@@ -32,10 +85,23 @@ export function SageQuickView({ sage, open, onOpenChange }: SageQuickViewProps) 
               alt={sage.name}
               className="w-16 h-16 rounded-full object-cover border-2 border-accent"
             />
-            <div>
+            <div className="flex-1">
               <DialogTitle className="text-2xl font-bold">{sage.name}</DialogTitle>
               <p className="text-sm text-muted-foreground">{sage.tradition} • {sage.era}</p>
             </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleFavoriteToggle}
+              disabled={checkingFavorite || addFavorite.isPending || removeFavorite.isPending}
+              className="shrink-0"
+            >
+              <Heart
+                className={`w-5 h-5 transition-colors ${
+                  isFavorited ? "fill-red-500 text-red-500" : "text-muted-foreground"
+                }`}
+              />
+            </Button>
           </div>
         </DialogHeader>
 

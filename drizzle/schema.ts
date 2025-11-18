@@ -536,3 +536,16 @@ export const glossaryTerms = mysqlTable("glossary_terms", {
 
 export type GlossaryTerm = typeof glossaryTerms.$inferSelect;
 export type InsertGlossaryTerm = typeof glossaryTerms.$inferInsert;
+
+/**
+ * User favorites/bookmarks for sages
+ */
+export const sageFavorites = mysqlTable("sage_favorites", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  teacherId: int("teacherId").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type SageFavorite = typeof sageFavorites.$inferSelect;
+export type InsertSageFavorite = typeof sageFavorites.$inferInsert;

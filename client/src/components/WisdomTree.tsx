@@ -36,6 +36,9 @@ const PHILOSOPHICAL_TRADITIONS = [
 
 export default function WisdomTree() {
   const { data: teachers } = trpc.teachers.getAll.useQuery();
+  const { data: favorites } = trpc.favorites.getAll.useQuery(undefined, {
+    enabled: false, // Only fetch when user is authenticated
+  });
   const [sageNodes, setSageNodes] = useState<SageNode[]>([]);
   const [selectedNode, setSelectedNode] = useState<number | null>(null);
   const [hoveredNode, setHoveredNode] = useState<number | null>(null);
@@ -47,6 +50,11 @@ export default function WisdomTree() {
   const [isVisible, setIsVisible] = useState(false);
   const [quickViewSage, setQuickViewSage] = useState<any>(null);
   const [showQuickView, setShowQuickView] = useState(false);
+  
+  // Check if a sage is favorited
+  const isSageFavorited = (teacherId: number) => {
+    return favorites?.some(fav => fav.teacherId === teacherId) || false;
+  };
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -417,13 +425,41 @@ export default function WisdomTree() {
               />
             )}
 
+            {/* Favorite indicator - small heart */}
+            {isSageFavorited(node.id) && (
+              <motion.g
+                initial={{ scale: 0, opacity: 0 }}
+                animate={isGrown ? { scale: 1, opacity: 1 } : {}}
+                transition={{ duration: 0.5, delay: 0.7 + i * 0.05 }}
+              >
+                <circle
+                  cx={node.x + (isMobile ? 10 : 18)}
+                  cy={node.y - (isMobile ? 10 : 18)}
+                  r={isMobile ? 6 : 8}
+                  fill="#ef4444"
+                  stroke="white"
+                  strokeWidth="1.5"
+                />
+                <text
+                  x={node.x + (isMobile ? 10 : 18)}
+                  y={node.y - (isMobile ? 10 : 18)}
+                  fontSize={isMobile ? "8" : "10"}
+                  fill="white"
+                  textAnchor="middle"
+                  dominantBaseline="central"
+                >
+                  ❤
+                </text>
+              </motion.g>
+            )}
+
             {/* Node border */}
             <motion.circle
               cx={node.x}
               cy={node.y}
               r={hoveredNode === node.id ? (isMobile ? 18 : 30) : (isMobile ? 14 : 22)}
               fill="none"
-              stroke="#f4d03f"
+              stroke={isSageFavorited(node.id) ? "#ef4444" : "#f4d03f"}
               strokeWidth={hoveredNode === node.id ? 3 : 2}
               initial={{ scale: 0, opacity: 0 }}
               animate={isGrown ? { scale: 1, opacity: 1 } : {}}

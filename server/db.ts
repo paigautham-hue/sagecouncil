@@ -7,7 +7,7 @@ import {
   embeddings, analytics, deepQuestions, userThemeStats, councilDebates,
   microRetreats, userMicroRetreatSessions, shadowMirrorSummaries, stories,
   paradoxes, userParadoxReflections, lifeExperiments, userExperimentLogs,
-  teacherBiographies, integrationGuides
+  teacherBiographies, integrationGuides, sageFavorites
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -777,4 +777,76 @@ export async function updateExperimentLog(logId: number, updates: Partial<typeof
     .where(eq(userExperimentLogs.id, logId));
   
   return true;
+}
+
+// Sage Favorites
+export async function getUserFavorites(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(sageFavorites)
+    .where(eq(sageFavorites.userId, userId))
+    .orderBy(desc(sageFavorites.createdAt));
+}
+
+export async function isSageFavorited(userId: number, teacherId: number) {
+  const db = await getDb();
+  if (!db) return false;
+  
+  const result = await db.select().from(sageFavorites)
+    .where(and(
+      eq(sageFavorites.userId, userId),
+      eq(sageFavorites.teacherId, teacherId)
+    ))
+    .limit(1);
+  
+  return result.length > 0;
+}
+
+export async function addSageFavorite(userId: number, teacherId: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.insert(sageFavorites).values({
+    userId,
+    teacherId,
+  });
+  
+  return Number(result[0].insertId);
+}
+
+export async function removeSageFavorite(userId: number, teacherId: number) {
+  const db = await getDb();
+  if (!db) return false;
+  
+  await db.delete(sageFavorites)
+    .where(and(
+      eq(sageFavorites.userId, userId),
+      eq(sageFavorites.teacherId, teacherId)
+    ));
+  
+  return true;
+}
+
+export async function getUserFavoritesWithTeachers(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const favorites = await db.select().from(sageFavorites)
+    .where(eq(sageFavorites.userId, userId))
+    .orderBy(desc(sageFavorites.createdAt));
+  
+  if (favorites.length === 0) return [];
+  
+  const teacherIds = favorites.map(f => f.teacherId);
+  const teacherList = await db.select().from(teachers)
+    .where(inArray(teachers.id, teacherIds));
+  
+  return favorites.map(fav => {
+    const teacher = teacherList.find(t => t.id === fav.teacherId);
+    return {
+      ...fav,
+      teacher,
+    };
+  });
 }

@@ -5,6 +5,7 @@ import MicroRetreats from "./pages/MicroRetreats";
 import ParadoxPlayground from "./pages/ParadoxPlayground";
 import LifeExperiments from "./pages/LifeExperiments";
 import AdminAnalytics from "@/pages/AdminAnalytics";
+import Favorites from "./pages/Favorites";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -24,8 +25,8 @@ import AdminConsole from "./pages/AdminConsole";
 function Router() {
   return (
     <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/council"} component={Council} />
+      <Route path={"/"} component={Home} />      <Route path={"/council"} component={Council} />
+      <Route path={"/favorites"} component={Favorites} />
       <Route path={"/micro-retreats"} component={MicroRetreats} />
       <Route path={"/paradox-playground"} component={ParadoxPlayground} />
       <Route path={"/life-experiments"} component={LifeExperiments} />

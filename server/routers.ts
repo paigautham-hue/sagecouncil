@@ -705,6 +705,32 @@ export const appRouter = router({
       }),
   }),
 
+  // Sage Favorites
+  favorites: router({
+    getAll: protectedProcedure.query(async ({ ctx }) => {
+      return await db.getUserFavoritesWithTeachers(ctx.user.id);
+    }),
+    
+    isFavorited: protectedProcedure
+      .input(z.object({ teacherId: z.number() }))
+      .query(async ({ ctx, input }) => {
+        return await db.isSageFavorited(ctx.user.id, input.teacherId);
+      }),
+    
+    add: protectedProcedure
+      .input(z.object({ teacherId: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        return await db.addSageFavorite(ctx.user.id, input.teacherId);
+      }),
+    
+    remove: protectedProcedure
+      .input(z.object({ teacherId: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        await db.removeSageFavorite(ctx.user.id, input.teacherId);
+        return { success: true };
+      }),
+  }),
+
   // Analytics
   analytics: router({
     track: publicProcedure
