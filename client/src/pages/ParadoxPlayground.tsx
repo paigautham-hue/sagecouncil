@@ -10,14 +10,12 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { Streamdown } from "streamdown";
 import { toast } from "sonner";
-import { AIInsightsModal } from "@/components/AIInsightsModal";
 
 export default function ParadoxPlayground() {
   const { isAuthenticated } = useAuth();
   const [selectedParadox, setSelectedParadox] = useState<number | null>(null);
   const [reflection, setReflection] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [showAIInsights, setShowAIInsights] = useState(false);
 
   const { data: paradoxes, isLoading } = trpc.paradoxPlayground.getAll.useQuery();
   const { data: userReflections } = trpc.paradoxPlayground.getUserReflections.useQuery(
@@ -135,32 +133,17 @@ export default function ParadoxPlayground() {
                     <p className="text-foreground/70 mb-4 line-clamp-3">
                       {paradox.paradoxStatement}
                     </p>
-                    <div className="flex gap-2">
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
-                        className="flex-1"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedParadox(paradox.id);
-                        }}
-                      >
-                        Explore Paradox
-                      </Button>
-                      <Button 
-                        variant="secondary" 
-                        size="sm" 
-                        className="flex-1"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedParadox(paradox.id);
-                          setShowAIInsights(true);
-                        }}
-                      >
-                        <Sparkles className="w-3 h-3 mr-1" />
-                        AI Insight
-                      </Button>
-                    </div>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedParadox(paradox.id);
+                      }}
+                    >
+                      Explore Paradox
+                    </Button>
                   </Card>
                 );
               })}
@@ -175,20 +158,6 @@ export default function ParadoxPlayground() {
           )}
         </div>
       </div>
-
-      {/* AI Insights Modal */}
-      {selectedParadoxData && (
-        <AIInsightsModal
-          isOpen={showAIInsights}
-          onClose={() => setShowAIInsights(false)}
-          title={selectedParadoxData.title}
-          description={selectedParadoxData.paradoxStatement}
-          type="paradox"
-          onInsightGenerated={(insight) => {
-            toast.success("Insight saved! You can add it to your journal.");
-          }}
-        />
-      )}
 
       {/* Paradox Detail Dialog */}
       <Dialog open={selectedParadox !== null} onOpenChange={() => setSelectedParadox(null)}>

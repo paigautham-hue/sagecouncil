@@ -21,7 +21,7 @@ import Journeys from "./pages/Journeys";
 import JourneyDetail from "./pages/JourneyDetail";
 import MyPath from "./pages/MyPath";
 import AdminConsole from "./pages/AdminConsole";
-import MyJourney from "./pages/MyJourney";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function Router() {
   return (
@@ -36,13 +36,12 @@ function Router() {
       <Route path="/safety" component={Safety} />
       <Route path="/privacy" component={Privacy} />
       <Route path={"/admin/analytics"} component={AdminAnalytics} />
-      <Route path={"/404"} component={NotFound} />
-      <Route path="/sages" component={Sages} />
+      <Route path={"/admin"} component={AdminDashboard} />
+      <Route path={"/404"} component={NotFound} />      <Route path="/sages" component={Sages} />
       <Route path="/sages/:teacherId" component={SageDetail} />
       <Route path="/journeys" component={Journeys} />
       <Route path="/journeys/:journeyId" component={JourneyDetail} />
       <Route path="/my-path" component={MyPath} />
-      <Route path="/my-journey" component={MyJourney} />
       <Route path="/admin" component={AdminConsole} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />

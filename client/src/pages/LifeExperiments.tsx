@@ -30,20 +30,13 @@ export default function LifeExperiments() {
   });
 
   const handleStartExperiment = async (experimentId: number) => {
-    try {
-      if (!isAuthenticated) {
-        toast.error("Please sign in to start experiments");
-        window.location.href = getLoginUrl();
-        return;
-      }
-      
-      console.log('[LifeExperiments] Starting experiment:', experimentId);
-      const result = await startExperiment.mutateAsync({ experimentId });
-      console.log('[LifeExperiments] Experiment started:', result);
-    } catch (error) {
-      console.error('[LifeExperiments] Error starting experiment:', error);
-      toast.error(error instanceof Error ? error.message : 'Failed to start experiment');
+    if (!isAuthenticated) {
+      toast.error("Please sign in to start experiments");
+      window.location.href = getLoginUrl();
+      return;
     }
+    
+    await startExperiment.mutateAsync({ experimentId });
   };
 
   const getExperimentStatus = (experimentId: number) => {

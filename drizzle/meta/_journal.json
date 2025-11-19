@@ -64,6 +64,13 @@
       "when": 1763457189421,
       "tag": "0008_legal_kang",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1763570469689,
+      "tag": "0009_square_the_stranger",
+      "breakpoints": true
     }
   ]
 }

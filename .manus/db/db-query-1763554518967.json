@@ -1,9 +1,0 @@
-{
-  "query": "INSERT INTO user_experiment_logs (userId, experimentId, status, startDate, checkInEntries) VALUES (1, 1, 'active', CURDATE(), JSON_ARRAY());",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4PQbAAV1fA3eoWB.9bb51d851611 --database my7vf9kVVC5tHsnhvudijY --execute INSERT INTO user_experiment_logs (userId, experimentId, status, startDate, checkInEntries) VALUES (1, 1, 'active', CURDATE(), JSON_ARRAY());",
-  "rows": [],
-  "messages": [],
-  "stdout": "",
-  "stderr": "",
-  "execution_time_ms": 1655
-}

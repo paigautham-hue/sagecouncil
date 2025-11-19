@@ -549,3 +549,118 @@ export const sageFavorites = mysqlTable("sage_favorites", {
 
 export type SageFavorite = typeof sageFavorites.$inferSelect;
 export type InsertSageFavorite = typeof sageFavorites.$inferInsert;
+
+
+/**
+ * User activity tracking for analytics
+ * Tracks every user action across the platform
+ */
+export const userActivity = mysqlTable(
+  "user_activity",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    userId: int("userId").notNull(),
+    activityType: mysqlEnum("activityType", [
+      "page_view",
+      "experiment_started",
+      "paradox_explored",
+      "retreat_begun",
+      "quote_saved",
+      "sage_viewed",
+      "theme_explored",
+      "search_performed",
+      "ai_insight_generated",
+    ]).notNull(),
+    resourceType: varchar("resourceType", { length: 50 }),
+    resourceId: varchar("resourceId", { length: 255 }),
+    resourceName: text("resourceName"),
+    metadata: text("metadata"),
+    ipAddress: varchar("ipAddress", { length: 45 }),
+    userAgent: text("userAgent"),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+  }
+);
+
+export type UserActivity = typeof userActivity.$inferSelect;
+export type InsertUserActivity = typeof userActivity.$inferInsert;
+
+/**
+ * User engagement metrics
+ * Tracks user interaction patterns and engagement levels
+ */
+export const userEngagement = mysqlTable(
+  "user_engagement",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    userId: int("userId").notNull().unique(),
+    lastActivityDate: timestamp("last_activity_date"),
+    totalActiveDays: int("total_active_days").default(0).notNull(),
+    currentStreak: int("current_streak").default(0).notNull(),
+    longestStreak: int("longest_streak").default(0).notNull(),
+    totalPageViews: int("total_page_views").default(0).notNull(),
+    totalExperimentsStarted: int("total_experiments_started").default(0).notNull(),
+    totalExperimentsCompleted: int("total_experiments_completed").default(0).notNull(),
+    totalParadoxesExplored: int("total_paradoxes_explored").default(0).notNull(),
+    totalRetreatsBegun: int("total_retreats_begun").default(0).notNull(),
+    totalRetreatsCompleted: int("total_retreats_completed").default(0).notNull(),
+    totalAIInsightsGenerated: int("total_ai_insights_generated").default(0).notNull(),
+    engagementScore: varchar("engagement_score", { length: 10 }).default("0").notNull(),
+    lastEngagementCalculated: timestamp("last_engagement_calculated"),
+    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  }
+);
+
+export type UserEngagement = typeof userEngagement.$inferSelect;
+export type InsertUserEngagement = typeof userEngagement.$inferInsert;
+
+/**
+ * Feature usage statistics
+ * Tracks which features are most popular
+ */
+export const featureUsage = mysqlTable(
+  "feature_usage",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    featureName: varchar("feature_name", { length: 100 }).notNull().unique(),
+    totalUsageCount: int("total_usage_count").default(0).notNull(),
+    uniqueUsers: int("unique_users").default(0).notNull(),
+    averageUsagePerUser: varchar("average_usage_per_user", { length: 20 }).default("0").notNull(),
+    lastUsedDate: timestamp("last_used_date"),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  }
+);
+
+export type FeatureUsage = typeof featureUsage.$inferSelect;
+export type InsertFeatureUsage = typeof featureUsage.$inferInsert;
+
+/**
+ * Admin audit log
+ * Tracks all admin actions for security and compliance
+ */
+export const adminAuditLog = mysqlTable(
+  "admin_audit_log",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    adminId: int("admin_id").notNull(),
+    action: mysqlEnum("action", [
+      "user_role_changed",
+      "user_suspended",
+      "user_deleted",
+      "user_restored",
+      "content_moderated",
+      "system_setting_changed",
+      "analytics_exported",
+      "user_data_accessed",
+    ]).notNull(),
+    targetUserId: int("target_user_id"),
+    targetResourceType: varchar("target_resource_type", { length: 50 }),
+    targetResourceId: varchar("target_resource_id", { length: 255 }),
+    details: text("details"),
+    ipAddress: varchar("ip_address", { length: 45 }),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+  }
+);
+
+export type AdminAuditLog = typeof adminAuditLog.$inferSelect;
+export type InsertAdminAuditLog = typeof adminAuditLog.$inferInsert;

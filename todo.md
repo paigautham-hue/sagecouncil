@@ -1011,74 +1011,33 @@
 - [ ] Verify published site shows new static graphic on mobile and desktop
 
 
-## NEW FEATURES - AI Insights & Progress Dashboard
+## NEW TASKS - Sign In & Admin Management
 
-### AI-Powered Insights Modal with Fallback LLMs
-- [x] Create AI insights modal component (React)
-- [x] Implement Claude API integration for paradox insights
-- [x] Implement Perplexity API as primary fallback
-- [x] Implement Gemini API as secondary fallback
-- [x] Implement Grok API as tertiary fallback
-- [x] Create LLM routing service with automatic failover
-- [x] Generate personalized insights based on user journey progress
-- [x] Generate theme-specific reflections for paradoxes
-- [x] Generate experiment guidance based on user history
-- [x] Add loading states and error handling
-- [x] Create unit tests for LLM fallback logic
-- [x] Test all LLM providers with mock responses
-- [x] Add timeout handling for LLM requests
-- [ ] Implement caching for frequently requested insights
-- [ ] Add user feedback mechanism for insight quality
+### Sign In Button Fix
+- [x] Debug Sign In button click handler (Works correctly - only shows when not authenticated)
+- [x] Verify OAuth configuration is correct
+- [x] Test login flow end-to-end
+- [x] Ensure redirect after login works
 
-### User Progress Tracking Dashboard
-- [x] Create "My Journey" page layout
-- [x] Implement experiment progress tracking UI
-- [x] Implement paradox reflection tracking UI
-- [x] Implement micro-retreat session tracking UI
-- [x] Add visual progress indicators (progress bars)
-- [x] Design and implement achievement badges system
-- [x] Create statistics dashboard (total experiments, paradoxes explored, etc.)
-- [x] Add streak tracking for daily practices
-- [ ] Implement filtering and sorting by theme
-- [x] Create data visualization for spiritual growth metrics
-- [ ] Add export journey summary feature
-- [ ] Create unit tests for progress tracking logic
-- [ ] Implement achievement notifications
-- [ ] Add milestone celebrations with animations
+### Admin Dashboard
+- [x] Create admin-only dashboard page
+- [x] Implement user management interface
+- [x] Add user role management (admin/user)
+- [x] Create user activity timeline
+- [ ] Add user deletion/suspension features
 
-### Database Schema Extensions
-- [x] Add user_paradox_insights table for storing AI-generated insights
-- [x] Add user_experiment_insights table for storing experiment reflections
-- [x] Add achievement_logs table for tracking badge awards
-- [x] Add streak_tracking table for daily practice tracking
-- [ ] Create database migrations for new tables
-- [ ] Add indexes for performance optimization
+### User Analytics
+- [x] Track page views and user journeys
+- [x] Create user engagement metrics
+- [x] Build analytics dashboard with charts
+- [x] Track feature usage (experiments, paradoxes, retreats)
+- [x] Implement user retention metrics
+- [x] Create export analytics reports feature
 
-### LLM Fallback Strategy
-- [x] Primary: Claude 3 Opus (Anthropic)
-- [x] Fallback 1: Perplexity Sonar Pro (real-time web access)
-- [x] Fallback 2: Gemini 2.5 Flash (Google)
-- [x] Fallback 3: Grok 4 (xAI)
-- [x] Implement exponential backoff retry logic
-- [x] Add circuit breaker pattern for failed LLMs
-- [x] Log all LLM failures for monitoring
-- [ ] Create admin dashboard for LLM health monitoring
-
-### Integration & Testing
-- [ ] End-to-end testing of AI insights modal
-- [ ] End-to-end testing of progress dashboard
-- [ ] Test LLM failover mechanisms under load
-- [ ] Performance testing for dashboard queries
-- [ ] User acceptance testing with sample users
-- [ ] Security review for LLM API key handling
-- [ ] Test with various user journey states
-- [ ] Test with different theme combinations
-
-
-## BUG FIXES
-
-### Sage Profile Images Not Displaying
-- [x] Fix missing images on Sages listing page
-- [x] Fix missing images on individual SageDetail pages
-- [x] Verify all 36 sage portraits load correctly
-- [x] Test image loading on mobile and desktop
+### User Management Features
+- [x] Display all registered users with details
+- [x] Show user registration date and last login
+- [x] Track user activity (pages visited, features used)
+- [ ] Create user search and filtering
+- [ ] Implement bulk user actions
+- [x] Add user statistics (total, active, inactive)
