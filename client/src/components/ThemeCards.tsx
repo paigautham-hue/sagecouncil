@@ -5,12 +5,19 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
-import { Brain, Heart, Skull, Users, Sparkles, Flame } from "lucide-react";
+// Theme graphics - imported as URLs for proper asset serving
+const egoSelfImg = "/theme-ego-self.png";
+const relationshipsImg = "/theme-relationships.png";
+const deathImg = "/theme-death-impermanence.png";
+const sufferingImg = "/theme-suffering-growth.png";
+const presenceImg = "/theme-presence-awareness.png";
+const purposeImg = "/theme-purpose-meaning.png";
 
 interface Theme {
   id: string;
   title: string;
-  icon: any;
+  icon?: any;
+  image?: string;
   color: string;
   description: string;
   synthesis: string;
@@ -22,7 +29,7 @@ const themes: Theme[] = [
   {
     id: "ego",
     title: "Ego & Self",
-    icon: Brain,
+    image: egoSelfImg,
     color: "from-purple-600 to-indigo-600",
     description: "Understanding the nature of self and transcending ego",
     synthesis: "The ego is not an enemy to be destroyed, but a construct to be understood. Across traditions, teachers point to the illusory nature of the separate self while honoring the practical necessity of personality. The path involves seeing through identification while functioning skillfully in the world.",
@@ -35,7 +42,7 @@ const themes: Theme[] = [
   {
     id: "relationships",
     title: "Relationships",
-    icon: Heart,
+    image: relationshipsImg,
     color: "from-rose-600 to-pink-600",
     description: "Love, connection, and authentic relating",
     synthesis: "True relationship begins with relationship to oneself. Teachers across traditions emphasize that we cannot offer others what we haven't cultivated within. Love is not possession but recognition—seeing the divine in another while honoring their autonomy. Healthy boundaries and authentic vulnerability create the container for genuine connection.",
@@ -48,7 +55,7 @@ const themes: Theme[] = [
   {
     id: "death",
     title: "Death & Impermanence",
-    icon: Skull,
+    image: deathImg,
     color: "from-slate-600 to-gray-700",
     description: "Embracing mortality and the transient nature of existence",
     synthesis: "Death is the ultimate teacher, stripping away all that is non-essential. Contemplating mortality doesn't lead to despair but to presence—when we truly understand that this moment is all we have, we stop postponing our lives. Impermanence is not a problem to solve but a truth to embrace, revealing the preciousness of each passing moment.",
@@ -61,7 +68,7 @@ const themes: Theme[] = [
   {
     id: "suffering",
     title: "Suffering & Growth",
-    icon: Flame,
+    image: sufferingImg,
     color: "from-orange-600 to-red-600",
     description: "Finding meaning in pain and adversity",
     synthesis: "Suffering is universal, but it need not be meaningless. The Buddha taught that suffering arises from attachment; Viktor Frankl showed that meaning can be found even in the darkest circumstances. Pain is inevitable; suffering is what happens when we resist pain. The path through difficulty involves neither avoidance nor wallowing, but conscious engagement with what is.",
@@ -74,7 +81,7 @@ const themes: Theme[] = [
   {
     id: "presence",
     title: "Presence & Awareness",
-    icon: Sparkles,
+    image: presenceImg,
     color: "from-gold to-yellow-600",
     description: "Living in the present moment",
     synthesis: "The present moment is the only point of power. Past and future exist only as thoughts arising now. Presence is not a state to achieve but our natural condition when we stop resisting what is. Awareness itself is always here, always whole—it's only our attention that wanders. Coming home to now is coming home to ourselves.",
@@ -87,7 +94,7 @@ const themes: Theme[] = [
   {
     id: "purpose",
     title: "Purpose & Meaning",
-    icon: Users,
+    image: purposeImg,
     color: "from-blue-600 to-cyan-600",
     description: "Discovering your unique contribution",
     synthesis: "Purpose is not found but forged through engagement with life. It emerges at the intersection of your gifts, the world's needs, and what brings you alive. Meaning is not a destination but a direction—a continuous choosing of values over comfort, growth over stagnation, contribution over consumption. Your purpose evolves as you do.",
@@ -115,7 +122,6 @@ export function ThemeCards() {
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {themes.map((theme) => {
-          const Icon = theme.icon;
           return (
             <Card
               key={theme.id}
@@ -123,9 +129,17 @@ export function ThemeCards() {
               onClick={() => handleThemeClick(theme)}
             >
               <CardContent className="p-6 space-y-4">
-                <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${theme.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
-                  <Icon className="w-6 h-6 text-white" />
-                </div>
+                {theme.image && (
+                  <div className="w-full h-40 rounded-lg overflow-hidden group-hover:scale-110 transition-transform origin-top-left">
+                    <img
+                      src={theme.image}
+                      alt={theme.title}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                )}
                 <div>
                   <h3 className="text-xl font-semibold text-white mb-2">{theme.title}</h3>
                   <p className="text-sm text-slate-300">{theme.description}</p>
@@ -150,9 +164,17 @@ export function ThemeCards() {
             <>
               <DialogHeader>
                 <div className="flex items-center gap-4 mb-4">
-                  <div className={`w-16 h-16 rounded-lg bg-gradient-to-br ${selectedTheme.color} flex items-center justify-center`}>
-                    <selectedTheme.icon className="w-8 h-8 text-white" />
-                  </div>
+                  {selectedTheme.image && (
+                    <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+                      <img
+                        src={selectedTheme.image}
+                        alt={selectedTheme.title}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  )}
                   <DialogTitle className="text-3xl font-bold text-white">
                     {selectedTheme.title}
                   </DialogTitle>
