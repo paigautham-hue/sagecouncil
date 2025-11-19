@@ -21,6 +21,7 @@ import Journeys from "./pages/Journeys";
 import JourneyDetail from "./pages/JourneyDetail";
 import MyPath from "./pages/MyPath";
 import AdminConsole from "./pages/AdminConsole";
+import MyJourney from "./pages/MyJourney";
 
 function Router() {
   return (
@@ -41,6 +42,7 @@ function Router() {
       <Route path="/journeys" component={Journeys} />
       <Route path="/journeys/:journeyId" component={JourneyDetail} />
       <Route path="/my-path" component={MyPath} />
+      <Route path="/my-journey" component={MyJourney} />
       <Route path="/admin" component={AdminConsole} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />

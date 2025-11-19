@@ -8,9 +8,11 @@ import { invokeLLM } from "./_core/llm";
 import { getRelevantContext } from "./rag";
 import * as aiService from "./ai-service";
 import { getTodaysDrop } from "./daily-drop";
+import { aiRouter } from "./routers/ai";
 
 export const appRouter = router({
   system: systemRouter,
+  ai: aiRouter,
   
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
