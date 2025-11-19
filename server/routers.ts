@@ -466,17 +466,26 @@ export const appRouter = router({
     startExperiment: protectedProcedure
       .input(z.object({ experimentId: z.number() }))
       .mutation(async ({ input, ctx }) => {
-        const startDate = new Date().toISOString().split('T')[0];
-        
-        const logId = await db.createExperimentLog({
-          userId: ctx.user.id,
-          experimentId: input.experimentId,
-          status: 'active',
-          startDate: startDate as any,
-          checkInEntries: [],
-        });
-        
-        return { logId };
+        try {
+          const startDate = new Date().toISOString().split('T')[0];
+          
+          const logId = await db.createExperimentLog({
+            userId: ctx.user.id,
+            experimentId: input.experimentId,
+            status: 'active',
+            startDate: startDate as any,
+            checkInEntries: [] as any,
+          });
+          
+          if (!logId) {
+            throw new Error('Failed to create experiment log');
+          }
+          
+          return { logId, success: true };
+        } catch (error) {
+          console.error('[startExperiment] Error:', error);
+          throw new Error(`Failed to start experiment: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        }
       }),
   }),
 
