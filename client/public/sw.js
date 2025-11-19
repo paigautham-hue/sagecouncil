@@ -1,7 +1,8 @@
 // Service Worker for Council of Sages
 // Provides basic offline support by caching static assets
 
-const CACHE_NAME = 'council-of-sages-v1';
+const CACHE_NAME = 'council-of-sages-v2';
+const CACHE_VERSION = 'v2';
 const OFFLINE_URL = '/offline.html';
 
 // Assets to cache on install
@@ -41,7 +42,8 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Fetch event - serve from cache, fallback to network
+// Fetch event - use stale-while-revalidate strategy
+// Serve cached version immediately, but always fetch fresh copy in background
 self.addEventListener('fetch', (event) => {
   // Skip non-GET requests
   if (event.request.method !== 'GET') {
@@ -55,37 +57,40 @@ self.addEventListener('fetch', (event) => {
 
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-
-      return fetch(event.request)
-        .then((response) => {
-          // Don't cache non-successful responses
-          if (!response || response.status !== 200 || response.type !== 'basic') {
-            return response;
-          }
-
-          // Clone the response
-          const responseToCache = response.clone();
-
-          // Cache static assets (JS, CSS, images, fonts)
-          if (
-            event.request.url.match(/\.(js|css|png|jpg|jpeg|svg|gif|webp|woff|woff2)$/)
-          ) {
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(event.request, responseToCache);
-            });
-          }
-
+      // Always fetch fresh copy in background for static assets
+      const fetchPromise = fetch(event.request).then((response) => {
+        // Don't cache non-successful responses
+        if (!response || response.status !== 200 || response.type !== 'basic') {
           return response;
-        })
-        .catch(() => {
-          // If both cache and network fail, show offline page
-          if (event.request.mode === 'navigate') {
-            return caches.match(OFFLINE_URL);
-          }
-        });
+        }
+
+        // Clone the response
+        const responseToCache = response.clone();
+
+        // Cache static assets (JS, CSS, images, fonts)
+        if (
+          event.request.url.match(/\.(js|css|png|jpg|jpeg|svg|gif|webp|woff|woff2)$/)
+        ) {
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
+        }
+
+        return response;
+      }).catch(() => {
+        // If network fails, fall back to cache
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+        // If both cache and network fail, show offline page
+        if (event.request.mode === 'navigate') {
+          return caches.match(OFFLINE_URL);
+        }
+      });
+
+      // Return cached version immediately if available (stale-while-revalidate)
+      // Otherwise wait for fresh fetch
+      return cachedResponse || fetchPromise;
     })
   );
 });
