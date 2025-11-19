@@ -1,8 +1,8 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
-import { Link } from "wouter";
-import { Sparkles, Users, BookOpen, Compass, ArrowRight, Menu, Brain, ChevronDown } from "lucide-react";
+import { Link, useLocation } from "wouter";
+import { Sparkles, Users, BookOpen, Compass, ArrowRight, Menu, Brain, ChevronDown, LogOut } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useEffect, useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -13,13 +13,39 @@ import { TodaysDeepDrop } from "@/components/TodaysDeepDrop";
 import wisdomTreeImage from "../../../client/public/wisdom-tree-20251118-v2.png?url";
 
 /**
+ * Logout Button Component
+ */
+function LogoutButton() {
+  const [, navigate] = useLocation();
+  const logoutMutation = trpc.auth.logout.useMutation();
+
+  const handleLogout = async () => {
+    await logoutMutation.mutateAsync();
+    navigate("/");
+  };
+
+  return (
+    <Button
+      variant="outline"
+      size="sm"
+      onClick={handleLogout}
+      disabled={logoutMutation.isPending}
+      className="text-foreground/80 hover:text-foreground"
+    >
+      <LogOut className="w-4 h-4 mr-2" />
+      {logoutMutation.isPending ? "Logging out..." : "Logout"}
+    </Button>
+  );
+}
+
+/**
  * Home Page - Rebuilt from scratch 2025-11-18
  * Clean structure with direct static Wisdom Tree image
  * No complex component nesting, no conditional rendering of tree
  * Simple, straightforward layout for all devices
  */
 export default function Home() {
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, loading } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { data: randomQuote } = trpc.quotes.getRandom.useQuery();
 
@@ -63,13 +89,20 @@ export default function Home() {
                 Experiments
               </Link>
               {isAuthenticated && (
-                <Link href="/my-path" className="text-foreground/80 hover:text-foreground transition-colors">
-                  My Path
-                </Link>
+                <>
+                  <Link href="/my-path" className="text-foreground/80 hover:text-foreground transition-colors">
+                    My Path
+                  </Link>
+                  {user?.role === "admin" && (
+                    <Link href="/admin" className="text-accent hover:text-accent/80 transition-colors font-semibold">
+                      Admin Panel
+                    </Link>
+                  )}
+                </>
               )}
             </div>
 
-            {/* Mobile Menu & Sign In */}
+            {/* Mobile Menu & Auth Buttons */}
             <div className="flex items-center gap-4">
               <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
                 <SheetTrigger asChild className="md:hidden">
@@ -101,19 +134,52 @@ export default function Home() {
                       Experiments
                     </Link>
                     {isAuthenticated && (
-                      <Link href="/my-path" className="text-foreground/80 hover:text-foreground transition-colors">
-                        My Path
-                      </Link>
+                      <>
+                        <Link href="/my-path" className="text-foreground/80 hover:text-foreground transition-colors">
+                          My Path
+                        </Link>
+                        <div className="border-t border-border/30 pt-4 mt-4">
+                          {user?.role === "admin" && (
+                            <Link href="/admin" className="text-accent hover:text-accent/80 transition-colors font-semibold block mb-2">
+                              Admin Panel
+                            </Link>
+                          )}
+                          <LogoutButton />
+                        </div>
+                      </>
                     )}
                   </nav>
                 </SheetContent>
               </Sheet>
 
-              {!isAuthenticated && (
-                <Link href={getLoginUrl()}>
-                  <Button className="bg-accent hover:bg-accent/90">Sign In</Button>
-                </Link>
-              )}
+              {/* Desktop Auth Buttons */}
+              <div className="hidden md:flex items-center gap-4">
+                {isAuthenticated ? (
+                  <>
+                    {user?.role === "admin" && (
+                      <Link href="/admin">
+                        <Button variant="outline" size="sm" className="text-accent border-accent/50 hover:border-accent">
+                          Admin Panel
+                        </Button>
+                      </Link>
+                    )}
+                    <LogoutButton />
+                  </>
+                ) : (
+                  <Link href={getLoginUrl()}>
+                    <Button className="bg-accent hover:bg-accent/90">Sign In</Button>
+                  </Link>
+                )}
+              </div>
+
+              {/* Mobile Auth Buttons (visible only on mobile when not in menu) */}
+              <div className="md:hidden">
+                {!isAuthenticated && (
+                  <Link href={getLoginUrl()}>
+                    <Button className="bg-accent hover:bg-accent/90" size="sm">Sign In</Button>
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
         </div>
