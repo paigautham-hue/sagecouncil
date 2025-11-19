@@ -1073,3 +1073,12 @@
 - [ ] Security review for LLM API key handling
 - [ ] Test with various user journey states
 - [ ] Test with different theme combinations
+
+
+## BUG FIXES
+
+### Sage Profile Images Not Displaying
+- [x] Fix missing images on Sages listing page
+- [x] Fix missing images on individual SageDetail pages
+- [x] Verify all 36 sage portraits load correctly
+- [x] Test image loading on mobile and desktop

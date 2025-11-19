@@ -92,8 +92,16 @@ export default function SageDetail() {
 
       <div className="container mx-auto px-4 py-12">
         <div className="text-center mb-12">
-          <div className="w-32 h-32 rounded-full bg-gradient-to-br from-primary/30 to-accent/30 flex items-center justify-center mx-auto mb-6 sage-avatar">
-            <span className="text-5xl font-bold text-foreground">
+          <div className="w-32 h-32 rounded-full bg-gradient-to-br from-primary/30 to-accent/30 flex items-center justify-center mx-auto mb-6 sage-avatar overflow-hidden">
+            <img
+              src={getSagePortrait(teacher.teacherId)}
+              alt={teacher.fullName}
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+              }}
+            />
+            <span className="text-5xl font-bold text-foreground hidden" id={`avatar-${teacher.id}`}>
               {teacher.fullName.charAt(0)}
             </span>
           </div>
