@@ -20,7 +20,9 @@ export const appRouter = router({
     getOAuthConfig: publicProcedure.query(({ ctx }) => {
       const appId = process.env.VITE_APP_ID;
       const oauthPortalUrl = process.env.VITE_OAUTH_PORTAL_URL;
-      const redirectUri = `${ctx.req.protocol}://${ctx.req.get("host")}/api/oauth/callback`;
+      const host = ctx.req.get("x-forwarded-host") || ctx.req.get("host") || "localhost:3000";
+      const protocol = ctx.req.get("x-forwarded-proto") || ctx.req.protocol || "https";
+      const redirectUri = `${protocol}://${host}/api/oauth/callback`;
       const state = Buffer.from(redirectUri).toString("base64");
       
       const url = new URL(`${oauthPortalUrl}/app-auth`);
