@@ -291,6 +291,8 @@
 - [x] Add missing useState import to Sages.tsx
 - [x] Add missing useAuth import to ParadoxPlayground.tsx
 - [x] Add missing useAuth and useState imports to LifeExperiments.tsx
+- [x] Compress all sage portrait images (76MB → 10MB, 87% reduction)
+- [x] Optimize images for web display (225-293KB per image)
 - [ ] Verify all button clicks work across all pages
 - [ ] Test sage portrait display on all pages
 
