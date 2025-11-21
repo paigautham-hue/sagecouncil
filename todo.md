@@ -284,6 +284,16 @@
 - [x] Add reflection prompt and teacher selection endpoints
 
 
+## Critical Bug Fixes (Current Session - Nov 21, 2025)
+- [x] Fix TypeScript Promise errors in DashboardLayout, SageQuickView, main.tsx, useAuth
+- [x] Add ComponentShowcase route to App.tsx (imported but not registered)
+- [x] Normalize sage portrait filenames with PORTRAIT_FILES array
+- [x] Add missing useState import to Sages.tsx
+- [x] Add missing useAuth import to ParadoxPlayground.tsx
+- [x] Add missing useAuth and useState imports to LifeExperiments.tsx
+- [ ] Verify all button clicks work across all pages
+- [ ] Test sage portrait display on all pages
+
 ## Continuation - Final Push to 100%
 
 ### Enhanced Council Chat UI

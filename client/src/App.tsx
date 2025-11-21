@@ -22,6 +22,7 @@ import JourneyDetail from "./pages/JourneyDetail";
 import MyPath from "./pages/MyPath";
 import AdminConsole from "./pages/AdminConsole";
 import AdminDashboard from "./pages/AdminDashboard";
+import ComponentShowcase from "./pages/ComponentShowcase";
 
 function Router() {
   return (
@@ -55,6 +56,9 @@ function Router() {
       <Route path={"/admin/analytics"} component={AdminAnalytics} />
       <Route path={"/admin/dashboard"} component={AdminDashboard} />
       <Route path={"/admin"} component={AdminConsole} />
+
+      {/* Component Showcase (Dev/Testing) */}
+      <Route path="/components" component={ComponentShowcase} />
 
       {/* Fallback - Must be last */}
       <Route path={"/404"} component={NotFound} />

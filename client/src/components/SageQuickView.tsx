@@ -6,7 +6,7 @@ import { getSagePortrait } from "@/lib/sagePortraits";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { useAuth } from "@/_core/hooks/useAuth";
-import { getLoginUrl } from "@/const";
+import { useLoginUrl } from "@/hooks/useLoginUrl";
 
 interface Sage {
   id: string;
@@ -57,10 +57,14 @@ export function SageQuickView({ sage, open, onOpenChange }: SageQuickViewProps) 
     },
   });
   
+  const { loginUrl } = useLoginUrl();
+  
   const handleFavoriteToggle = () => {
     if (!isAuthenticated) {
       toast.error("Please sign in to save favorites");
-      window.location.href = getLoginUrl();
+      if (loginUrl && loginUrl !== '#') {
+        window.location.href = loginUrl;
+      }
       return;
     }
     

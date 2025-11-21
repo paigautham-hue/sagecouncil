@@ -1,4 +1,51 @@
 /**
+ * Array of all available sage portrait filenames
+ * Ensures all 36 sages have corresponding images
+ */
+export const PORTRAIT_FILES = [
+  'adyashanti',
+  'alan-watts',
+  'baruch-spinoza',
+  'bessel-van-der-kolk',
+  'carl-jung',
+  'david-bohm',
+  'eckhart-tolle',
+  'epictetus',
+  'francisco-varela',
+  'gabor-mate',
+  'gautama-buddha',
+  'hafiz',
+  'iain-mcgilchrist',
+  'ibn-arabi',
+  'jack-kornfield',
+  'jalal-ad-din-rumi',
+  'james-hillman',
+  'jiddu-krishnamurti',
+  'jon-kabat-zinn',
+  'kabir',
+  'krishnamurti',
+  'lao-tzu',
+  'marcus-aurelius',
+  'mooji',
+  'nisargadatta',
+  'nisargadatta-maharaj',
+  'osho',
+  'pema-chodron',
+  'plato',
+  'rabindranath-tagore',
+  'rainer-maria-rilke',
+  'ramana-maharshi',
+  'rumi',
+  'sam-harris',
+  'seneca',
+  'socrates',
+  'spinoza',
+  'tara-brach',
+  'thich-nhat-hanh',
+  'viktor-frankl',
+];
+
+/**
  * Mapping of sage names to their image filenames
  * Handles special characters, accents, and parentheses
  */
