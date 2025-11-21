@@ -106,7 +106,7 @@ export default function Sages() {
                 <Card className="glass-card p-6 cursor-pointer group h-full">
                   <div className="flex flex-col items-center text-center h-full">
                     <ProgressiveImage
-                      src={getSagePortrait(teacher.teacherId)}
+                      src={getSagePortrait(teacher.fullName)}
                       alt={teacher.fullName}
                       className="w-24 h-24 rounded-full object-cover mb-4 sage-avatar"
                     />
