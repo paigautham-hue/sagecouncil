@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '@/_core/hooks/useAuth';
+import { useLoginUrl } from '@/hooks/useLoginUrl';
 import { trpc } from '@/lib/trpc';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -22,7 +23,6 @@ import {
   Book,
 } from 'lucide-react';
 import { Link, useLocation } from 'wouter';
-import { getLoginUrl } from '@/const';
 import { Streamdown } from 'streamdown';
 import { InnerConstellation } from '@/components/InnerConstellation';
 import { ShadowMirror } from '@/components/ShadowMirror';
@@ -30,6 +30,7 @@ import { StoryAlchemy } from '@/components/StoryAlchemy';
 
 export default function MyPath() {
   const { user, loading, isAuthenticated } = useAuth();
+  const { loginUrl } = useLoginUrl();
   const [, setLocation] = useLocation();
   const [journalContent, setJournalContent] = useState('');
   const [journalTags, setJournalTags] = useState<string[]>([]);
@@ -91,7 +92,7 @@ export default function MyPath() {
             Create an account to track your spiritual journey, save conversations, and access personalized insights.
           </p>
           <Button asChild size="lg">
-            <a href={getLoginUrl()}>Sign In</a>
+            <a href={loginUrl}>Sign In</a>
           </Button>
         </Card>
       </div>

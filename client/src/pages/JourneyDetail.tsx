@@ -1,15 +1,16 @@
 import { useParams, Link } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useLoginUrl } from "@/hooks/useLoginUrl";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
 import { ArrowLeft, CheckCircle2, Circle, Lock } from "lucide-react";
 import { Streamdown } from "streamdown";
-import { getLoginUrl } from "@/const";
 
 export default function JourneyDetail() {
   const { journeyId } = useParams();
   const { isAuthenticated } = useAuth();
+  const { loginUrl } = useLoginUrl();
   
   const { data: journey, isLoading } = trpc.journeys.getById.useQuery(
     { id: Number(journeyId) },
@@ -50,7 +51,7 @@ export default function JourneyDetail() {
             </Link>
             {!isAuthenticated && (
               <Button asChild>
-                <a href={getLoginUrl()}>Sign In to Start</a>
+                <a href={loginUrl}>Sign In to Start</a>
               </Button>
             )}
           </div>

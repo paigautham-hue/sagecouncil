@@ -13,9 +13,12 @@ export const useLoginUrl = () => {
       try {
         const response = await fetch('/api/trpc/auth.getOAuthConfig');
         const data = await response.json();
-        const url = data.result?.data?.loginUrl;
+        // tRPC response structure: { result: { data: { json: { loginUrl: "..." } } } }
+        const url = data.result?.data?.json?.loginUrl;
         if (url) {
           setLoginUrl(url);
+        } else {
+          console.warn('No login URL found in response:', data);
         }
       } catch (error) {
         console.error('Failed to fetch login URL:', error);
