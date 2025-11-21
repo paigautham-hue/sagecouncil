@@ -166,22 +166,21 @@ export default function Home() {
                     <LogoutButton />
                   </>
                 ) : (
-                  <Link href={getLoginUrl()}>
+                  <a href={getLoginUrl()}>
                     <Button className="bg-accent hover:bg-accent/90">Sign In</Button>
-                  </Link>
+                  </a>
                 )}
               </div>
 
               {/* Mobile Auth Buttons (visible only on mobile when not in menu) */}
               <div className="md:hidden">
                 {!isAuthenticated && (
-                  <Link href={getLoginUrl()}>
+                  <a href={getLoginUrl()}>
                     <Button className="bg-accent hover:bg-accent/90" size="sm">Sign In</Button>
-                  </Link>
+                  </a>
                 )}
               </div>
-            </div>
-          </div>
+            </div>        </div>
         </div>
       </nav>
 

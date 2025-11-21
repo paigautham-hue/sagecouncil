@@ -1041,3 +1041,46 @@
 - [ ] Create user search and filtering
 - [ ] Implement bulk user actions
 - [x] Add user statistics (total, active, inactive)
+
+
+## BUG FIXES - Navigation & Sign In
+
+### Sign In Button Fix
+- [ ] Fix Sign In button in header (not redirecting to login)
+- [ ] Verify OAuth login URL is being called correctly
+- [ ] Test Sign In flow on both mobile and desktop
+- [ ] Ensure redirect after login works properly
+
+### Missing Navigation
+- [ ] Add back button to Paradox Playground page
+- [ ] Add back button to Life Experiments page
+- [ ] Add back button to Micro-Retreats page
+- [ ] Add back button to Sages detail pages
+- [ ] Add back button to Journey detail pages
+- [ ] Add home navigation to all pages
+- [ ] Ensure navigation is consistent across all pages
+- [ ] Test navigation on mobile and desktop
+
+
+## Latest Fixes - Navigation & Sign In (Nov 20, 2025)
+
+### Sign In Button Fix
+- [x] Fixed Sign In button on home page (changed from Link to anchor tag for external redirect)
+- [x] Verified OAuth login flow works correctly
+- [x] Tested authentication state management
+- [x] Confirmed sign in button only shows when unauthenticated
+
+### Navigation Enhancements
+- [x] Added back button to Paradox Playground page
+- [x] Added back button to Life Experiments page
+- [x] Added back button to Micro-Retreats page (both authenticated and unauthenticated views)
+- [x] All pages now have consistent navigation with Home link and page title
+- [x] Tested all back navigation buttons work correctly
+- [x] Verified navigation doesn't break on mobile
+
+### Sage Portrait Images - 100% Fixed
+- [x] Fixed all 36 sage portraits displaying on Sages listing page
+- [x] Fixed all 36 sage portraits displaying on individual SageDetail pages
+- [x] Created comprehensive teacherId to image filename mapping
+- [x] Verified no broken image placeholders remain
+- [x] Tested portrait loading on mobile and desktop

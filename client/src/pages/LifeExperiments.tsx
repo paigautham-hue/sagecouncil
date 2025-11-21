@@ -47,17 +47,35 @@ export default function LifeExperiments() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen cosmic-bg flex items-center justify-center">
-        <Card className="max-w-md p-8 text-center">
-          <Sparkles className="w-12 h-12 text-accent mx-auto mb-4" />
-          <h2 className="text-2xl font-bold mb-4">Life Experiments</h2>
-          <p className="text-foreground/70 mb-6">
-            Sign in to start real-world behavioral experiments and track your growth.
-          </p>
-          <Button asChild>
-            <a href={getLoginUrl()}>Sign In to Continue</a>
-          </Button>
-        </Card>
+      <div className="min-h-screen cosmic-bg">
+        <nav className="border-b border-border/50 backdrop-blur-xl bg-background/50 sticky top-0 z-50">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex items-center gap-4">
+              <Link href="/">
+                <Button variant="ghost" size="sm">
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Home
+                </Button>
+              </Link>
+              <div className="flex items-center gap-3">
+                <FlaskConical className="w-6 h-6 text-accent" />
+                <h1 className="text-xl font-bold text-gradient-gold">Life Experiments</h1>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <div className="flex items-center justify-center min-h-[calc(100vh-80px)]">
+          <Card className="max-w-md p-8 text-center">
+            <Sparkles className="w-12 h-12 text-accent mx-auto mb-4" />
+            <h2 className="text-2xl font-bold mb-4">Life Experiments</h2>
+            <p className="text-foreground/70 mb-6">
+              Sign in to start real-world behavioral experiments and track your growth.
+            </p>
+            <Button asChild>
+              <a href={getLoginUrl()}>Sign In to Continue</a>
+            </Button>
+          </Card>
+        </div>
       </div>
     );
   }
