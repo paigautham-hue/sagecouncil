@@ -8,6 +8,8 @@ import { Loader2, Play, Pause, SkipForward, Check, Star } from "lucide-react";
 import { Streamdown } from "streamdown";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
+import { ProgressBar } from "@/components/ProgressBar";
+import { StepIndicator } from "@/components/StepIndicator";
 
 interface MicroRetreatExperienceProps {
   retreatId: number;
@@ -198,13 +200,31 @@ export function MicroRetreatExperience({ retreatId, onComplete }: MicroRetreatEx
 
   return (
     <div className="space-y-6">
+      {/* Enhanced Progress Indicators */}
+      <div className="space-y-4">
+        {/* Step Indicator */}
+        <StepIndicator
+          steps={retreat.steps.map((step, idx) => ({
+            id: idx + 1,
+            title: step.title,
+            description: step.type,
+          }))}
+          currentStep={currentStepIndex}
+          orientation="horizontal"
+          color="purple"
+          clickable={false}
+        />
+      </div>
+
       {/* Progress Bar */}
       <div className="space-y-2">
-        <div className="flex justify-between text-sm text-indigo-300">
-          <span>Step {currentStepIndex + 1} of {retreat.steps.length}</span>
-          <span>{Math.round(progress)}% Complete</span>
-        </div>
-        <Progress value={progress} className="bg-indigo-950/50" />
+        <ProgressBar
+          percentage={Math.round(progress)}
+          label={`Step ${currentStepIndex + 1} of ${retreat.steps.length}`}
+          color="purple"
+          showLabel={true}
+          animated={true}
+        />
       </div>
 
       {/* Current Step */}

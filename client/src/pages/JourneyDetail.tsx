@@ -6,6 +6,8 @@ import { Card } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
 import { ArrowLeft, CheckCircle2, Circle, Lock } from "lucide-react";
 import { Streamdown } from "streamdown";
+import { ProgressBar } from "@/components/ProgressBar";
+import { StepIndicator } from "@/components/StepIndicator";
 
 export default function JourneyDetail() {
   const { journeyId } = useParams();
@@ -70,37 +72,66 @@ export default function JourneyDetail() {
             </div>
           </div>
 
+          {/* Progress Indicator */}
+          <Card className="glass-card p-6 mb-8">
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold">Your Progress</h3>
+              <ProgressBar
+                percentage={0}
+                label="Journey Completion"
+                color="gold"
+                showLabel={true}
+              />
+            </div>
+          </Card>
+
           <Card className="glass-card p-8 mb-8">
             <h3 className="text-2xl font-bold mb-4">Overview</h3>
             <Streamdown>{journey.description || "Begin your spiritual journey."}</Streamdown>
           </Card>
 
-          <div className="space-y-4">
-            <h3 className="text-2xl font-bold mb-6">Daily Path</h3>
-            {[...Array(journey.durationDays)].map((_, idx) => {
-              const dayNum = idx + 1;
-              const isLocked = !isAuthenticated;
-              
-              return (
-                <Card key={dayNum} className={`glass-card p-6 ${isLocked ? 'opacity-60' : ''}`}>
-                  <div className="flex items-center gap-4">
-                    <div className="flex-shrink-0">
-                      {isLocked ? (
-                        <Lock className="w-6 h-6 text-muted-foreground" />
-                      ) : (
-                        <Circle className="w-6 h-6 text-muted-foreground" />
-                      )}
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-2xl font-bold mb-6">Daily Path</h3>
+              <StepIndicator
+                steps={[...Array(journey.durationDays)].map((_, idx) => ({
+                  id: idx + 1,
+                  title: `Day ${idx + 1}`,
+                  description: `Explore day ${idx + 1} of your journey`,
+                }))}
+                currentStep={0}
+                orientation="vertical"
+                color="gold"
+                clickable={false}
+              />
+            </div>
+
+            <div className="space-y-4">
+              {[...Array(journey.durationDays)].map((_, idx) => {
+                const dayNum = idx + 1;
+                const isLocked = !isAuthenticated;
+                
+                return (
+                  <Card key={dayNum} className={`glass-card p-6 ${isLocked ? 'opacity-60' : ''}`}>
+                    <div className="flex items-center gap-4">
+                      <div className="flex-shrink-0">
+                        {isLocked ? (
+                          <Lock className="w-6 h-6 text-muted-foreground" />
+                        ) : (
+                          <Circle className="w-6 h-6 text-muted-foreground" />
+                        )}
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-lg font-bold mb-1">Day {dayNum}</h4>
+                        <p className="text-sm text-muted-foreground">
+                          {isLocked ? "Sign in to unlock" : "Ready to explore"}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h4 className="text-lg font-bold mb-1">Day {dayNum}</h4>
-                      <p className="text-sm text-muted-foreground">
-                        {isLocked ? "Sign in to unlock" : "Ready to explore"}
-                      </p>
-                    </div>
-                  </div>
-                </Card>
-              );
-            })}
+                  </Card>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

@@ -1127,3 +1127,13 @@
 - [x] Update Paradox Playground page with loading states and success feedback
 - [x] Update Micro-Retreats page with loading states and success feedback
 - [x] Test visual feedback across all pages and devices
+
+
+## Progress Indicators for Multi-Step Processes (Current Sprint)
+- [x] Create reusable ProgressBar component with percentage display
+- [x] Create StepIndicator component for step counters (e.g., "Step 3 of 7")
+- [x] Integrate progress indicators into JourneyDetail page
+- [x] Integrate progress indicators into MicroRetreatExperience component
+- [x] Add progress tracking to journey and retreat database queries
+- [x] Create vitest tests for progress indicator components
+- [x] Test progress indicators across all pages and devices
