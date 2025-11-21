@@ -16,6 +16,24 @@ export const appRouter = router({
   
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
+    
+    getOAuthConfig: publicProcedure.query(({ ctx }) => {
+      const appId = process.env.VITE_APP_ID;
+      const oauthPortalUrl = process.env.VITE_OAUTH_PORTAL_URL;
+      const redirectUri = `${ctx.req.protocol}://${ctx.req.get("host")}/api/oauth/callback`;
+      const state = Buffer.from(redirectUri).toString("base64");
+      
+      const url = new URL(`${oauthPortalUrl}/app-auth`);
+      url.searchParams.set("appId", appId || "");
+      url.searchParams.set("redirectUri", redirectUri);
+      url.searchParams.set("state", state);
+      url.searchParams.set("type", "signIn");
+      
+      return {
+        loginUrl: url.toString(),
+      };
+    }),
+    
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });

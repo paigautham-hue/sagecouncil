@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { getLoginUrl } from "@/const";
+import { useLoginUrl } from "@/hooks/useLoginUrl";
 import { trpc } from "@/lib/trpc";
 import { Sparkles, Brain, ArrowLeft } from "lucide-react";
 import { useState } from "react";
@@ -13,6 +13,7 @@ import { toast } from "sonner";
 
 export default function ParadoxPlayground() {
   const { isAuthenticated } = useAuth();
+  const { loginUrl } = useLoginUrl();
   const [selectedParadox, setSelectedParadox] = useState<number | null>(null);
   const [reflection, setReflection] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -82,7 +83,7 @@ export default function ParadoxPlayground() {
               Sign in to explore spiritual paradoxes and receive AI-guided reflections.
             </p>
             <Button asChild>
-              <a href={getLoginUrl()}>Sign In to Continue</a>
+              <a href={loginUrl}>Sign In to Continue</a>
             </Button>
           </Card>
         </div>

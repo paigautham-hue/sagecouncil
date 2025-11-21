@@ -4,8 +4,21 @@ export const APP_TITLE = import.meta.env.VITE_APP_TITLE || "App";
 
 export const APP_LOGO = "https://placehold.co/128x128/E1E7EF/1F2937?text=App";
 
-// Generate login URL at runtime so redirect URI reflects the current origin.
-export const getLoginUrl = () => {
+// Generate login URL by calling the server API endpoint
+// This ensures the OAuth configuration is always correct regardless of environment variables
+export const getLoginUrl = async () => {
+  try {
+    const response = await fetch('/api/trpc/auth.getOAuthConfig');
+    const data = await response.json();
+    return data.result?.data?.loginUrl || '#';
+  } catch (error) {
+    console.error('Failed to get OAuth config:', error);
+    return '#';
+  }
+};
+
+// Fallback for synchronous usage (deprecated - use getLoginUrl() instead)
+export const getLoginUrlSync = () => {
   const oauthPortalUrl = import.meta.env.VITE_OAUTH_PORTAL_URL;
   const appId = import.meta.env.VITE_APP_ID;
   const redirectUri = `${window.location.origin}/api/oauth/callback`;

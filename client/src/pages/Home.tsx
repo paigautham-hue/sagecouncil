@@ -1,6 +1,7 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
+import { APP_LOGO, APP_TITLE } from "@/const";
+import { useLoginUrl } from "@/hooks/useLoginUrl";
 import { Link, useLocation } from "wouter";
 import { Sparkles, Users, BookOpen, Compass, ArrowRight, Menu, Brain, ChevronDown, LogOut } from "lucide-react";
 import { trpc } from "@/lib/trpc";
@@ -48,6 +49,7 @@ export default function Home() {
   const { user, isAuthenticated, loading } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { data: randomQuote } = trpc.quotes.getRandom.useQuery();
+  const { loginUrl } = useLoginUrl();
 
   return (
     <div className="min-h-screen cosmic-bg">
@@ -166,7 +168,7 @@ export default function Home() {
                     <LogoutButton />
                   </>
                 ) : (
-                  <a href={getLoginUrl()}>
+                  <a href={loginUrl}>
                     <Button className="bg-accent hover:bg-accent/90">Sign In</Button>
                   </a>
                 )}
@@ -175,7 +177,7 @@ export default function Home() {
               {/* Mobile Auth Buttons (visible only on mobile when not in menu) */}
               <div className="md:hidden">
                 {!isAuthenticated && (
-                  <a href={getLoginUrl()}>
+                  <a href={loginUrl}>
                     <Button className="bg-accent hover:bg-accent/90" size="sm">Sign In</Button>
                   </a>
                 )}

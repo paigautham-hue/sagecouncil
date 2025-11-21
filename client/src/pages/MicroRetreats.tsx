@@ -1,12 +1,13 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { MicroRetreatsLibrary } from "@/components/MicroRetreatsLibrary";
 import { Button } from "@/components/ui/button";
-import { getLoginUrl } from "@/const";
+import { useLoginUrl } from "@/hooks/useLoginUrl";
 import { Sparkles, ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
 
 export default function MicroRetreats() {
   const { isAuthenticated, loading } = useAuth();
+  const { loginUrl } = useLoginUrl();
 
   if (loading) {
     return (
@@ -51,7 +52,7 @@ export default function MicroRetreats() {
               </p>
             </div>
             <Button
-              onClick={() => window.location.href = getLoginUrl()}
+              onClick={() => window.location.href = loginUrl}
               className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500"
             >
               Sign In to Begin

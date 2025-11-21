@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { getSagePortrait } from "@/lib/sagePortraits";
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useLoginUrl } from "@/hooks/useLoginUrl";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -13,13 +14,13 @@ import { Link, useLocation } from "wouter";
 import { ArrowLeft, Send, Sparkles, Users, Loader2, BookmarkPlus } from "lucide-react";
 import { Streamdown } from "streamdown";
 import { toast } from "sonner";
-import { getLoginUrl } from "@/const";
 
 type ChatMode = "one_sage" | "compare_two" | "council";
 type ToneType = "gentle" | "balanced" | "direct";
 
 export default function Council() {
   const { user, isAuthenticated } = useAuth();
+  const { loginUrl } = useLoginUrl();
   const [location, setLocation] = useLocation();
   const searchParams = new URLSearchParams(window.location.search);
   const initialMode = (searchParams.get("mode") as ChatMode) || "one_sage";
@@ -82,7 +83,7 @@ export default function Council() {
 
     if (!isAuthenticated) {
       toast.error("Please sign in to chat with the council");
-      window.location.href = getLoginUrl();
+      window.location.href = loginUrl;
       return;
     }
 

@@ -1,7 +1,7 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { getLoginUrl } from "@/const";
+import { useLoginUrl } from "@/hooks/useLoginUrl";
 import { trpc } from "@/lib/trpc";
 import { Sparkles, FlaskConical, ArrowLeft, CheckCircle2, Clock } from "lucide-react";
 import { Link } from "wouter";
@@ -9,6 +9,7 @@ import { toast } from "sonner";
 
 export default function LifeExperiments() {
   const { isAuthenticated } = useAuth();
+  const { loginUrl } = useLoginUrl();
 
   const { data: experiments, isLoading } = trpc.lifeExperiments.getAll.useQuery();
   const { data: userLogs } = trpc.lifeExperiments.getUserLogs.useQuery(
@@ -32,7 +33,7 @@ export default function LifeExperiments() {
   const handleStartExperiment = async (experimentId: number) => {
     if (!isAuthenticated) {
       toast.error("Please sign in to start experiments");
-      window.location.href = getLoginUrl();
+      window.location.href = loginUrl;
       return;
     }
     
@@ -72,7 +73,7 @@ export default function LifeExperiments() {
               Sign in to start real-world behavioral experiments and track your growth.
             </p>
             <Button asChild>
-              <a href={getLoginUrl()}>Sign In to Continue</a>
+              <a href={loginUrl}>Sign In to Continue</a>
             </Button>
           </Card>
         </div>

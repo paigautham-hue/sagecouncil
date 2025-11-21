@@ -1,6 +1,7 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useLoginUrl } from "@/hooks/useLoginUrl";
 import { Button } from "@/components/ui/button";
-import { APP_TITLE, getLoginUrl } from "@/const";
+import { APP_TITLE } from "@/const";
 import { Link } from "wouter";
 import { Heart, Sparkles, ArrowRight } from "lucide-react";
 import { trpc } from "@/lib/trpc";
@@ -9,6 +10,7 @@ import { ProgressiveImage } from "@/components/ProgressiveImage";
 
 export default function Favorites() {
   const { isAuthenticated, loading } = useAuth();
+  const { loginUrl } = useLoginUrl();
   const { data: favorites, isLoading } = trpc.favorites.getAll.useQuery(undefined, {
     enabled: isAuthenticated,
   });
@@ -34,7 +36,7 @@ export default function Favorites() {
             Sign in to save your favorite sages and access them quickly anytime.
           </p>
           <Button asChild size="lg">
-            <a href={getLoginUrl()}>
+            <a href={loginUrl}>
               <Sparkles className="w-5 h-5 mr-2" />
               Sign In
             </a>
