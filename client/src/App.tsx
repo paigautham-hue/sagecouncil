@@ -40,6 +40,7 @@ function Router() {
       <Route path={"/micro-retreats"} component={MicroRetreats} />
       <Route path={"/paradox-playground"} component={ParadoxPlayground} />
       <Route path={"/life-experiments"} component={LifeExperiments} />
+      <Route path={"/components"} component={ComponentShowcase} />
 
       {/* Sages - General route BEFORE specific route */}
       <Route path="/sages" component={Sages} />
