@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useLoginUrl } from "@/hooks/useLoginUrl";
 import { trpc } from "@/lib/trpc";
-import { Sparkles, Brain, ArrowLeft } from "lucide-react";
+import { Sparkles, Brain, ArrowLeft, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { Link } from "wouter";
 import { Streamdown } from "streamdown";
@@ -226,9 +226,16 @@ export default function ParadoxPlayground() {
                     <Button
                       onClick={handleSubmitReflection}
                       disabled={!reflection.trim() || submitting}
-                      className="w-full"
+                      className="w-full bg-accent hover:bg-accent/90 transition-all duration-200"
                     >
-                      {submitting ? "Submitting..." : "Submit Reflection & Get AI Insight"}
+                      {submitting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          Submitting Reflection...
+                        </>
+                      ) : (
+                        "Submit Reflection & Get AI Insight"
+                      )}
                     </Button>
                   </div>
                 ) : (

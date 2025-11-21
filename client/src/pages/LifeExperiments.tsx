@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useLoginUrl } from "@/hooks/useLoginUrl";
 import { trpc } from "@/lib/trpc";
-import { Sparkles, FlaskConical, ArrowLeft, CheckCircle2, Clock } from "lucide-react";
+import { Sparkles, FlaskConical, ArrowLeft, CheckCircle2, Clock, Loader2 } from "lucide-react";
 import { Link } from "wouter";
 import { toast } from "sonner";
 
@@ -38,7 +38,12 @@ export default function LifeExperiments() {
       return;
     }
     
-    await startExperiment.mutateAsync({ experimentId });
+    try {
+      await startExperiment.mutateAsync({ experimentId });
+    } catch (error) {
+      // Error is handled by mutation's onError
+      console.error("Failed to start experiment:", error);
+    }
   };
 
   const getExperimentStatus = (experimentId: number) => {
@@ -219,9 +224,16 @@ export default function LifeExperiments() {
                         <Button
                           onClick={() => handleStartExperiment(experiment.id)}
                           disabled={startExperiment.isPending}
-                          className="w-full"
+                          className="w-full bg-accent hover:bg-accent/90 transition-all duration-200"
                         >
-                          {startExperiment.isPending ? "Starting..." : "Start Experiment"}
+                          {startExperiment.isPending ? (
+                            <>
+                              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                              Starting Experiment...
+                            </>
+                          ) : (
+                            "Start Experiment"
+                          )}
                         </Button>
                       )}
                     </Card>

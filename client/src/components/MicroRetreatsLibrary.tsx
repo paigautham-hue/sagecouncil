@@ -3,7 +3,7 @@ import { trpc } from "@/lib/trpc";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Loader2, Clock, Sparkles } from "lucide-react";
+import { Loader2, Clock, Sparkles, Zap } from "lucide-react";
 import { MicroRetreatExperience } from "./MicroRetreatExperience";
 
 export function MicroRetreatsLibrary() {
@@ -84,12 +84,13 @@ export function MicroRetreatsLibrary() {
                 </span>
                 <Button
                   size="sm"
-                  className="bg-indigo-600 hover:bg-indigo-500 text-white"
+                  className="bg-indigo-600 hover:bg-indigo-500 text-white transition-all duration-200 flex items-center gap-2"
                   onClick={(e) => {
                     e.stopPropagation();
                     setSelectedRetreatId(retreat.id);
                   }}
                 >
+                  <Zap className="w-4 h-4" />
                   Begin
                 </Button>
               </div>
