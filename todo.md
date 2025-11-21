@@ -291,10 +291,12 @@
 - [x] Add missing useState import to Sages.tsx
 - [x] Add missing useAuth import to ParadoxPlayground.tsx
 - [x] Add missing useAuth and useState imports to LifeExperiments.tsx
-- [x] Compress all sage portrait images (76MB → 10MB, 87% reduction)
+- [x] Compress all sage portrait images (76MB -> 10MB, 87% reduction)
 - [x] Optimize images for web display (225-293KB per image)
 - [x] Create database seed script with SSL support
 - [x] Seed 6 paradoxes, 5 life experiments, 5 micro retreats
+- [x] Fix getSagePortrait calls using teacherId instead of fullName
+- [x] Fixed Sages.tsx, QuoteCard.tsx, EnhancedChatInterface.tsx, SageQuickView.tsx
 - [x] Verify all button clicks work across all pages
 - [x] Test sage portrait display on all pages
 

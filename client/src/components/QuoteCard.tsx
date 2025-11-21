@@ -56,7 +56,7 @@ export function QuoteCard({ quote, teacherName, teacherId, showActions = true }:
     }
   };
 
-  const portraitUrl = getSagePortrait(teacherId);
+  const portraitUrl = getSagePortrait(teacherName);
 
   return (
     <div className="space-y-4">

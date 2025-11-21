@@ -103,7 +103,7 @@ export function EnhancedChatInterface({
                 <div className="relative">
                   <div className="absolute inset-0 bg-gold/20 rounded-full blur-lg animate-pulse"></div>
                   <img
-                    src={getSagePortrait(getTeacherInfo(selectedTeachers[0])?.teacherId)}
+                    src={getSagePortrait(getTeacherInfo(selectedTeachers[0])?.fullName)}
                     alt="Teacher"
                     className="relative w-12 h-12 rounded-full border-2 border-gold/50 object-cover"
                   />

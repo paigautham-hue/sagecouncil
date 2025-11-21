@@ -85,7 +85,7 @@ export function SageQuickView({ sage, open, onOpenChange }: SageQuickViewProps) 
         <DialogHeader>
           <div className="flex items-center gap-4 mb-4">
             <img
-              src={getSagePortrait(sage.id)}
+              src={getSagePortrait(sage.name)}
               alt={sage.name}
               className="w-16 h-16 rounded-full object-cover border-2 border-accent"
             />
