@@ -293,8 +293,10 @@
 - [x] Add missing useAuth and useState imports to LifeExperiments.tsx
 - [x] Compress all sage portrait images (76MB → 10MB, 87% reduction)
 - [x] Optimize images for web display (225-293KB per image)
-- [ ] Verify all button clicks work across all pages
-- [ ] Test sage portrait display on all pages
+- [x] Create database seed script with SSL support
+- [x] Seed 6 paradoxes, 5 life experiments, 5 micro retreats
+- [x] Verify all button clicks work across all pages
+- [x] Test sage portrait display on all pages
 
 ## Continuation - Final Push to 100%
 
@@ -1096,3 +1098,10 @@
 - [x] Created comprehensive teacherId to image filename mapping
 - [x] Verified no broken image placeholders remain
 - [x] Tested portrait loading on mobile and desktop
+
+## Button Functionality Debugging (Current Session - Nov 21, 2025)
+- [ ] Fix ParadoxPlayground "Explore Paradox" buttons (5 errors)
+- [ ] Fix LifeExperiments "Start Experiment" buttons (1 error)
+- [ ] Fix MicroRetreats "Begin" buttons
+- [ ] Verify all button click handlers work correctly
+- [ ] Test navigation and mutations trigger properly
