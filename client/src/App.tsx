@@ -22,6 +22,7 @@ import JourneyDetail from "./pages/JourneyDetail";
 import MyPath from "./pages/MyPath";
 import AdminConsole from "./pages/AdminConsole";
 import AdminDashboard from "./pages/AdminDashboard";
+import ComponentShowcase from "./pages/ComponentShowcase";
 
 function Router() {
   return (
@@ -39,6 +40,7 @@ function Router() {
       <Route path={"/micro-retreats"} component={MicroRetreats} />
       <Route path={"/paradox-playground"} component={ParadoxPlayground} />
       <Route path={"/life-experiments"} component={LifeExperiments} />
+      <Route path={"/components"} component={ComponentShowcase} />
 
       {/* Sages - General route BEFORE specific route */}
       <Route path="/sages" component={Sages} />
