@@ -1,16 +1,68 @@
 /**
+ * Mapping of sage names to their image filenames
+ * Handles special characters, accents, and parentheses
+ */
+const SAGE_IMAGE_MAP: Record<string, string> = {
+  'Adyashanti': 'adyashanti',
+  'Alan Watts': 'alan-watts',
+  'Baruch Spinoza': 'baruch-spinoza',
+  'Bessel van der Kolk': 'bessel-van-der-kolk',
+  'Carl Jung': 'carl-jung',
+  'David Bohm': 'david-bohm',
+  'Eckhart Tolle': 'eckhart-tolle',
+  'Epictetus': 'epictetus',
+  'Francisco Varela': 'francisco-varela',
+  'Gabor Maté': 'gabor-mate',
+  'Gautama Buddha': 'gautama-buddha',
+  'Hafiz (Hafez of Shiraz)': 'hafiz',
+  'Iain McGilchrist': 'iain-mcgilchrist',
+  'Ibn Arabi': 'ibn-arabi',
+  'Jack Kornfield': 'jack-kornfield',
+  'Jalal ad-Din Rumi': 'jalal-ad-din-rumi',
+  'James Hillman': 'james-hillman',
+  'Jiddu Krishnamurti': 'jiddu-krishnamurti',
+  'Jon Kabat-Zinn': 'jon-kabat-zinn',
+  'Kabir': 'kabir',
+  'Lao Tzu (Laozi)': 'lao-tzu',
+  'Marcus Aurelius': 'marcus-aurelius',
+  'Mooji': 'mooji',
+  'Nisargadatta Maharaj': 'nisargadatta-maharaj',
+  'Osho (Bhagwan Shree Rajneesh)': 'osho',
+  'Pema Chödrön': 'pema-chodron',
+  'Plato': 'plato',
+  'Rabindranath Tagore': 'rabindranath-tagore',
+  'Rainer Maria Rilke': 'rainer-maria-rilke',
+  'Ramana Maharshi': 'ramana-maharshi',
+  'Sam Harris (meditation and secular spirituality)': 'sam-harris',
+  'Seneca': 'seneca',
+  'Socrates': 'socrates',
+  'Tara Brach': 'tara-brach',
+  'Thich Nhat Hanh': 'thich-nhat-hanh',
+  'Viktor Frankl': 'viktor-frankl',
+};
+
+/**
  * Helper to get sage portrait image URL
- * Converts teacher full name to portrait filename
+ * Uses explicit mapping to handle special characters and accents
  */
 export function getSagePortrait(fullName: string): string {
-  // Convert name to filename format: lowercase, hyphens, no parentheses
-  const filename = fullName
+  const filename = SAGE_IMAGE_MAP[fullName];
+  if (filename) {
+    return `/sages/${filename}.png`;
+  }
+  
+  // Fallback: convert name to filename format
+  const fallback = fullName
     .toLowerCase()
     .replace(/\s+/g, '-')
     .replace(/[()]/g, '')
-    .replace(/'/g, '');
+    .replace(/'/g, '')
+    .replace(/ö/g, 'o')
+    .replace(/é/g, 'e')
+    .replace(/á/g, 'a')
+    .replace(/ñ/g, 'n');
   
-  return `/sages/${filename}.png`;
+  return `/sages/${fallback}.png`;
 }
 
 /**
